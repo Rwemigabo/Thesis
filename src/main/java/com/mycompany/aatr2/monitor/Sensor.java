@@ -36,13 +36,15 @@ public class Sensor extends Thread implements Observable {
     private NetworkStats net;
     private final String contID;
     private boolean now;
+    private double cpuPerc;
+    private double free;
 
     public Sensor(int ID, String context, double min, double max, String cid) {
         this.sensId = ID;
         this.name = context;
         this.property = new ContextElement(context);
         this.contID = cid;
-        this.property.setThreshold(max, max);
+        this.property.setThreshold(max, min);
         this.now = false;
     }
 
@@ -67,7 +69,7 @@ public class Sensor extends Thread implements Observable {
             long prevCPU;
             long prevSystem;
             long systemUsage;
-            double cpuPer;
+            
             
             scheduleNotification();
 
@@ -77,33 +79,22 @@ public class Sensor extends Thread implements Observable {
                 prevCPU = dm.getContainerStats(this.contID).precpuStats().cpuUsage().totalUsage();
                 prevSystem = dm.getContainerStats(this.contID).precpuStats().systemCpuUsage();
                 systemUsage = cpu.systemCpuUsage();
-                cpuPer = calculateCPU(cpuUsage, prevCPU, systemUsage, prevSystem, perCpu);
-                
-                if (this.now == true) {
-                    notifyObservers(cpuPer);
-                    this.now = false;
-                } else {
-                    checkThreshold(cpuPer, contNm);
-                }
+                this.cpuPerc = calculateCPU(cpuUsage, prevCPU, systemUsage, prevSystem, perCpu);
+                checkThreshold(this.cpuPerc, contNm);
 
             }
         } else if (this.property.getName().equals("Memory")) {
             System.out.print("\n Monitoring Memory of conitainer " + contNm);
             long limit;
             long used;
-            float free;
 
             scheduleNotification();
             while (dm.getContainer(this.contID).state().contains("running")) {
                 limit = this.mem.limit();
                 used = this.mem.usage();
-                free = memoryStat(limit, used);
-                if (this.now == true) {
-                    notifyObservers(free);
-                    this.now = false;
-                } else {
-                    checkThreshold(free, contNm);
-                }
+                this.free = memoryStat(limit, used);
+                checkThreshold(free, contNm);
+                
             }
         }
     }
@@ -125,7 +116,7 @@ public class Sensor extends Thread implements Observable {
      * @param cont container name
      */
     public void checkThreshold(final double metric, final String cont) {
-        if (metric >= this.property.getThreshold().getUpperBound() || metric < this.property.getThreshold().getLowerBound()) {
+        if (metric > this.property.getThreshold().getUpperBound() || metric < this.property.getThreshold().getLowerBound()) {
             System.out.print("\n Notifying monitor of container " + cont + " " + this.property.getName() + " " + metric + "%");
             notifyObservers(metric);
         } else {
@@ -143,17 +134,17 @@ public class Sensor extends Thread implements Observable {
      * @param perCpuUsage number of cores
      * @return the CPU percentage being used
      */
-    public float calculateCPU(long totalUsage, long prevCPU, long totalSystUse, long prevSystem, int perCpuUsage) {
+    public double calculateCPU(long totalUsage, long prevCPU, long totalSystUse, long prevSystem, int perCpuUsage) {
 
-        float cpuPerc = 0;
+        double cpuP = 0;
         long cpuDelta = totalUsage - prevCPU;
         long systemDelta = totalSystUse - prevSystem;
 
         if (systemDelta > 0.0 && cpuDelta > 0.0) {
-            cpuPerc = ((cpuDelta / systemDelta) * (perCpuUsage)) * 100;
+            cpuP = ((cpuDelta / systemDelta) * (perCpuUsage)) * 100;
         }
 
-        return cpuPerc;
+        return cpuP;
 
     }
 
@@ -163,9 +154,10 @@ public class Sensor extends Thread implements Observable {
      * @param usage
      * @return percentage of the memory used.
      */
-    public float memoryStat(long limit, long usage) {
+    public double memoryStat(long limit, long usage) {
 
-        float memMetric = (usage / limit) * 100;
+        double memMetric = (usage / limit) * 100;
+        //double memMetric = (limit-usage);
         return memMetric;
     }
 
@@ -212,11 +204,12 @@ public class Sensor extends Thread implements Observable {
         this.name = ctxt;
     }
 
-    public long getLogValue() {
+    public double getLogValue() {
+        
         if (this.name.equals("Memory")) {
-            return mem.usage();
+            return this.free;
         } else if (this.name.equals("CPU")) {
-            return cpu.systemCpuUsage();
+            return this.cpuPerc;
         }
         return 0;
     }

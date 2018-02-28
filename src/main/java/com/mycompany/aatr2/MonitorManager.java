@@ -41,7 +41,7 @@ public class MonitorManager {
         int newID = monitors.size() + 1;
         Monitor mon = new Monitor(newID, ID);
         mon.addSensor(this.sm.newSensor("CPU",  0.00, 75.00, ID));
-        mon.addSensor(this.sm.newSensor("Memory", 0, 0, ID));
+        mon.addSensor(this.sm.newSensor("Memory", 0, 5, ID));
         monitors.add(mon);        
         if(dm.getContainer(ID).state() != null && dm.getContainer(ID).state().equals("running")){
             System.out.print("\n Accessing sensors to initiate metric watch");

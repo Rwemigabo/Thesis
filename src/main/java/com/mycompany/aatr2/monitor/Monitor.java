@@ -10,6 +10,8 @@ import com.mycompany.aatr2.Observer;
 import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.exceptions.DockerException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *TBD monitor/ notify other monitor instances
@@ -44,7 +46,7 @@ public class Monitor implements Observer, Observable{
 
     @Override
     public void update(String context, double metric) {
-        float metric2 = 0;
+        double metric2 = 0;
         for (Sensor sen : sens) {
             if (!sen.sensorContext().equals(context)){
                 metric2 = sen.getLogValue();
@@ -74,12 +76,41 @@ public class Monitor implements Observer, Observable{
         sens.forEach((Sensor sen) -> {
                 System.out.print("\n Initiating Sensor for " + sen.sensorContext());
                 sen.addObserver(this);
-                sen.start();              
+                sen.start();
+                scheduleNotification();
         });
     }
     
     public void addSensor(Sensor s){
         this.sens.add(s);
+    }
+    
+    /**
+     * Notifies observers every 30 seconds
+     */
+    public void scheduleNotification() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                newStatistic();
+            }
+        }, 1*10000, 1 * 10000);
+    }
+    
+    public void newStatistic(){
+        double metric1 = 0;
+        double metric2 = 0;
+        
+        for (Sensor sen : this.sens) {
+            
+            if(sen.getName().equals("CPU")){
+                metric1 = sen.getLogValue();
+            }else{metric2 = sen.getLogValue();} 
+        }
+        this.stats.newStatistic(metric2, metric1);
+        System.out.println("\n New Memory Stat log from "+ this.id +metric2 +" CPU "+ metric1);
     }
     
     public int getID(){
