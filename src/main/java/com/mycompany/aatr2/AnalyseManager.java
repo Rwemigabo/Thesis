@@ -6,7 +6,7 @@
 package com.mycompany.aatr2;
 
 
-import com.mycompany.aatr2.analyse.Analyse;
+import com.mycompany.aatr2.analyse.Analyser;
 
 import java.util.ArrayList;
 
@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 public class AnalyseManager {
 
-    private final ArrayList<Analyse> analysers = new ArrayList<>();
-
+    private final ArrayList<Analyser> analysers = new ArrayList<>();
     private static final AnalyseManager inst = new AnalyseManager();
-
+    
+    
     public static AnalyseManager getInstance() {
         return inst;
     }
@@ -27,6 +27,14 @@ public class AnalyseManager {
     private AnalyseManager(){
     
     }
-    
-    
+
+    public ArrayList<Analyser> getAnalysers() {
+        return analysers;
+    }
+
+    public static AnalyseManager getInst() {
+        return inst;
+    }  
+
+
 }

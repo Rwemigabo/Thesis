@@ -69,13 +69,13 @@ public class Monitor implements Observer, Observable{
 
     @Override
     public void notifyObservers(double metric) {
-       
+       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void startMonitoring() throws DockerException, InterruptedException{
         sens.forEach((Sensor sen) -> {
                 System.out.print("\n Initiating Sensor for " + sen.sensorContext());
-                sen.addObserver(this);
+                setObbservable(sen);
                 sen.start();
                 scheduleNotification();
         });
@@ -110,6 +110,7 @@ public class Monitor implements Observer, Observable{
             }else{metric2 = sen.getLogValue();} 
         }
         this.stats.newStatistic(metric2, metric1);
+        notifyObservers();
         System.out.println("\n New Memory Stat log from "+ this.id +metric2 +" CPU "+ metric1);
     }
     
@@ -119,7 +120,12 @@ public class Monitor implements Observer, Observable{
 
     @Override
     public void notifyObservers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+
+    @Override
+    public void setObbservable(Observable obb) {
+        obb.addObserver(this);
     }
 
 }

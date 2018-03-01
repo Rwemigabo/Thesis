@@ -42,6 +42,7 @@ public class Sensor extends Thread implements Observable {
     private final String contNm;
     private double minimum;
     private double maximum;
+    private long uptime;
 
     public Sensor(int ID, String context, double min, double max, String cid) {
         this.sensId = ID;
@@ -51,6 +52,7 @@ public class Sensor extends Thread implements Observable {
         this.contID = cid;
         this.property = new ContextElement(max, min, context);
         this.contNm = dm.getContainer(cid).image();
+        uptime = dm.getContainer(cid).created();
     }
 
     /**
