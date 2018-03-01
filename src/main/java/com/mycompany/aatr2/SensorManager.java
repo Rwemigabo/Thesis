@@ -7,6 +7,7 @@ package com.mycompany.aatr2;
 
 import com.mycompany.aatr2.monitor.Sensor;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -38,8 +39,9 @@ public class SensorManager {
         sensors.add(sens);
     }
     
-    public ArrayList<Sensor> getAllSensors(){
-        return this.sensors;
+    public List<Sensor> getAllSensors(){
+        List<Sensor> senss = this.sensors;
+        return senss;
     }
     
     public Sensor getSeneor(int ID){

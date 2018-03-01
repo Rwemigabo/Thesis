@@ -14,12 +14,9 @@ package com.mycompany.aatr2.monitor;
  * @author eric
  */
 public class ContextElement {
-    private Threshold thresh;
-    private final String name;
-    public ContextElement(String nm){
-        this.name = nm;
-        
-    }
+    private final Threshold thresh;
+    final String name;
+
     
     public ContextElement(double upper, double lower, String nm){
         this.thresh = new Threshold(upper, lower);
@@ -28,7 +25,8 @@ public class ContextElement {
     }
     
     public void setThreshold(double upper, double lower){
-        this.thresh = new Threshold(upper, lower);
+        this.thresh.setLowerBound(lower);
+        this.thresh.setUpperBound(upper);
     }
     
     public Threshold getThreshold(){
@@ -36,7 +34,18 @@ public class ContextElement {
     }
     
     public String getName(){
-        return this.name;
+        System.out.println("Wrong get name");
+        return "";
+    }
+    
+    public double calculateCPU(){
+        System.out.println("Wrong get cpu");
+        return 0;
+    }
+    
+    public double getMemoryPerc() {
+        System.out.println("Wrong get memory");
+        return 0;
     }
     
 }

@@ -18,11 +18,11 @@ public class Threshold {
         this.upperBound = upper;
     }
     
-    public void setUpperBound(float upper){
+    public void setUpperBound(double upper){
         this.upperBound = upper;
     }
     
-    public void setLowerBound(float lower){
+    public void setLowerBound(double lower){
         this.lowerBound = lower;
     }
     
