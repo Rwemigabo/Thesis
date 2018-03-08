@@ -5,6 +5,7 @@
  */
 package com.mycompany.aatr2;
 
+import com.mycompany.aatr2.monitor.Service;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -13,15 +14,15 @@ import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerStats;
 import com.spotify.docker.client.messages.Image;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Singleton class
- * Connects to docker and gathers image info about the topologies(yml files) the
- * manager then prompts the feedback control loops to run on each of the
- * containers of a service available in the running topology
+ * Singleton class Connects to docker and gathers image info about the
+ * topologies(yml files) the manager then prompts the feedback control loops to
+ * run on each of the containers of a service available in the running topology
  *
  * @author eric
  */
@@ -29,23 +30,17 @@ public class DockerManager {
 
     private final DockerClient cli;
     private List<Image> images;
+    private final List<Service> appServices;
     private List<Container> containers;
     private final List<String> monitored;
-    
-    private static DockerManager instance;    //private static final DockerManager instance; //private static final DockerManager instance;
 
-//    static {
-//        try {
-//            instance = new DockerManager();
-//        } catch (DockerCertificateException | DockerException | InterruptedException ex) {
-//            Logger.getLogger(DockerManager.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    private static DockerManager instance;
 
     public DockerManager() throws DockerCertificateException, DockerException, InterruptedException {
-        cli = DefaultDockerClient.fromEnv().build();
-        images = cli.listImages();
-        monitored = new ArrayList<>();
+        this.cli = DefaultDockerClient.fromEnv().build();
+        this.images = cli.listImages();
+        this.monitored = new ArrayList<>();
+        this.appServices = new ArrayList<>();
     }
 
     public static DockerManager getInstance() {
@@ -68,34 +63,27 @@ public class DockerManager {
         }
         return null;
     }
-    
+
     private void createMonitors() throws DockerException, InterruptedException {
         repopulateContainersList();
         MonitorManager mm = MonitorManager.getInstance();
+
         for (Container cont : containers) {
-            if(!this.monitored.contains(cont.id())){
-                System.out.println("\n Adding monitor on "+cont.id());
-                mm.newMonitor(cont.id());
-                this.monitored.add(cont.id());
-                
-                }
-            else{
+            List<String> temp = new ArrayList();
+            appServices.forEach((service) -> {
+                temp.add(service.getServName());
+            });
+            if (!temp.contains(cont.image())) {
+                System.out.println("\n Creating new service for " + cont.image());
+                Service s = newService(cont.image());
+                mm.newMonitor(s);
+                this.monitored.add(s.getServName());
+
+            } else {
                 System.out.println("\n Already being monitored");
             }
         }
     }
-    
-//    public void createMonitor(Image img) throws DockerException, InterruptedException {
-//        MonitorManager mm = MonitorManager.getInstance();
-//        for (Container cont : containers) {
-//            if(monitored.contains(cont.id())){System.out.println("Already being monitored");}
-//            else{
-//                mm.newMonitor(cont.id());
-//                monitored.add(cont.id());
-//                System.out.println(cont.id() + "Monitored");
-//            }
-//        }
-//    }
 
     public Image getImage(String id) {
         for (Image img : images) {
@@ -110,15 +98,53 @@ public class DockerManager {
         ContainerStats stats = cli.stats(id);
         return stats;
     }
-    
+
+    public List<String> getMonitored() {
+        return Collections.unmodifiableList(monitored);
+    }
+
+    public List<Image> getImages() {
+        return Collections.unmodifiableList(images);
+    }
+
+    public List<Container> getContainers() {
+        return Collections.unmodifiableList(containers);
+    }
+
+    /**
+     * Create new service if the string passed to it has no service.
+     *
+     * @param img image/ service name
+     * @return
+     */
+    public Service newService(String img) {
+        Service serv = new Service(img);
+        List<String> temp = new ArrayList();
+        appServices.forEach((service) -> {
+            temp.add(service.getServName());
+        });
+        if (temp.contains(img)) {
+            System.out.print("\n Service already available for this container");
+        } else {
+
+            containers.stream().filter((cont) -> (cont.image().equals(img))).forEachOrdered((cont) -> {
+
+                serv.addContainer(cont);
+            });
+            this.appServices.add(serv);
+            return serv;
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) {
-         try {
+        try {
             instance = new DockerManager();
             instance.createMonitors();
         } catch (DockerCertificateException | DockerException | InterruptedException ex) {
             Logger.getLogger(DockerManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-    }
 
+    }
 }

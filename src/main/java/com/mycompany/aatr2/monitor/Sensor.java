@@ -75,6 +75,10 @@ public class Sensor extends Thread implements Observable {
 
         }
     }
+
+    public String getContID() {
+        return contID;
+    }
     
     
     /**

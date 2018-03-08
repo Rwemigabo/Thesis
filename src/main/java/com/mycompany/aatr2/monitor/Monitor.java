@@ -7,9 +7,12 @@ package com.mycompany.aatr2.monitor;
 
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
+import com.mycompany.aatr2.SensorManager;
 import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.exceptions.DockerException;
+import com.spotify.docker.client.messages.Container;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,22 +24,38 @@ import java.util.TimerTask;
 public class Monitor implements Observer, Observable{
     private final StatisticsLog stats;
     private final int ID;
-    private final String id;
+//    private final String id;
     private final ArrayList<Sensor> sens;
     private final ArrayList<Observer> obs;
-    
+    private Service serv;
     //private Observable obs = null;
     /**
      * 
      * @param id an id  for the new monitor
-     * @param ID the id for the container being monitored
+     * @param s service being monitored.
      */
-    public Monitor(int id, String ID){
+    public Monitor(int id,  Service s) throws DockerException, InterruptedException{
         this.sens = new ArrayList<>();
         this.ID = id;
-        this.id = ID;
-        this.stats = new StatisticsLog(ID);
+//        this.id = ID;
+        this.serv = s;
+        this.stats = new StatisticsLog(serv.getServName());
         this.obs = new ArrayList<>();
+        initiate();
+    }
+    
+    private void initiate() throws DockerException, InterruptedException{
+        List<Container> temp= this.serv.getContainers();
+        SensorManager sm = SensorManager.getInstance();
+        for (Container container : temp) {
+            
+            addSensor(sm.newSensor("CPU", 0.00, 75.00, container.id()));
+            addSensor(sm.newSensor("Memory", 0, 5, container.id()));
+            if(container.state() != null && container.state().equals("running")){
+                System.out.print("\n Accessing sensors to initiate metric watch");
+                startMonitoring(container.id());
+            }else{System.out.print("Sorry container state " + container.state());}
+        }
     }
     
     @Override
@@ -72,12 +91,14 @@ public class Monitor implements Observer, Observable{
        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void startMonitoring() throws DockerException, InterruptedException{
+    public void startMonitoring(String id) throws DockerException, InterruptedException{
         sens.forEach((Sensor sen) -> {
-                System.out.print("\n Initiating Sensor for " + sen.sensorContext());
+            if(sen.getContID().equals(id)){
+                System.out.print("\n Initiating Sensor for " + sen.sensorContext() + " " + sen.getContID());
                 setObbservable(sen);
                 sen.start();
                 scheduleNotification();
+            }else{}
         });
     }
     
@@ -111,7 +132,7 @@ public class Monitor implements Observer, Observable{
         }
         this.stats.newStatistic(metric2, metric1);
         notifyObservers();
-        System.out.println("\n New Memory Stat log from "+ this.id +metric2 +" CPU "+ metric1);
+        System.out.println("\n New Stat log from "+ this.serv.getServName() + " Memory " + metric2 +" CPU "+ metric1);
     }
     
     public int getID(){
@@ -128,4 +149,17 @@ public class Monitor implements Observer, Observable{
         obb.addObserver(this);
     }
 
+    public StatisticsLog getStats() {
+        return stats;
+    }
+
+    public Service getServ() {
+        return serv;
+    }
+
+    public void setServ(Service serv) {
+        this.serv = serv;
+    }
+
+    
 }
