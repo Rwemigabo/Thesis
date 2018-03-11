@@ -14,11 +14,11 @@ import java.util.List;
  *  Creates a service object with the containers that make up the functionality of the service
  * @author eric
  */
-public class Service {
+public class Cluster {
      private final List<Container> containers;
      private String servName;
      
-     public Service(String name){
+     public Cluster(String name){
          this.servName = name;
          this.containers = new ArrayList<>();
      }

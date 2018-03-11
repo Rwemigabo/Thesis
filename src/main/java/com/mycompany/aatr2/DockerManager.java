@@ -5,7 +5,7 @@
  */
 package com.mycompany.aatr2;
 
-import com.mycompany.aatr2.monitor.Service;
+import com.mycompany.aatr2.monitor.Cluster;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -30,7 +30,7 @@ public class DockerManager {
 
     private final DockerClient cli;
     private List<Image> images;
-    private final List<Service> appServices;
+    private final List<Cluster> appServices;
     private List<Container> containers;
     private final List<String> monitored;
 
@@ -75,7 +75,7 @@ public class DockerManager {
             });
             if (!temp.contains(cont.image())) {
                 System.out.println("\n Creating new service for " + cont.image());
-                Service s = newService(cont.image());
+                Cluster s = newService(cont.image());
                 mm.newMonitor(s);
                 this.monitored.add(s.getServName());
 
@@ -117,8 +117,8 @@ public class DockerManager {
      * @param img image/ service name
      * @return
      */
-    public Service newService(String img) {
-        Service serv = new Service(img);
+    public Cluster newService(String img) {
+        Cluster serv = new Cluster(img);
         List<String> temp = new ArrayList();
         appServices.forEach((service) -> {
             temp.add(service.getServName());

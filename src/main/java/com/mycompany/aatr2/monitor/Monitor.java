@@ -27,14 +27,14 @@ public class Monitor implements Observer, Observable{
 //    private final String id;
     private final ArrayList<Sensor> sens;
     private final ArrayList<Observer> obs;
-    private Service serv;
+    private Cluster serv;
     //private Observable obs = null;
     /**
      * 
      * @param id an id  for the new monitor
      * @param s service being monitored.
      */
-    public Monitor(int id,  Service s) throws DockerException, InterruptedException{
+    public Monitor(int id,  Cluster s) throws DockerException, InterruptedException{
         this.sens = new ArrayList<>();
         this.ID = id;
 //        this.id = ID;
@@ -153,11 +153,11 @@ public class Monitor implements Observer, Observable{
         return stats;
     }
 
-    public Service getServ() {
+    public Cluster getServ() {
         return serv;
     }
 
-    public void setServ(Service serv) {
+    public void setServ(Cluster serv) {
         this.serv = serv;
     }
 
