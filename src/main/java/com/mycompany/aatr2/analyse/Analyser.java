@@ -7,7 +7,10 @@ package com.mycompany.aatr2.analyse;
 
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
+import com.mycompany.aatr2.monitor.Monitor;
+import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import java.util.ArrayList;
+import java.util.function.UnaryOperator;
 
 /**
  *
@@ -17,10 +20,14 @@ public class Analyser implements Observable, Observer{
     
     private final int anId;
     private final ArrayList<Observer> obs;
+    private final ArrayList<Monitor> obvle;
+    private ArrayList<StatisticsLog> logs;
     
     public Analyser(int id) {
         this.anId = id;
         this.obs = new ArrayList<>();
+        this.logs = new ArrayList<>();
+        this.obvle = new ArrayList<>();
     }
     
     /**
@@ -44,7 +51,9 @@ public class Analyser implements Observable, Observer{
 
     @Override
     public void notifyObservers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        obs.forEach((ob) -> {
+            ob.update();
+        });
     }
 
     @Override
@@ -53,8 +62,11 @@ public class Analyser implements Observable, Observer{
     }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public synchronized void update() {
+        
+        obvle.forEach((obv)->{
+            this.logs.replaceAll((UnaryOperator<StatisticsLog>) obv.getStats());
+        });
     }
 
     @Override
@@ -64,7 +76,7 @@ public class Analyser implements Observable, Observer{
 
 
     @Override
-    public void setObbservable(Observable ob) {
+    public void setObservable(Observable ob) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

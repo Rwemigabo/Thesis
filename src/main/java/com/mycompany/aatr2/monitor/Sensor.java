@@ -96,6 +96,9 @@ public class Sensor extends Thread implements Observable {
     }
 
     @Override
+    /**
+     * checks the metric threshold and returns it if it has been crossed.
+     */
     public void run() {
         if (this.name.equals("CPU")) {
             
@@ -227,7 +230,4 @@ public class Sensor extends Thread implements Observable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void setWatchedMetric() {
-
-    }
 }

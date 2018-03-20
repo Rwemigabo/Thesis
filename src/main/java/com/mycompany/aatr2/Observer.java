@@ -12,5 +12,5 @@ package com.mycompany.aatr2;
 public interface Observer {
     public void update();
     public void update(String context, double metric);
-    public void setObbservable(Observable ob);
+    public void setObservable(Observable ob);
 }

@@ -10,19 +10,22 @@ import java.sql.Timestamp;
  * @author eric
  */
 public class Statistic {
+    private final String containerID;
+    private final String servicenm;
     private final double cpu;
     private final double memory;
     //private final int BIO;
     //private final int network;
     private final Timestamp date;
     
-    public Statistic(double setcpu, double setmemory){
+    public Statistic(String snme, String cid, double setcpu, double setmemory){
         this.cpu = setcpu;
         //this.BIO = setBIO;
         this.memory = setmemory;
         //this.network = setnetwork;
         this.date = new Timestamp(System.currentTimeMillis());
-
+        this.containerID = cid;
+        this.servicenm = snme;
     }
 
     public double getCpu(){

@@ -13,37 +13,44 @@ import java.util.ArrayList;
  * @author eric
  */
 public class StatisticsLog {
+
     private final ArrayList<Statistic> monitorstats;
-    private final String container;
-    public StatisticsLog(String contid){
-        this.container = contid;
+    private final String service;
+
+    public StatisticsLog(String snm) {
+        this.service = snm;
         this.monitorstats = new ArrayList<>();
     }
-    
-    public ArrayList<Statistic> getSystemStats(){
-        return this.monitorstats;
+
+    public ArrayList<Statistic> getMonitorstats() {
+        return monitorstats;
     }
-    
-    public Statistic getSystemStat(Timestamp time){
+
+    public String getService() {
+        return service;
+    }
+
+    public Statistic getSystemStat(Timestamp time) {
         for (Statistic stat : monitorstats) {
-            if (stat.getTimestamp().equals(time)){
+            if (stat.getTimestamp().equals(time)) {
                 return stat;
             }
-        }return null;
+        }
+        return null;
     }
-    
-    public ArrayList<Statistic> getSystemStats(Timestamp t1, Timestamp t2){
-        
+
+    public ArrayList<Statistic> getSystemStats(Timestamp t1, Timestamp t2) {
+
         ArrayList<Statistic> s = new ArrayList<>();
         monitorstats.stream().filter((stat) -> (stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2))).forEachOrdered((stat) -> {
             s.add(stat);
         });
-return s;
+        return s;
     }
-    
-    public void newStatistic(double mem, double cpu){
-        Statistic s = new Statistic(cpu, mem);
+
+    public void newStatistic(String snme, String contid, double mem, double cpu) {
+        Statistic s = new Statistic(snme, contid, cpu, mem);
         this.monitorstats.add(s);
     }
-    
+
 }

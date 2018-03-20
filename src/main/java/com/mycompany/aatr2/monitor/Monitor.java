@@ -17,65 +17,76 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *TBD monitor/ notify other monitor instances
- * @author eric
- * Capture and record new statistics to the database every set number of minutes or seconds.
+ * TBD monitor/ notify other monitor instances
+ *
+ * @author eric Capture and record new statistics to the database every set
+ * number of minutes or seconds.
  */
-public class Monitor implements Observer, Observable{
+public class Monitor implements Observer, Observable {
+
     private final StatisticsLog stats;
     private final int ID;
 //    private final String id;
     private final ArrayList<Sensor> sens;
     private final ArrayList<Observer> obs;
+    private final List<Container> conts;
     private Cluster serv;
+
     //private Observable obs = null;
     /**
-     * 
-     * @param id an id  for the new monitor
+     *
+     * @param id an id for the new monitor
      * @param s service being monitored.
      */
-    public Monitor(int id,  Cluster s) throws DockerException, InterruptedException{
+    public Monitor(int id, Cluster s) throws DockerException, InterruptedException {
         this.sens = new ArrayList<>();
         this.ID = id;
 //        this.id = ID;
         this.serv = s;
         this.stats = new StatisticsLog(serv.getServName());
         this.obs = new ArrayList<>();
+        this.conts = this.serv.getContainers();
         initiate();
     }
-    
-    private void initiate() throws DockerException, InterruptedException{
-        List<Container> temp= this.serv.getContainers();
+
+    private void initiate() throws DockerException, InterruptedException {
         SensorManager sm = SensorManager.getInstance();
-        for (Container container : temp) {
-            
+        for (Container container : conts) {
+
             addSensor(sm.newSensor("CPU", 0.00, 75.00, container.id()));
             addSensor(sm.newSensor("Memory", 0, 5, container.id()));
-            if(container.state() != null && container.state().equals("running")){
+            if (container.state() != null && container.state().equals("running")) {
                 System.out.print("\n Accessing sensors to initiate metric watch");
                 startMonitoring(container.id());
-            }else{System.out.print("Sorry container state " + container.state());}
+                scheduleNotification();
+            } else {
+                System.out.print("Sorry container state " + container.state());
+            }
         }
     }
-    
-    @Override
-   public void update() {
-      System.out.println( "whaaatttt" ); 
-   }
 
     @Override
-    public void update(String context, double metric) {
+    public synchronized void update() {
+        System.out.println("whaaatttt");
+    }
+
+    @Override
+    public synchronized void update(String context, double metric) {
         double metric2 = 0;
         for (Sensor sen : sens) {
-            if (!sen.sensorContext().equals(context)){
+            if (!sen.sensorContext().equals(context)) {
                 metric2 = sen.getLogValue();
             }
-        }if(context.equals("CPU")){
-            this.stats.newStatistic(metric, metric2);
-        
-        }else{this.stats.newStatistic(metric2, metric);}
+            if (context.equals("CPU")) {
+                this.stats.newStatistic(this.serv.getServName(), sen.getContID(), metric, metric2);
+
+            } else {
+                this.stats.newStatistic(this.serv.getServName(), sen.getContID(), metric2, metric);
+            }
+            notifyObservers();
+        }
     }
-    
+
     @Override
     public void addObserver(Observer o) {
         obs.add(o);
@@ -88,24 +99,24 @@ public class Monitor implements Observer, Observable{
 
     @Override
     public void notifyObservers(double metric) {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
-    
-    public void startMonitoring(String id) throws DockerException, InterruptedException{
+
+    public void startMonitoring(String id) throws DockerException, InterruptedException {
         sens.forEach((Sensor sen) -> {
-            if(sen.getContID().equals(id)){
+            if (sen.getContID().equals(id)) {
                 System.out.print("\n Initiating Sensor for " + sen.sensorContext() + " " + sen.getContID());
-                setObbservable(sen);
+                setObservable(sen);
                 sen.start();
-                scheduleNotification();
-            }else{}
+            } else {
+            }
         });
     }
-    
-    public void addSensor(Sensor s){
+
+    public void addSensor(Sensor s) {
         this.sens.add(s);
     }
-    
+
     /**
      * Notifies observers every 30 seconds
      */
@@ -117,35 +128,41 @@ public class Monitor implements Observer, Observable{
             public void run() {
                 newStatistic();
             }
-        }, 1*10000, 1 * 10000);
+        }, 1 * 10000, 1 * 10000);
     }
-    
-    public void newStatistic(){
+
+    public void newStatistic() {
         double metric1 = 0;
         double metric2 = 0;
-        
-        for (Sensor sen : this.sens) {
-            
-            if(sen.getName().equals("CPU")){
-                metric1 = sen.getLogValue();
-            }else{metric2 = sen.getLogValue();} 
+        for (Container cont : this.conts) {
+            for (Sensor sen : this.sens) {
+                if (sen.getContID().equals(cont.id())) {
+
+                    if (sen.getName().equals("CPU")) {
+                        metric1 = sen.getLogValue();
+                    } else {
+                        metric2 = sen.getLogValue();
+                    }
+                }
+            }this.stats.newStatistic(this.serv.getServName(), cont.id(), metric2, metric1);
         }
-        this.stats.newStatistic(metric2, metric1);
         notifyObservers();
-        System.out.println("\n New Stat log from "+ this.serv.getServName() + " Memory " + metric2 +" CPU "+ metric1);
+        System.out.println("\n New Stat log from " + this.serv.getServName() + " Memory " + metric2 + " CPU " + metric1);
     }
-    
-    public int getID(){
-    return this.ID;
+
+    public int getID() {
+        return this.ID;
     }
 
     @Override
     public void notifyObservers() {
-        
+        obs.forEach((ob) -> {
+            ob.update();
+        });
     }
 
     @Override
-    public void setObbservable(Observable obb) {
+    public void setObservable(Observable obb) {
         obb.addObserver(this);
     }
 
@@ -161,5 +178,4 @@ public class Monitor implements Observer, Observable{
         this.serv = serv;
     }
 
-    
 }
