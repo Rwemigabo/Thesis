@@ -19,7 +19,7 @@ public class CPU extends ContextElement{
     private long prevSystem;
     private long systemUsage;
     private CpuStats cpu;
-    private CpuStats pcpu;
+    //private CpuStats pcpu;
     //private PreCpu pcpu;
     
     public CPU(double upper, double lower, String name, CpuStats cpu, CpuStats precpu) {

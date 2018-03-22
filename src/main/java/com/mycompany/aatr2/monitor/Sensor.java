@@ -12,7 +12,7 @@ import com.spotify.docker.client.messages.CpuStats;
 import com.spotify.docker.client.messages.MemoryStats;
 import java.util.ArrayList;
 import com.mycompany.aatr2.Observer;
-import com.spotify.docker.client.messages.NetworkStats;
+//import com.spotify.docker.client.messages.NetworkStats;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -32,27 +32,27 @@ public class Sensor extends Thread implements Observable {
     private ContextElement property = null;
     private String name;
     private CpuStats cpu;
-    private CpuStats pcpu;
+    //private CpuStats pcpu;
     private MemoryStats mem;
-    private NetworkStats net;
+    //private NetworkStats net;
     private final String contID;
     private double cpuPerc;
     private double free;
     private final DockerManager dm = DockerManager.getInstance();
     private final String contNm;
-    private double minimum;
-    private double maximum;
-    private long uptime;
+//    private double minimum;
+//    private double maximum;
+//    private long uptime;
 
     public Sensor(int ID, String context, double min, double max, String cid) {
         this.sensId = ID;
         this.name = context;
-        this.maximum = max;
-        this.minimum = min;
+//        this.maximum = max;
+//        this.minimum = min;
         this.contID = cid;
         this.property = new ContextElement(max, min, context);
         this.contNm = dm.getContainer(cid).image();
-        uptime = dm.getContainer(cid).created();
+//        uptime = dm.getContainer(cid).created();
     }
 
     /**
@@ -62,7 +62,7 @@ public class Sensor extends Thread implements Observable {
      * @throws InterruptedException
      */
     public void watchCPU() throws DockerException, InterruptedException {
-        this.net = dm.getContainerStats(contID).network();
+//        this.net = dm.getContainerStats(contID).network();
         this.cpu = dm.getContainerStats(this.contID).cpuStats();
 
         if (dm.getContainer(this.contID).state().contains("running")) {

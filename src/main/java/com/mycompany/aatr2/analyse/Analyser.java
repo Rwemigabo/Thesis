@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 
 /**
- *
+ * Analyze class performs an analysis on the data received from the monitor
  * @author eric
  */
 public class Analyser implements Observable, Observer{
@@ -21,7 +21,7 @@ public class Analyser implements Observable, Observer{
     private final int anId;
     private final ArrayList<Observer> obs;
     private final ArrayList<Monitor> obvle;
-    private ArrayList<StatisticsLog> logs;
+    private final ArrayList<StatisticsLog> logs;
     
     public Analyser(int id) {
         this.anId = id;
@@ -61,7 +61,8 @@ public class Analyser implements Observable, Observer{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public synchronized void update() {
         
         obvle.forEach((obv)->{

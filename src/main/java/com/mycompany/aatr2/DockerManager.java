@@ -69,7 +69,7 @@ public class DockerManager {
         MonitorManager mm = MonitorManager.getInstance();
 
         for (Container cont : containers) {
-            List<String> temp = new ArrayList();
+            List<String> temp = new ArrayList<String>();
             appServices.forEach((service) -> {
                 temp.add(service.getServName());
             });
@@ -119,7 +119,7 @@ public class DockerManager {
      */
     public Cluster newService(String img) {
         Cluster serv = new Cluster(img);
-        List<String> temp = new ArrayList();
+        List<String> temp = new ArrayList<String>();
         appServices.forEach((service) -> {
             temp.add(service.getServName());
         });

@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class MonitorManager {
 
     private final ArrayList<Monitor> monitors = new ArrayList<>();
-    private final SensorManager sm;
+    //private final SensorManager sm;
 
     private static final MonitorManager inst = new MonitorManager();
 
     private MonitorManager() {
-        sm = SensorManager.getInstance();
+        //sm = SensorManager.getInstance();
     }
 
     public static MonitorManager getInstance() {
@@ -38,7 +38,7 @@ public class MonitorManager {
      * @throws java.lang.InterruptedException
      */
     public void newMonitor(Cluster s) throws DockerException, InterruptedException {
-        DockerManager dm = DockerManager.getInstance();
+        //DockerManager dm = DockerManager.getInstance();
         int newID = monitors.size() + 1;
         Monitor mon = new Monitor(newID, s);
         monitors.add(mon);

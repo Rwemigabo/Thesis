@@ -47,6 +47,14 @@ public class Statistic {
     public Timestamp getTimestamp() {
         return this.date;
     }
+
+	public String getServiceName() {
+		return servicenm;
+	}
+
+	public String getContainerID() {
+		return containerID;
+	}
     
     
 }
