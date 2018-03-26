@@ -11,9 +11,11 @@ import com.mycompany.aatr2.monitor.Monitor;
 import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
+import net.sourceforge.jFuzzyLogic.FIS;
 
 /**
  * Analyze class performs an analysis on the data received from the monitor
+ * a thread is created for each of the services in order to perform an analysis on the data recorded on that service
  * @author eric
  */
 public class Analyser implements Observable, Observer{
@@ -29,6 +31,35 @@ public class Analyser implements Observable, Observer{
         this.logs = new ArrayList<>();
         this.obvle = new ArrayList<>();
     }
+    
+    /**
+     * Takes the average memory and cup statistics for a service and uses fuzzy logic analysis 
+     * to estimate the containers needed to optimize the service
+     * @param avrcpu
+     * @param avrmem
+     */
+    public void analyseService(double avrcpu, double avrmem) {
+    	String fileName = "./SystAnalysis.fcl";
+        FIS fis = FIS.load(fileName,true);
+        
+        if( fis == null ) { 
+            System.err.println("Can't load file: '" + fileName + "'");
+            return;
+        }
+        
+     // Show 
+        //JFuzzyChart.get().chart(functionBlock);
+        
+     // Set inputs
+        fis.setVariable("CPU_load", avrcpu);
+        fis.setVariable("food", avrmem);
+        
+     // Evaluate
+        fis.evaluate();
+        
+    }
+    
+    
     
     /**
      * Get the value of anId
