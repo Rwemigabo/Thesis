@@ -7,7 +7,6 @@ package com.mycompany.aatr2;
 
 
 import com.mycompany.aatr2.analyse.Analyser;
-
 import java.util.ArrayList;
 
 /**
@@ -25,16 +24,19 @@ public class AnalyseManager {
     }
     
     private AnalyseManager(){
+    	
+    }
     
+    public void newAnalyser(){
+        int newID = analysers.size() + 1;
+        Analyser ana = new Analyser(newID);
+        analysers.add(ana);
+
     }
 
     public ArrayList<Analyser> getAnalysers() {
         return analysers;
     }
-
-    public static AnalyseManager getInst() {
-        return inst;
-    }  
 
 
 }

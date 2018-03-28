@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class StatisticsLog {
 
-    private final ArrayList<Statistic> monitorstats;
+    private ArrayList<Statistic> monitorstats;
     private final String service;
 
     public StatisticsLog(String snm) {
@@ -26,7 +26,7 @@ public class StatisticsLog {
         return monitorstats;
     }
 
-    public String getService() {
+    public String getServiceName() {
         return service;
     }
 
@@ -51,6 +51,10 @@ public class StatisticsLog {
     public void newStatistic(String snme, String contid, double mem, double cpu) {
         Statistic s = new Statistic(snme, contid, cpu, mem);
         this.monitorstats.add(s);
+    }
+    
+    public void setMonitorStats(ArrayList<Statistic> stats) {
+    	this.monitorstats = stats;
     }
 
 }

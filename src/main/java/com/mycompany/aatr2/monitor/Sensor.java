@@ -43,7 +43,15 @@ public class Sensor extends Thread implements Observable {
 //    private double minimum;
 //    private double maximum;
 //    private long uptime;
-
+    
+    /**
+     * 
+     * @param ID sensor's id
+     * @param context what is being monitored (CPU/ memory)
+     * @param min min threshold
+     * @param max max threshold
+     * @param cid container name
+     */
     public Sensor(int ID, String context, double min, double max, String cid) {
         this.sensId = ID;
         this.name = context;
@@ -76,6 +84,10 @@ public class Sensor extends Thread implements Observable {
         }
     }
 
+    /**
+     * 
+     * @return container's id
+     */
     public String getContID() {
         return contID;
     }
@@ -143,8 +155,10 @@ public class Sensor extends Thread implements Observable {
     public void checkThreshold(final double metric, final String cont) {
         if (metric > this.property.getThreshold().getUpperBound() || metric < this.property.getThreshold().getLowerBound()) {
             System.out.print("\n Notifying monitor of container " + cont + " " + this.property.getName() + " " + metric + "%");
-            notifyObservers(metric);
+            //notifyObservers(metric);
+            notifyObservers();
         } else {
+        	//System.out.print("");
         }
 
     }
@@ -227,7 +241,9 @@ public class Sensor extends Thread implements Observable {
 
     @Override
     public void notifyObservers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	 obs.forEach((ob) -> {
+             ob.update();
+         });
     }
 
 }

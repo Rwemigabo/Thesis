@@ -32,7 +32,7 @@ public class MonitorManager {
     }
 
     /**
-     *New Monitor created for a container with
+     *New Monitor created for a service with
      * @param s the service going to be monitored
      * @throws com.spotify.docker.client.exceptions.DockerException
      * @throws java.lang.InterruptedException
