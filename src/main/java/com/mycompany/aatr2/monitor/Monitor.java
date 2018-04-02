@@ -5,12 +5,15 @@
  */
 package com.mycompany.aatr2.monitor;
 
+//import com.mycompany.aatr2.DockerManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
 import com.mycompany.aatr2.SensorManager;
 import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.Container;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -30,6 +33,9 @@ public class Monitor implements Observer, Observable {
 	private final ArrayList<Observer> obs;
 	private final List<Container> conts;
 	private Cluster service;
+	private SensorManager sm = SensorManager.getInstance();
+	//private DockerManager dm = DockerManager.getInstance();
+	
 
 	/**
 	 *
@@ -46,7 +52,7 @@ public class Monitor implements Observer, Observable {
 		this.obs = new ArrayList<>();
 		this.conts = this.service.getContainers();
 		this.stats = new ArrayList<>();
-		initiate();
+		
 	}
 	
 	/**
@@ -57,8 +63,7 @@ public class Monitor implements Observer, Observable {
 	 * @throws DockerException
 	 * @throws InterruptedException
 	 */
-	private void initiate() throws DockerException, InterruptedException {
-		SensorManager sm = SensorManager.getInstance();
+	public void initiate() throws DockerException, InterruptedException {
 		for (Container container : conts) {
 			
 			StatisticsLog sl = new StatisticsLog(service.getServName() + " " + container.id());
@@ -70,7 +75,7 @@ public class Monitor implements Observer, Observable {
 				startMonitoring(container.id());
 				scheduleNotification();
 			} else {
-				System.out.print("Sorry container state " + container.state());
+				System.out.print("\n Sorry container state: " + container.state());
 			}
 		}
 	}
@@ -160,11 +165,11 @@ public class Monitor implements Observer, Observable {
 	public void newStatistic() {
 		double metric1 = 0;
 		double metric2 = 0;
-		for (Container cont : this.conts) {
+		for (Container cont : conts) {
 			String cid = cont.id();
 			StatisticsLog sl = null;
 			for(StatisticsLog log: stats){
-				if(log.getServiceName().equals(cid)) {
+				if(log.getServiceName().contains(cid)) {
 					sl = log;
 					break;
 				}

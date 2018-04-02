@@ -5,8 +5,8 @@
  */
 package com.mycompany.aatr2;
 
-import com.mycompany.aatr2.monitor.Monitor;
 import com.mycompany.aatr2.monitor.Cluster;
+import com.mycompany.aatr2.monitor.Monitor;
 import com.spotify.docker.client.exceptions.DockerException;
 import java.util.ArrayList;
 
@@ -37,10 +37,11 @@ public class MonitorManager {
      * @throws com.spotify.docker.client.exceptions.DockerException
      * @throws java.lang.InterruptedException
      */
-    public void newMonitor(Cluster s) throws DockerException, InterruptedException {
+    public void newMonitor(Cluster serv) throws DockerException, InterruptedException {
         //DockerManager dm = DockerManager.getInstance();
         int newID = monitors.size() + 1;
-        Monitor mon = new Monitor(newID, s);
+        Monitor mon = new Monitor(newID, serv);
+        mon.initiate();
         monitors.add(mon);
 //        mon.addSensor(this.sm.newSensor("CPU",  0.00, 75.00, ID));
 //        mon.addSensor(this.sm.newSensor("Memory", 0, 5, ID));

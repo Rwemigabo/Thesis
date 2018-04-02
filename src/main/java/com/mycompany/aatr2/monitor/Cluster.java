@@ -7,7 +7,6 @@ package com.mycompany.aatr2.monitor;
 
 import com.spotify.docker.client.messages.Container;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public class Cluster {
      }
 
     public List<Container> getContainers() {
-        return Collections.unmodifiableList(containers);
+        return this.containers;
     }
 
     public String getServName() {
@@ -32,7 +31,11 @@ public class Cluster {
     }
 
     public void addContainer(Container container) {
-        this.containers.add(container);
+    	if(!this.containers.contains(container)) {
+    		this.containers.add(container);
+        }else {
+        	System.out.println("container already exists");
+        }
     }
 
     public void setServName(String servName) {

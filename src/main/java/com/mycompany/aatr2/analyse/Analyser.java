@@ -23,7 +23,7 @@ public class Analyser implements Observable, Observer {
 
 	private final int anId;
 	private final ArrayList<Observer> obs;
-	// private final ArrayList<Monitor> obvle;
+	//private Observable obvle = null;
 	private final ArrayList<StatisticsLog> logs;
 
 	public Analyser(int id) {
