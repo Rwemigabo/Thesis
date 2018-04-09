@@ -72,13 +72,17 @@ public class DockerManager {
 		return null;
 	}
 
-	private void createMonitors() throws DockerException, InterruptedException {
+	private void newMapeLoop() throws DockerException, InterruptedException {
 		MonitorManager mm = MonitorManager.getInstance();
 		AnalyseManager am = AnalyseManager.getInstance();
+		PlanManager pm = PlanManager.getInstance();
+		ExecuteManager em = ExecuteManager.getInstance();
 		defineServices();
 		for (Cluster serv : appServices) {
 			mm.newMonitor(serv);
-			am.newAnalyser();
+			am.newAnalyser(serv);
+			pm.newPlanManager(serv);
+			em.newExecutionManager(serv);
 		}
 	}
 
@@ -173,19 +177,24 @@ public class DockerManager {
 		try {
 			instance = new DockerManager();
 			instance.repopulateContainersList();
-			instance.createMonitors();
+			instance.newMapeLoop();
 		} catch (DockerCertificateException | DockerException | InterruptedException ex) {
 			Logger.getLogger(DockerManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 	}
-
+/**
+ * return the specified cluster
+ * @param serv
+ * @return
+ */
 	public Cluster getCluster(String serv) {
 		for (Cluster c : appServices) {
 			if (c.getServName().equals(serv)) {
 				return c;
 			}
 			break;
+			
 		}
 		return null;
 	}

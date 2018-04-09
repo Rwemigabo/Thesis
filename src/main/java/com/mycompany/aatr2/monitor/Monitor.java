@@ -20,10 +20,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * TBD monitor/ notify other monitor instances
+ * Capture and record new statistics to the database every set
+ * number of minutes or seconds.
  *
- * @author eric Capture and record new statistics to the database every set
- *         number of minutes or seconds.
+ * @author eric 
  */
 public class Monitor implements Observer, Observable {
 
@@ -77,7 +77,7 @@ public class Monitor implements Observer, Observable {
 			} else {
 				System.out.print("\n Sorry container state: " + container.state());
 			}
-		}
+		}this.service.setLogs(this.stats);
 	}
 
 	@Override
@@ -90,22 +90,17 @@ public class Monitor implements Observer, Observable {
 	public synchronized void update(String context, double metric) {
 		double metric2 = 0;
 		for (Sensor sen : sens) {
-			String cont = sen.getContID();
-			StatisticsLog sl = null;
-			for(StatisticsLog log: stats){
-				if(log.getServiceName().equals(cont)) {
-					sl = log;
-					break;
-				}
-			}
+			String servId = this.service.getServName();
 			if (!sen.sensorContext().equals(context)) {
 				metric2 = sen.getLogValue();
 			}
 			if (context.equals("CPU")) {
-				sl.newStatistic(this.service.getServName(), sen.getContID(), metric, metric2);
+				this.service.addStat(servId, metric, metric2);
+				//sl.newStatistic(this.service.getServName(), sen.getContID(), metric, metric2);
 
 			} else {
-				sl.newStatistic(this.service.getServName(), sen.getContID(), metric2, metric);
+				this.service.addStat(servId, metric2, metric);
+				//sl.newStatistic(this.service.getServName(), sen.getContID(), metric2, metric);
 			}
 			
 		}notifyObservers();
@@ -165,15 +160,17 @@ public class Monitor implements Observer, Observable {
 	public void newStatistic() {
 		double metric1 = 0;
 		double metric2 = 0;
-		for (Container cont : conts) {
-			String cid = cont.id();
-			StatisticsLog sl = null;
-			for(StatisticsLog log: stats){
-				if(log.getServiceName().contains(cid)) {
-					sl = log;
-					break;
-				}
-			}
+		for (Container cont : this.service.getContainers()) {
+			//String cid = cont.id();
+			//StatisticsLog sl = null;
+			//get the container's statistics log
+//			for(StatisticsLog log: stats){
+//				if(log.getServiceName().contains(cid)) {
+//					sl = log;
+//					break;
+//				}
+//			}
+			// assign the metrics gotten from the sensors
 			for (Sensor sen : this.sens) {
 				if (sen.getContID().equals(cont.id())) {
 
@@ -184,7 +181,9 @@ public class Monitor implements Observer, Observable {
 					}
 				}
 			}
-			sl.newStatistic(this.service.getServName(), cont.id(), metric2, metric1);
+			//create new stat and add it to the container's log
+			
+			this.service.addStat(this.service.getServName(), metric2, metric1);
 		}
 		notifyObservers();
 		System.out

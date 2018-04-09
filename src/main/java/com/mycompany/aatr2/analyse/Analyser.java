@@ -5,11 +5,15 @@
  */
 package com.mycompany.aatr2.analyse;
 
+//import com.mycompany.aatr2.MonitorManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
-import com.mycompany.aatr2.monitor.data.Statistic;
-import com.mycompany.aatr2.monitor.data.StatisticsLog;
+import com.mycompany.aatr2.monitor.Cluster;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import net.sourceforge.jFuzzyLogic.FIS;
 
 /**
@@ -23,14 +27,22 @@ public class Analyser implements Observable, Observer {
 
 	private final int anId;
 	private final ArrayList<Observer> obs;
-	//private Observable obvle = null;
-	private final ArrayList<StatisticsLog> logs;
+	// private Observable obvle = null;
+	// private ArrayList<StatisticsLog> logs = new ArrayList<>();
+	private Cluster clst;
+	// private MonitorManager mm;
+	//private Timestamp waittime = null;
+	private static final long THIRTY_MINUTES = 30 * 60 * 1000;
 
-	public Analyser(int id) {
+	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+
+	public Analyser(int id, Cluster c) {
 		this.anId = id;
 		this.obs = new ArrayList<>();
-		this.logs = new ArrayList<>();
+		this.clst = c;
 		// this.obvle = new ArrayList<>();
+
+		// this.mm = MonitorManager.getInstance();
 	}
 
 	/**
@@ -40,7 +52,7 @@ public class Analyser implements Observable, Observer {
 	 * @param avrcpu
 	 * @param avrmem
 	 */
-	public void diagnoseService(double avrcpu, double avrmem) {
+	public void diagnose(double cpugrad, double memgrad) {
 		String fileName = "./SystAnalysis.fcl";
 		FIS fis = FIS.load(fileName, true);
 
@@ -53,18 +65,19 @@ public class Analyser implements Observable, Observer {
 		// JFuzzyChart.get().chart(functionBlock);
 
 		// Set inputs
-		fis.setVariable("CPU_load", avrcpu);
-		fis.setVariable("food", avrmem);
+		fis.setVariable("CPU_load", cpugrad);
+		fis.setVariable("food", memgrad);
 
 		// Evaluate
 		fis.evaluate();
 
 	}
-
+	
 	/**
-	 * perform analysis on 'historical data'
+	 * perform analysis on data for the given time window
 	 */
-	public void analyseHistory(ArrayList<Statistic> stats) {
+	public void runAnalysis(HashMap<Timestamp, Double> cpu, HashMap<Timestamp, Double> mem) {
+		
 
 	}
 
@@ -101,11 +114,9 @@ public class Analyser implements Observable, Observer {
 	}
 
 	@Override
-	public synchronized void update() {
 
-		logs.forEach((stat) -> {
-			
-		});
+	public synchronized void update() {
+		windowCheck();
 	}
 
 	@Override
@@ -117,6 +128,34 @@ public class Analyser implements Observable, Observer {
 	@Override
 	public void setObservable(Observable ob) {
 		ob.addObserver(this);
+	}
+
+	/**
+	 * call either short term or long term analysis based on the time passed between
+	 * the last analysis/ checkpoint and this current statistic's timestamp.
+	 */
+	public void windowCheck() {
+		clst.getLogs().forEach((log) -> {
+			if (log != null) {
+				Timestamp latest = log.getLatest().getTimestamp();
+				Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
+				Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
+				
+				long m_window = System.currentTimeMillis() - log.getminCheckpoint();
+				long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
+				
+				if (m_window > THIRTY_MINUTES) {
+					runAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
+					log.setminCheckpoint(latest.getTime());
+				}else {}
+				if (h_window > THIRTY_MINUTES * 2) {
+					runAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
+					log.setHrCheckpoint(latest.getTime());
+				}else {
+					//check critical values (Reactive analysis)
+				}
+			}else {System.out.println("\n No logs found ");}
+		});
 	}
 
 }

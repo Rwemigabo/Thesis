@@ -40,9 +40,6 @@ public class Sensor extends Thread implements Observable {
 	private double free;
 	private final DockerManager dm = DockerManager.getInstance();
 	private final String contNm;
-	// private double minimum;
-	// private double maximum;
-	// private long uptime;
 
 	/**
 	 * 
@@ -60,12 +57,9 @@ public class Sensor extends Thread implements Observable {
 	public Sensor(int ID, String context, double min, double max, String cid) {
 		this.sensId = ID;
 		this.name = context;
-		// this.maximum = max;
-		// this.minimum = min;
 		this.contID = cid;
 		this.property = new ContextElement(max, min, context);
 		this.contNm = dm.getContainer(cid).image();
-		// uptime = dm.getContainer(cid).created();
 	}
 
 	/**
@@ -75,7 +69,6 @@ public class Sensor extends Thread implements Observable {
 	 * @throws InterruptedException
 	 */
 	public void watchCPU() throws DockerException, InterruptedException {
-		// this.net = dm.getContainerStats(contID).network();
 		this.cpu = dm.getContainerStats(this.contID).cpuStats();
 
 		if (dm.getContainer(this.contID).state().contains("running")) {
@@ -84,7 +77,6 @@ public class Sensor extends Thread implements Observable {
 					dm.getContainerStats(this.contID).precpuStats().systemCpuUsage(),
 					cpu.cpuUsage().percpuUsage().size());
 			checkThreshold(this.cpuPerc, contNm);
-			// System.gc();
 
 		}
 	}

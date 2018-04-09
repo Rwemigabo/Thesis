@@ -5,10 +5,28 @@
  */
 package com.mycompany.aatr2;
 
+import com.mycompany.aatr2.monitor.Cluster;
+
 /**
  *Manages the various execute processes
  * @author eric
  */
 public class ExecuteManager {
+
+	private static final ExecuteManager inst = new ExecuteManager();
+	
+	
+	public ExecuteManager() {
+		
+	}
+	
+	public static ExecuteManager getInstance() {
+		return inst;
+	}
+
+	public void newExecutionManager(Cluster serv) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

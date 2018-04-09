@@ -5,17 +5,19 @@
  */
 package com.mycompany.aatr2.monitor;
 
+import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.messages.Container;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Creates a service object with the containers that make up the functionality of the service
+ *  Creates a cluster object with the containers that make up the functionality of a service
  * @author eric
  */
 public class Cluster {
      private final List<Container> containers;
      private String servName;
+     private ArrayList<StatisticsLog> logs = new ArrayList<>();
      
      public Cluster(String name){
          this.servName = name;
@@ -37,11 +39,44 @@ public class Cluster {
         	System.out.println("container already exists");
         }
     }
+    
+    public void addStat(String cid, double mem, double cpu) {
+    	for(StatisticsLog log: logs){
+			if(log.getServiceName().contains(cid)) {
+				log.newStatistic(this.servName, cid, mem, cpu);;
+				break;
+			}
+		}
+    }
 
     public void setServName(String servName) {
         this.servName = servName;
     }
     
+    public void setLogs(ArrayList<StatisticsLog> nlogs) {
+    	this.logs = nlogs;
+    }
+
+	public ArrayList<StatisticsLog> getLogs() {
+		return logs;
+	}
+	
+	public StatisticsLog getLog(String sname) {
+		for (StatisticsLog sl: logs) {
+			if(sl.getServiceName().equals(sname)) {
+				return sl;
+			}
+			break;
+		}return null;
+	}
+    
+    public boolean exists(Container c) {
+    	if(containers.contains(c)) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+    }
     
      
 }

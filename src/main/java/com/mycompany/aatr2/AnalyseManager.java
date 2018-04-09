@@ -7,6 +7,8 @@ package com.mycompany.aatr2;
 
 
 import com.mycompany.aatr2.analyse.Analyser;
+import com.mycompany.aatr2.monitor.Cluster;
+
 import java.util.ArrayList;
 
 /**
@@ -27,9 +29,9 @@ public class AnalyseManager {
     	
     }
     
-    public void newAnalyser(){
+    public void newAnalyser(Cluster c){
         int newID = analysers.size() + 1;
-        Analyser ana = new Analyser(newID);
+        Analyser ana = new Analyser(newID, c);
         analysers.add(ana);
 
     }
