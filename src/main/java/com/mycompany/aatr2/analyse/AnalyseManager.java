@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.aatr2;
+package com.mycompany.aatr2.analyse;
 
 
-import com.mycompany.aatr2.analyse.Analyser;
 import com.mycompany.aatr2.monitor.Cluster;
 
 import java.util.ArrayList;

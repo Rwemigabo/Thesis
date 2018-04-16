@@ -28,5 +28,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jFuzzyLogic.jar"/>
+	<classpathentry kind="lib" path="lib/flanagan.jar" sourcepath="lib/flanagan.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.aatr2;
+package com.mycompany.aatr2.monitor;
 
-import com.mycompany.aatr2.monitor.Cluster;
-import com.mycompany.aatr2.monitor.Monitor;
 import com.spotify.docker.client.exceptions.DockerException;
 import java.util.ArrayList;
 

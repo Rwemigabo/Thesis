@@ -5,7 +5,9 @@
  */
 package com.mycompany.aatr2;
 
+import com.mycompany.aatr2.analyse.AnalyseManager;
 import com.mycompany.aatr2.monitor.Cluster;
+import com.mycompany.aatr2.monitor.MonitorManager;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
