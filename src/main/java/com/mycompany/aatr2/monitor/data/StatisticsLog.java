@@ -65,17 +65,18 @@ public class StatisticsLog {
 	}
 
 	public Statistic getLatest() {
+		System.out.println("\n Queue size : " + queue.size()+" for "+container );
 		Statistic s = null;
 		if (this.queue.size() > 0) {
 			s = this.queue.get(0);
-			this.queue.remove(0);
-
 		} else {
-			System.out.println("\n Nothing in the queue : " +container );
 		}
 		return s;
 	}
 
+	public void removeProcessed() {
+		this.queue.remove(0);
+	}
 	/*
 	 * returns cpu stats between the given timestamps.
 	 */

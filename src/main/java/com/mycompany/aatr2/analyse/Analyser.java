@@ -190,13 +190,15 @@ public class Analyser implements Observable, Observer {
 	 */
 	public void windowCheck() {
 		cluster.getLogs().forEach((log) -> {
+			
 			if (log != null) {
-				if (log.getminCheckpoint() == 0) {
+				System.out.println("Number of stats :"+ log.getMonitorstats().size());
+				System.out.println("Checking window");
+				if (log.getminCheckpoint() == 0) {// if it's the first value to be recorded
 					log.setminCheckpoint(System.currentTimeMillis());
 					log.setHrCheckpoint(System.currentTimeMillis());
 				} else {
-					System.out.println("Checking window");
-					if (log.getLatest() != null) {
+						System.out.println("latest log" + log.getLatest());
 						Timestamp latest = log.getLatest().getTimestamp();
 						Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
 						Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
@@ -225,10 +227,11 @@ public class Analyser implements Observable, Observer {
 						} else {
 							// check critical values (Reactive analysis)
 						}
+						log.removeProcessed();
 						// }
-					} else {
-						System.out.println("\n No new values ");
-					}
+//					} else {
+//						System.out.println("\n No new values ");
+//					}
 
 				}
 
