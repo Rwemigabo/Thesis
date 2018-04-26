@@ -17,7 +17,14 @@ public class Statistic {
     //private final int BIO;
     //private final int network;
     private final Timestamp date;
+    private boolean SLO;
     
+    /**
+     * @param snme
+     * @param cid
+     * @param setcpu
+     * @param setmemory
+     */
     public Statistic(String snme, String cid, double setcpu, double setmemory){
         this.cpu = setcpu;
         //this.BIO = setBIO;
@@ -27,6 +34,7 @@ public class Statistic {
         this.containerID = cid;
         this.servicenm = snme;
     }
+
 
     public double getCpu(){
         return this.cpu;
@@ -55,6 +63,16 @@ public class Statistic {
 	public String getContainerID() {
 		return containerID;
 	}
+
+	public boolean isSLO() {
+		return SLO;
+	}
+
+	public void setSLO(boolean sLO) {
+		SLO = sLO;
+		
+	}
+	
     
     
 }

@@ -6,8 +6,10 @@
 package com.mycompany.aatr2;
 
 import com.mycompany.aatr2.analyse.AnalyseManager;
+import com.mycompany.aatr2.execute.ExecuteManager;
 import com.mycompany.aatr2.monitor.Cluster;
 import com.mycompany.aatr2.monitor.MonitorManager;
+import com.mycompany.aatr2.plan.PlanManager;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -56,10 +58,10 @@ public class DockerManager {
 	public void repopulateContainersList() throws DockerException, InterruptedException {
 		this.containers = cli.listContainers();
 	}
-	
+
 	public void refreshContainersList() throws DockerException, InterruptedException {
-		for (Container cont: cli.listContainers()) {
-			if(!this.containers.contains(cont)) {
+		for (Container cont : cli.listContainers()) {
+			if (!this.containers.contains(cont)) {
 				containers.add(cont);
 			}
 		}
@@ -80,6 +82,7 @@ public class DockerManager {
 		PlanManager pm = PlanManager.getInstance();
 		ExecuteManager em = ExecuteManager.getInstance();
 		defineServices();
+		System.out.println("Service count: " + appServices.size());
 		for (Cluster serv : appServices) {
 			mm.newMonitor(serv);
 			am.newAnalyser(serv);
@@ -96,7 +99,6 @@ public class DockerManager {
 	 */
 	private void defineServices() throws DockerException, InterruptedException {
 		Cluster s;
-
 		for (Container cont : containers) {
 			ArrayList<String> temp = new ArrayList<String>();
 			appServices.forEach((service) -> {
@@ -104,19 +106,19 @@ public class DockerManager {
 			});
 			// if service doesn't exist then create it and add it to the list of services.
 			if (!temp.contains(cont.image())) {
-				System.out.println("\n Creating new service for " + cont.image());
+				// System.out.println("\n Creating new service for " + cont.image());
 				s = newService(cont.image());
 				s.addContainer(cont);
-				if(!this.appServices.contains(s)) {
+				if (!this.appServices.contains(s)) {
 					this.appServices.add(s);
 				}
 				this.monitored.add(s.getServName());
 
 			} else {
-				System.out.println("\n Service exists, adding container");
+				System.out.println("\n Service exists, adding container: " + cont.id());
 				s = getCluster(cont.image());
 				s.addContainer(cont);
-				
+
 			}
 		}
 	}
@@ -185,19 +187,22 @@ public class DockerManager {
 		}
 
 	}
-/**
- * return the specified cluster
- * @param serv
- * @return
- */
+
+	/**
+	 * return the specified cluster
+	 * 
+	 * @param serv
+	 * @return
+	 */
 	public Cluster getCluster(String serv) {
+		Cluster clst = null;
 		for (Cluster c : appServices) {
 			if (c.getServName().equals(serv)) {
-				return c;
+				clst = c;
+				break;
 			}
-			break;
-			
+
 		}
-		return null;
+		return clst;
 	}
 }

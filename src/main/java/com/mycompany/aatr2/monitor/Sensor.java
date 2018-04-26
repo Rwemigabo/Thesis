@@ -78,7 +78,7 @@ public class Sensor extends Thread implements Observable {
 					cpu.cpuUsage().percpuUsage().size());
 			checkThreshold(this.cpuPerc, contNm);
 
-		}
+		}else {System.out.print("Not running anymore");}
 	}
 
 	/**
@@ -105,11 +105,10 @@ public class Sensor extends Thread implements Observable {
 
 	@Override
 	/**
-	 * checks the metric threshold and returns it if it has been crossed.
+	 * checks the current metric every 2 seconds and returns the statistic if the threshold has been crossed.
 	 */
 	public void run() {
 		if (this.name.equals("CPU")) {
-
 			System.out.print("\n Monitoring CPU of conitainer " + contNm);
 			Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
@@ -124,7 +123,6 @@ public class Sensor extends Thread implements Observable {
 				}
 			}, 1, 1 * 2000);
 		} else if (this.name.equals("Memory")) {
-			// this.property = new Memory(this.maximum, this.minimum, this.name, this.mem);
 			System.out.print("\n Monitoring Memory of conitainer " + contNm);
 			Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {

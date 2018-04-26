@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.aatr2;
+package com.mycompany.aatr2.execute;
 
 import com.mycompany.aatr2.monitor.Cluster;
 
 /**
- *Manages the various plan processes
+ *Manages the various execute processes
  * @author eric
  */
-public class PlanManager {
+public class ExecuteManager {
+
+	private static final ExecuteManager inst = new ExecuteManager();
 	
-	private static final PlanManager inst = new PlanManager();
 	
-	
-	public PlanManager() {
+	public ExecuteManager() {
 		
 	}
 	
-	public static PlanManager getInstance() {
+	public static ExecuteManager getInstance() {
 		return inst;
 	}
 
-	public void newPlanManager(Cluster serv) {
+	public void newExecutionManager(Cluster serv) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -15,81 +15,88 @@ import java.util.HashMap;
  */
 public class StatisticsLog {
 
-    private ArrayList<Statistic> monitorstats;
-    private ArrayList<Statistic> queue;
-    private final String service;
-    private long min_checkpoint = 0;
-    private long hr_checkpoint = 0;
+	private ArrayList<Statistic> monitorstats;
+	private ArrayList<Statistic> queue;
+	private final String container;
+	private long min_checkpoint = 0;
+	private long hr_checkpoint = 0;
 
-    public StatisticsLog(String snm) {
-        this.service = snm;
-        this.monitorstats = new ArrayList<>();
-        this.queue = new ArrayList<>();
-    }
+	public StatisticsLog(String snm) {
+		this.container = snm;
+		this.monitorstats = new ArrayList<>();
+		this.queue = new ArrayList<>();
+	}
 
-    public ArrayList<Statistic> getMonitorstats() {
-        return monitorstats;
-    }
+	public ArrayList<Statistic> getMonitorstats() {
+		return monitorstats;
+	}
 
-    public String getServiceName() {
-        return service;
-    }
+	public String getServiceName() {
+		return container;
+	}
 
-    public Statistic getSystemStat(Timestamp time) {
-        for (Statistic stat : monitorstats) {
-            if (stat.getTimestamp().equals(time)) {
-                return stat;
-            }
-        }
-        return null;
-    }
+	public Statistic getSystemStat(Timestamp time) {
+		for (Statistic stat : monitorstats) {
+			if (stat.getTimestamp().equals(time)) {
+				return stat;
+			}
+		}
+		return null;
+	}
 
-    public ArrayList<Statistic> getSystemStats(Timestamp t1, Timestamp t2) {
+	public ArrayList<Statistic> getSystemStats(Timestamp t1, Timestamp t2) {
 
-        ArrayList<Statistic> s = new ArrayList<>();
-        monitorstats.stream().filter((stat) -> (stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2))).forEachOrdered((stat) -> {
-            s.add(stat);
-        });
-        return s;
-    }
-
-    public void newStatistic(String snme, String contid, double mem, double cpu) {
-        Statistic s = new Statistic(snme, contid, cpu, mem);
-        this.monitorstats.add(s);
-        this.queue.add(s);
-    }
-    
-    public void setMonitorStats(ArrayList<Statistic> stats) {
-    	this.monitorstats = stats;
-    }
-
-	public Statistic getLatest() {
-		Statistic s = queue.get(0);
-		this.queue.remove(0);
+		ArrayList<Statistic> s = new ArrayList<>();
+		monitorstats.stream().filter((stat) -> (stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2)))
+				.forEachOrdered((stat) -> {
+					s.add(stat);
+				});
 		return s;
 	}
-	
+
+	public void newStatistic(String snme, String contid, double mem, double cpu) {
+		Statistic s = new Statistic(snme, contid, cpu, mem);
+		this.queue.add(s);
+		this.monitorstats.add(s);
+	}
+
+	public void setMonitorStats(ArrayList<Statistic> stats) {
+		this.monitorstats = stats;
+	}
+
+	public Statistic getLatest() {
+		Statistic s = null;
+		if (this.queue.size() > 0) {
+			s = this.queue.get(0);
+			this.queue.remove(0);
+
+		} else {
+			System.out.println("\n Nothing in the queue : " +container );
+		}
+		return s;
+	}
+
 	/*
 	 * returns cpu stats between the given timestamps.
 	 */
-	public HashMap<Timestamp, Double> getCPUStats(Timestamp t, Timestamp t1){
+	public HashMap<Timestamp, Double> getCPUStats(Timestamp t, Timestamp t1) {
 		HashMap<Timestamp, Double> cpu1 = new HashMap<>();
-		ArrayList<Statistic> s = getSystemStats(t,t1);
-		for(Statistic stat: s) {
+		ArrayList<Statistic> s = getSystemStats(t, t1);
+		for (Statistic stat : s) {
 			Timestamp t2 = stat.getTimestamp();
 			double c = stat.getCpu();
 			cpu1.put(t2, c);
 		}
 		return cpu1;
 	}
-	
+
 	/*
 	 * returns memory stats between the given timestamps.
 	 */
-	public HashMap<Timestamp, Double> getMemStats(Timestamp t, Timestamp t1){
+	public HashMap<Timestamp, Double> getMemStats(Timestamp t, Timestamp t1) {
 		HashMap<Timestamp, Double> mem = new HashMap<>();
-		ArrayList<Statistic> s = getSystemStats(t,t1);
-		for(Statistic stat: s) {
+		ArrayList<Statistic> s = getSystemStats(t, t1);
+		for (Statistic stat : s) {
 			Timestamp t2 = stat.getTimestamp();
 			double m = stat.getMemory();
 			mem.put(t2, m);
@@ -104,7 +111,7 @@ public class StatisticsLog {
 	public long getminCheckpoint() {
 		return min_checkpoint;
 	}
-    
+
 	public void setHrCheckpoint(long chk) {
 		this.hr_checkpoint = chk;
 	}

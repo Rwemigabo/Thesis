@@ -31,6 +31,7 @@ public class AnalyseManager {
     public void newAnalyser(Cluster c){
         int newID = analysers.size() + 1;
         Analyser ana = new Analyser(newID, c);
+        ana.initiate();
         analysers.add(ana);
 
     }

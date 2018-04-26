@@ -13,29 +13,28 @@ import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.Container;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Capture and record new statistics to the database every set
- * number of minutes or seconds.
+ * Capture and record new statistics to the database every set number of minutes
+ * or seconds.
  *
- * @author eric 
+ * @author eric
  */
 public class Monitor implements Observer, Observable {
 
 	private final ArrayList<StatisticsLog> stats;
+	// private ArrayList<StatisticsLog> statsq;
 	private final int ID;
 	private final ArrayList<Sensor> sens;
 	private final ArrayList<Observer> obs;
 	private final List<Container> conts;
 	private Cluster service;
 	private SensorManager sm = SensorManager.getInstance();
-	//private DockerManager dm = DockerManager.getInstance();
-	
+	// private DockerManager dm = DockerManager.getInstance();
 
 	/**
 	 *
@@ -48,36 +47,37 @@ public class Monitor implements Observer, Observable {
 		this.sens = new ArrayList<>();
 		this.ID = id;
 		this.service = s;
-		//this.stats = new StatisticsLog(serv.getServName());
+		// this.stats = new StatisticsLog(serv.getServName());
 		this.obs = new ArrayList<>();
 		this.conts = this.service.getContainers();
 		this.stats = new ArrayList<>();
-		
+		// this.statsq = new ArrayList<>();
+
 	}
-	
+
 	/**
-	 * for each container;
-	 *  create a new statistics log for it using it's id and the name of the service,
-	 *  add sensors for CPU and Memory
-	 *  start monitoring the container
+	 * for each container; create a new statistics log for it using it's id and the
+	 * name of the service, add sensors for CPU and Memory start monitoring the
+	 * container
+	 * 
 	 * @throws DockerException
 	 * @throws InterruptedException
 	 */
 	public void initiate() throws DockerException, InterruptedException {
 		for (Container container : conts) {
-			
-			StatisticsLog sl = new StatisticsLog(service.getServName() + " " + container.id());
+			StatisticsLog sl = new StatisticsLog(container.id());
 			stats.add(sl);
 			addSensor(sm.newSensor("CPU", 0.00, 75.00, container.id()));
 			addSensor(sm.newSensor("Memory", 0, 5, container.id()));
 			if (container.state() != null && container.state().equals("running")) {
 				System.out.print("\n Accessing sensors to initiate metric watch");
 				startMonitoring(container.id());
-				scheduleNotification();
 			} else {
 				System.out.print("\n Sorry container state: " + container.state());
 			}
-		}this.service.setLogs(this.stats);
+		}
+		this.service.setLogs(this.stats);
+		scheduleNotification();
 	}
 
 	@Override
@@ -96,14 +96,17 @@ public class Monitor implements Observer, Observable {
 			}
 			if (context.equals("CPU")) {
 				this.service.addStat(servId, metric, metric2);
-				//sl.newStatistic(this.service.getServName(), sen.getContID(), metric, metric2);
+				// sl.newStatistic(this.service.getServName(), sen.getContID(), metric,
+				// metric2);
 
 			} else {
 				this.service.addStat(servId, metric2, metric);
-				//sl.newStatistic(this.service.getServName(), sen.getContID(), metric2, metric);
+				// sl.newStatistic(this.service.getServName(), sen.getContID(), metric2,
+				// metric);
 			}
-			
-		}notifyObservers();
+
+		}
+		notifyObservers();
 	}
 
 	@Override
@@ -144,7 +147,7 @@ public class Monitor implements Observer, Observable {
 	}
 
 	/**
-	 * Notifies observers every 30 seconds
+	 * updates the log with a new statistic every x seconds.
 	 */
 	public void scheduleNotification() {
 		Timer timer = new Timer();
@@ -154,26 +157,15 @@ public class Monitor implements Observer, Observable {
 			public void run() {
 				newStatistic();
 			}
-		}, 1 * 10000, 1 * 10000);
+		}, 1 * 5000, 1 * 5000);
 	}
 
 	public void newStatistic() {
 		double metric1 = 0;
 		double metric2 = 0;
-		for (Container cont : this.service.getContainers()) {
-			//String cid = cont.id();
-			//StatisticsLog sl = null;
-			//get the container's statistics log
-//			for(StatisticsLog log: stats){
-//				if(log.getServiceName().contains(cid)) {
-//					sl = log;
-//					break;
-//				}
-//			}
-			// assign the metrics gotten from the sensors
+		for (Container cont : conts) {
 			for (Sensor sen : this.sens) {
 				if (sen.getContID().equals(cont.id())) {
-
 					if (sen.getName().equals("CPU")) {
 						metric1 = sen.getLogValue();
 					} else {
@@ -181,14 +173,20 @@ public class Monitor implements Observer, Observable {
 					}
 				}
 			}
-			//create new stat and add it to the container's log
-			
-			this.service.addStat(this.service.getServName(), metric2, metric1);
+			// create new stat and add it to the container's log
+
+			this.service.addStat(cont.id(), metric2, metric1);
 		}
+		System.out.println(
+				"\n New Stat log from " + this.service.getServName() + " Memory " + metric2 + " CPU " + metric1);
 		notifyObservers();
-		System.out
-				.println("\n New Stat log from " + this.service.getServName() + " Memory " + metric2 + " CPU " + metric1);
+		// setNewStat(true);
 	}
+
+	// private void setNewStat(boolean b) {
+	// TODO Auto-generated method stub
+
+	// }
 
 	public int getID() {
 		return this.ID;

@@ -6,7 +6,8 @@
 package com.mycompany.aatr2.analyse;
 
 /**
- *
+ * this class indicates to what level the Service level objectives are being met
+ * 
  * @author eric
  */
 public class Symptom {

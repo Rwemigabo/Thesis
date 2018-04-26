@@ -1,26 +1,31 @@
+//rule functionality: to make an estimation of how many more containers are needed to handle the rate of increase.
+//					* high increase, 
+
 FUNCTION_BLOCK
 VAR_INPUT
-    CPU_load  :    REAL; (* RANGE(0 .. 100) *) 
-    MEM_load  :  REAL; (* RANGE(0 .. 100) *) 
+    CPU_load_delta  :    REAL; (* RANGE(-100 .. 100) *) 
+    MEM_load_delta  :  REAL; (* RANGE(-100 .. 100) *) 
 END_VAR
 VAR_OUTPUT
-    Aggressiveness : REAL; (* RANGE(0 .. 4) *) 
+    replicas : REAL; (* RANGE(-2 .. 2) *) 
 END_VAR
-FUZZIFY CPU_load
-    TERM low := (0, 0) (0, 1) (50, 0) ;
-    TERM medium := (15, 0) (50, 1) (75, 0) ;
-    TERM high := (50, 0) (100, 1) (100, 0) ;
+FUZZIFY CPU_load_delta
+    TERM low := (-100, 0) (-100, 1) (-75, 0) ;
+    TERM medium := (-25, 0) (-75, 1) (25, 1) (75, 0) ;
+    TERM high := (25, 0) (100, 1) (100, 0);
 END_FUZZIFY
-FUZZIFY MEM_load
-    TERM low := (0, 0) (0, 1) (50, 0) ;
-    TERM medium := (25, 0) (50, 1) (75, 0) ;
-    TERM high := (50, 0) (100, 1) (100, 0) ;
+FUZZIFY MEM_load_delta
+    TERM low := (-100, 0) (-100, 1) (-75, 0) ;
+    TERM medium := (-25, 0) (-75, 1) (25, 1) (75, 0) ;
+    TERM high := (25, 0) (100, 1) (100, 0);
 END_FUZZIFY
 
-DEFUZZIFY Aggressiveness
-	TERM Run_Away := 1 ;
-    TERM Fight_Defensively := 2 ;
-    TERM All_Out_Attack := 3 ;
+DEFUZZIFY replicas
+	TERM doubleup := 2 ;
+	TERM singleup := 1;
+    TERM none := 0 ;
+    TERM singledown := -1;
+    TERM doubledown := -2 ;
     METHOD: COG;
     DEFAULT := 0;
 END_DEFUZZIFY
@@ -28,14 +33,14 @@ RULEBLOCK first
 
 AND:MIN;
 ACCU:MAX;
-RULE 0: IF CPU_load IS low AND MEM_load IS low THEN Aggressiveness IS Fight_Defensively;
-//RULE 1: IF (Our_Health IS Near_Death) AND (Enemy_Health IS Good) THEN (Aggressiveness IS Run_Away);
-//RULE 2: IF (Our_Health IS Near_Death) AND (Enemy_Health IS Excellent) THEN (Aggressiveness IS Run_Away);
-//RULE 3: IF (Our_Health IS Good) AND (Enemy_Health IS Near_Death) THEN (Aggressiveness IS All_Out_Attack);
-//RULE 4: IF (Our_Health IS Good) AND (Enemy_Health IS Good) THEN (Aggressiveness IS Fight_Defensively);
-//RULE 5: IF (Our_Health IS Good) AND (Enemy_Health IS Excellent) THEN (Aggressiveness IS Fight_Defensively);
-//RULE 6: IF (Our_Health IS Excellent) AND (Enemy_Health IS Near_Death) THEN (Aggressiveness IS All_Out_Attack);
-//RULE 7: IF (Our_Health IS Excellent) AND (Enemy_Health IS Good) THEN (Aggressiveness IS All_Out_Attack);
-//RULE 8: IF (Our_Health IS Excellent) AND (Enemy_Health IS Excellent) THEN (Aggressiveness IS Fight_Defensively);
+RULE 0: IF CPU_load_delta IS low AND MEM_load_delta IS low THEN replicas IS doubledown;
+RULE 1: IF MEM_load_delta IS medium AND MEM_load_delta IS medium THEN replicas IS none;
+RULE 2: IF CPU_load_delta IS high AND MEM_load_delta IS high THEN replicas IS doubleup;
+RULE 3: IF CPU_load_delta IS low AND MEM_load_delta IS high THEN replicas IS none;
+RULE 4: IF CPU_load_delta IS high AND MEM_load_delta IS low THEN replicas IS singleup;
+RULE 5: IF CPU_load_delta IS medium AND MEM_load_delta IS low THEN replicas IS singledown;
+RULE 6: IF CPU_load_delta IS low AND MEM_load_delta IS medium THEN replicas IS singledown;
+RULE 7: IF CPU_load_delta IS high AND MEM_load_delta IS medium THEN replicas IS singleup;
+RULE 8: IF CPU_load_delta IS medium AND MEM_load_delta IS high THEN replicas IS singleup;
 END_RULEBLOCK
 END_FUNCTION_BLOCK

@@ -41,27 +41,26 @@ public class MonitorManager {
         Monitor mon = new Monitor(newID, serv);
         mon.initiate();
         monitors.add(mon);
-//        mon.addSensor(this.sm.newSensor("CPU",  0.00, 75.00, ID));
-//        mon.addSensor(this.sm.newSensor("Memory", 0, 5, ID));
-        
-//        if(dm.getContainer(ID).state() != null && dm.getContainer(ID).state().equals("running")){
-//            System.out.print("\n Accessing sensors to initiate metric watch");
-//            startMonitor(newID);
-//        }else{System.out.print("Sorry container state " + dm.getContainer(ID).state());}
     }
 
-//    public void startMonitor(int ID) throws DockerException, InterruptedException {
-//        for (Monitor monitor : monitors) {
-//            if (monitor.getID() == ID) {
-//                monitor.startMonitoring(container.id());
-//            }
-//        }
-//    }
-
-//    public void startMonitors() throws DockerException, InterruptedException {
-//        for (Monitor monitor : monitors) {
-//            monitor.startMonitoring();
-//        }
-//    }
+	public ArrayList<Monitor> getMonitors() {
+		return monitors;
+	}
+    
+	/**
+	 * 
+	 * @param m
+	 * @return monitor belonging to the cluster
+	 */
+    public Monitor getMonitor(Cluster c) {
+    	Monitor mon = null;
+    	for(Monitor m: this.monitors) {
+    		if(m.getService().equals(c)) {
+    			mon = m;
+    			break;
+    		}
+    	}
+		return mon;
+    }
 
 }

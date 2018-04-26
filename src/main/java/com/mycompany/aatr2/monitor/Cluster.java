@@ -18,6 +18,7 @@ public class Cluster {
      private final List<Container> containers;
      private String servName;
      private ArrayList<StatisticsLog> logs = new ArrayList<>();
+     private SLO slo = new SLO();
      
      public Cluster(String name){
          this.servName = name;
@@ -42,10 +43,11 @@ public class Cluster {
     
     public void addStat(String cid, double mem, double cpu) {
     	for(StatisticsLog log: logs){
-			if(log.getServiceName().contains(cid)) {
-				log.newStatistic(this.servName, cid, mem, cpu);;
+			if(log.getServiceName().equals(cid)) {
+				//System.out.println("Found it");
+				log.newStatistic(this.servName, cid, mem, cpu);
 				break;
-			}
+			}else {}
 		}
     }
 
@@ -77,6 +79,15 @@ public class Cluster {
     		return false;
     	}
     }
+
+	public SLO getSlo() {
+		return slo;
+	}
+
+	public void setSlo(SLO slo) {
+		this.slo = slo;
+	}
+    
     
      
 }
