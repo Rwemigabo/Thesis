@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.aatr2.monitor;
+package com.mycompany.aatr2;
 
+import com.mycompany.aatr2.monitor.SLO;
 import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.messages.Container;
 import java.util.ArrayList;

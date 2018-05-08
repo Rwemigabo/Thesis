@@ -7,7 +7,6 @@ package com.mycompany.aatr2;
 
 import com.mycompany.aatr2.analyse.AnalyseManager;
 import com.mycompany.aatr2.execute.ExecuteManager;
-import com.mycompany.aatr2.monitor.Cluster;
 import com.mycompany.aatr2.monitor.MonitorManager;
 import com.mycompany.aatr2.plan.PlanManager;
 import com.spotify.docker.client.DefaultDockerClient;
@@ -176,18 +175,7 @@ public class DockerManager {
 
 		return null;
 	}
-
-	public static void main(String[] args) {
-		try {
-			instance = new DockerManager();
-			instance.repopulateContainersList();
-			instance.newMapeLoop();
-		} catch (DockerCertificateException | DockerException | InterruptedException ex) {
-			Logger.getLogger(DockerManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-	}
-
+	
 	/**
 	 * return the specified cluster
 	 * 
@@ -205,4 +193,16 @@ public class DockerManager {
 		}
 		return clst;
 	}
+
+	public static void main(String[] args) {
+		try {
+			instance = new DockerManager();
+			instance.repopulateContainersList();
+			instance.newMapeLoop();
+		} catch (DockerCertificateException | DockerException | InterruptedException ex) {
+			Logger.getLogger(DockerManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+	}
+
 }

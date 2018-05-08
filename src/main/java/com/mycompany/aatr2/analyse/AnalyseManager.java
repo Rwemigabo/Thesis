@@ -6,9 +6,9 @@
 package com.mycompany.aatr2.analyse;
 
 
-import com.mycompany.aatr2.monitor.Cluster;
-
 import java.util.ArrayList;
+
+import com.mycompany.aatr2.Cluster;
 
 /**
  *

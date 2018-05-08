@@ -47,10 +47,11 @@ public class StatisticsLog {
 	public ArrayList<Statistic> getSystemStats(Timestamp t1, Timestamp t2) {
 
 		ArrayList<Statistic> s = new ArrayList<>();
-		monitorstats.stream().filter((stat) -> (stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2)))
-				.forEachOrdered((stat) -> {
-					s.add(stat);
-				});
+		for(Statistic stat : monitorstats) {
+			if(stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2)) {
+				s.add(stat);
+			}
+		}
 		return s;
 	}
 
@@ -82,7 +83,8 @@ public class StatisticsLog {
 	 */
 	public HashMap<Timestamp, Double> getCPUStats(Timestamp t, Timestamp t1) {
 		HashMap<Timestamp, Double> cpu1 = new HashMap<>();
-		ArrayList<Statistic> s = getSystemStats(t, t1);
+		ArrayList<Statistic> s = getSystemStats(t1, t);
+		System.out.println("Number of statistics between the timestamps: " + s.size());
 		for (Statistic stat : s) {
 			Timestamp t2 = stat.getTimestamp();
 			double c = stat.getCpu();
@@ -96,7 +98,7 @@ public class StatisticsLog {
 	 */
 	public HashMap<Timestamp, Double> getMemStats(Timestamp t, Timestamp t1) {
 		HashMap<Timestamp, Double> mem = new HashMap<>();
-		ArrayList<Statistic> s = getSystemStats(t, t1);
+		ArrayList<Statistic> s = getSystemStats(t1, t);
 		for (Statistic stat : s) {
 			Timestamp t2 = stat.getTimestamp();
 			double m = stat.getMemory();

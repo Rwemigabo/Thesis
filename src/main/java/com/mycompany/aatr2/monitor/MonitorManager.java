@@ -5,6 +5,7 @@
  */
 package com.mycompany.aatr2.monitor;
 
+import com.mycompany.aatr2.Cluster;
 import com.spotify.docker.client.exceptions.DockerException;
 import java.util.ArrayList;
 

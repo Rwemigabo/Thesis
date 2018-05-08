@@ -5,10 +5,10 @@
  */
 package com.mycompany.aatr2.analyse;
 
+import com.mycompany.aatr2.Cluster;
 //import com.mycompany.aatr2.MonitorManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
-import com.mycompany.aatr2.monitor.Cluster;
 import com.mycompany.aatr2.monitor.MonitorManager;
 
 import flanagan.math.Gradient;
@@ -38,7 +38,7 @@ public class Analyser implements Observable, Observer {
 	// private ArrayList<StatisticsLog> logs = new ArrayList<>();
 	private Cluster cluster;
 	private MonitorManager mm;
-	private static final long THIRTY_MINUTES = 2 * 60 * 1000;
+	private static final long THIRTY_MINUTES = 1 * 60 * 1000;
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -63,11 +63,10 @@ public class Analyser implements Observable, Observer {
 	 * @param avrcpu
 	 * @param avrmem
 	 */
-	@SuppressWarnings("null")
 	public void diagnose(double[] cpugrad, double[] memgrad) {
-		String fileName = "./SystAnalysis.fcl";
+		String fileName = "/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/src/main/java/com/mycompany/aatr2/analyse/SystAnalysis.fcl";
 		FIS fis = FIS.load(fileName, true);
-		List<Double> eval = null;
+		List<Double> eval = new ArrayList<Double>();
 
 		if (fis == null) {
 			System.err.println("Can't load file: '" + fileName + "'");
@@ -75,13 +74,16 @@ public class Analyser implements Observable, Observer {
 		}
 
 		// Set inputs and evaluate then create new symptom
-		for (int i = 0; i < cpugrad.length; i++) {
-			for (int x = 0; x < memgrad.length; x++) {
-				fis.setVariable("food", memgrad[x]);
-				fis.setVariable("CPU_load", cpugrad[i]);
+		for (int i=0, x = 0; i < cpugrad.length && x < memgrad.length; i++, x++) {
+			
+			//for (int x = 0; x < memgrad.length; x++) {
+				fis.setVariable("MEM_load_delta", memgrad[x]);
+				fis.setVariable("CPU_load_delta", cpugrad[i]);
 				fis.evaluate();
-				eval.add(fis.getVariable("replicas").getValue());
-			}
+				double result = fis.getVariable("replicas").getValue();
+				eval.add(result);
+				System.out.println("Number of replicas required = " + result);
+			//}
 		}
 
 		double avg = calculateAverage(eval);
@@ -89,13 +91,13 @@ public class Analyser implements Observable, Observer {
 
 	}
 
-	private double calculateAverage(List<Double> marks) {
+	private double calculateAverage(List<Double> results) {
 		double sum = 0;
-		if (!marks.isEmpty()) {
-			for (double mark : marks) {
+		if (!results.isEmpty()) {
+			for (double mark : results) {
 				sum += mark;
 			}
-			return sum / marks.size();
+			return sum / results.size();
 		}
 		return sum;
 	}
@@ -104,15 +106,15 @@ public class Analyser implements Observable, Observer {
 	 * TBD: Add sampling for large arrays of values calculate the gradient of data
 	 * in a given time window
 	 */
-	@SuppressWarnings("null")
+
 	public void runAnalysis(HashMap<Timestamp, Double> cpu, HashMap<Timestamp, Double> mem) {
 		// double previous_entry = 0;
 		Map<Timestamp, Double> c_map = new TreeMap<>(cpu);// order by the timestamp
 		Map<Timestamp, Double> m_map = new TreeMap<>(mem);// order by the timestamp
-		double[] cx = null;
-		double[] cy = null;
-		double[] mx = null;
-		double[] my = null;
+		double[] cx = new double[c_map.size()];
+		double[] cy = new double[c_map.size()];
+		double[] mx = new double[m_map.size()];
+		double[] my = new double[m_map.size()];
 
 		for (Map.Entry<Timestamp, Double> entry : c_map.entrySet()) {
 			for (int i = 0; i < c_map.size(); i++) {
@@ -129,8 +131,10 @@ public class Analyser implements Observable, Observer {
 		Gradient cg = new Gradient(cx, cy);
 		Gradient mg = new Gradient(mx, my);
 
-		double[] cpu_gradients = cg.numDeriv_1D_array();// changes in cpu usage
-		double[] mem_gradients = mg.numDeriv_1D_array();// changes in memory usage
+		double[] cpu_gradients = cg.numDeriv_1D_array();// deltas in cpu usage
+		System.out.println("CPU gradients: " + cpu_gradients.length);
+		double[] mem_gradients = mg.numDeriv_1D_array();// deltas in memory usage
+		System.out.println("Memory gradients: " + mem_gradients.length);
 		diagnose(cpu_gradients, mem_gradients);
 
 	}

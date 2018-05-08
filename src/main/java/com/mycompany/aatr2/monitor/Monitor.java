@@ -5,6 +5,7 @@
  */
 package com.mycompany.aatr2.monitor;
 
+import com.mycompany.aatr2.Cluster;
 //import com.mycompany.aatr2.DockerManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;

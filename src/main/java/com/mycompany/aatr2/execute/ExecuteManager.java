@@ -5,7 +5,7 @@
  */
 package com.mycompany.aatr2.execute;
 
-import com.mycompany.aatr2.monitor.Cluster;
+import com.mycompany.aatr2.Cluster;
 
 /**
  *Manages the various execute processes
