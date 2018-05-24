@@ -30,12 +30,12 @@ import net.sourceforge.jFuzzyLogic.FIS;
  * 
  * @author eric
  */
-public class Analyser implements Observable, Observer {
+public class Analyser implements Observer {
 
 	private final int anId;
-	private final ArrayList<Observer> obs;
+	
 	// private Observable obvle = null;
-	// private ArrayList<StatisticsLog> logs = new ArrayList<>();
+	private ArrayList<Symptom> symplogs = new ArrayList<>();
 	private Cluster cluster;
 	private MonitorManager mm;
 	private static final long THIRTY_MINUTES = 1 * 60 * 1000;
@@ -44,7 +44,7 @@ public class Analyser implements Observable, Observer {
 
 	public Analyser(int id, Cluster c) {
 		this.anId = id;
-		this.obs = new ArrayList<>();
+		
 		this.cluster = c;
 		// this.obvle = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public class Analyser implements Observable, Observer {
 	/**
 	 * Takes a list of the gradients from the cpu and the gradients from the memory
 	 * and uses fuzzy logic analysis to estimate the containers needed to be added
-	 * or removed optimize the service
+	 * or removed to optimize the service
 	 * 
 	 * @param avrcpu
 	 * @param avrmem
@@ -66,7 +66,7 @@ public class Analyser implements Observable, Observer {
 	public void diagnose(double[] cpugrad, double[] memgrad) {
 		String fileName = "/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/src/main/java/com/mycompany/aatr2/analyse/SystAnalysis.fcl";
 		FIS fis = FIS.load(fileName, true);
-		List<Double> eval = new ArrayList<Double>();
+		List<Double> eval = new ArrayList<Double>(); //List of the evaluation results based on the data from the last hour or half hour
 
 		if (fis == null) {
 			System.err.println("Can't load file: '" + fileName + "'");
@@ -86,7 +86,7 @@ public class Analyser implements Observable, Observer {
 			//}
 		}
 
-		double avg = calculateAverage(eval);
+		double avg = calculateAverage(eval); //average of the number of containers to be added or removed
 		System.out.println("Average = " + avg);
 
 	}
@@ -148,29 +148,7 @@ public class Analyser implements Observable, Observer {
 		return anId;
 	}
 
-	@Override
-	public void addObserver(Observer o) {
-		obs.add(o);
-	}
-
-	@Override
-	public void removeObserver(Observer o) {
-		obs.remove(o);
-	}
-
-	@Override
-	public void notifyObservers() {
-		obs.forEach((Observer ob) -> {
-			ob.update();
-		});
-	}
-
-	@Override
-	public void notifyObservers(double metric) {
-		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-																		// Tools | Templates.
-	}
-
+	
 	@Override
 
 	public void update() {
@@ -209,27 +187,25 @@ public class Analyser implements Observable, Observer {
 
 						long m_window = System.currentTimeMillis() - log.getminCheckpoint();
 						long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
-
-						// check that new statistic meets service level objectives and directly report
-						// to the planner if it doesn't else move on
-						// if (log.getLatest().isSLO()) {
-						// TBD a method to check the if last X statistics met the SLO and handle it if
-						// it didn't
-						// } else {
-						// if X mins have passed run short term analysis
-						if (m_window > THIRTY_MINUTES) {
+						
+						if (m_window > THIRTY_MINUTES) {// if X mins have passed run short term analysis
 							System.out.println("\n 30 min window");
 							runAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
 							log.setminCheckpoint(latest.getTime());
 						} else {
 						}
-						// if 2X mins have passed run long term analysis
-						if (h_window > THIRTY_MINUTES * 2) {
+						
+						if (h_window > THIRTY_MINUTES * 2) {// if 2X mins have passed run long term analysis
 							System.out.println("\n 1 hr window");
 							runAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
 							log.setHrCheckpoint(latest.getTime());
 						} else {
-							// check critical values (Reactive analysis)
+							
+							//TBD check critical values (Reactive analysis)
+							//check SLOs are followed using symptom repository method checkSLO()
+							//if not, request adaptation from plan.
+							//NB: consider writing the method in Statistics Log class and call it here.
+							
 						}
 						log.removeProcessed();
 						// }
@@ -245,4 +221,13 @@ public class Analyser implements Observable, Observer {
 		});
 	}
 
+	public ArrayList<Symptom> getSymplogs() {
+		return symplogs;
+	}
+
+	public void setSymplogs(ArrayList<Symptom> symplogs) {
+		this.symplogs = symplogs;
+	}
+
+	
 }

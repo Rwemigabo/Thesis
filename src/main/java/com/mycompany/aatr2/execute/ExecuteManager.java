@@ -5,7 +5,7 @@
  */
 package com.mycompany.aatr2.execute;
 
-import com.mycompany.aatr2.Cluster;
+
 
 /**
  *Manages the various execute processes
@@ -24,7 +24,7 @@ public class ExecuteManager {
 		return inst;
 	}
 
-	public void newExecutionManager(Cluster serv) {
+	public void newExecutionManager() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -6,9 +6,7 @@
 package com.mycompany.aatr2;
 
 import com.mycompany.aatr2.analyse.AnalyseManager;
-import com.mycompany.aatr2.execute.ExecuteManager;
 import com.mycompany.aatr2.monitor.MonitorManager;
-import com.mycompany.aatr2.plan.PlanManager;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -36,6 +34,7 @@ public class DockerManager {
 	private final ArrayList<Cluster> appServices;
 	private List<Container> containers;
 	private final ArrayList<String> monitored;
+	//private List<Topology> topologies;
 
 	private static DockerManager instance;
 
@@ -78,15 +77,14 @@ public class DockerManager {
 	private void newMapeLoop() throws DockerException, InterruptedException {
 		MonitorManager mm = MonitorManager.getInstance();
 		AnalyseManager am = AnalyseManager.getInstance();
-		PlanManager pm = PlanManager.getInstance();
-		ExecuteManager em = ExecuteManager.getInstance();
+		//PlanManager pm = PlanManager.getInstance();
+		//ExecuteManager em = ExecuteManager.getInstance();
 		defineServices();
+		//createTopology();
 		System.out.println("Service count: " + appServices.size());
 		for (Cluster serv : appServices) {
 			mm.newMonitor(serv);
 			am.newAnalyser(serv);
-			pm.newPlanManager(serv);
-			em.newExecutionManager(serv);
 		}
 	}
 
@@ -147,6 +145,12 @@ public class DockerManager {
 	public List<Container> getContainers() {
 		return Collections.unmodifiableList(containers);
 	}
+	
+	public boolean isMonitored(Container cont) {
+		if(this.monitored.contains(cont.id())) {
+			return true;
+		}else {return false;}
+	}
 
 	/**
 	 * Create new service if the string passed to it has no service.
@@ -176,6 +180,12 @@ public class DockerManager {
 		return null;
 	}
 	
+//	public Topology createTopology() {
+//		//if topology doesn't exist then create and store it's id in the list of topologies
+		//TBD: how to check if a topology exists (Structural specifications like containers and number of VMS)
+//		
+//	}
+	
 	/**
 	 * return the specified cluster
 	 * 
@@ -204,5 +214,11 @@ public class DockerManager {
 		}
 
 	}
+
+	public ArrayList<Cluster> getAppServices() {
+		return appServices;
+	}
+
+	
 
 }
