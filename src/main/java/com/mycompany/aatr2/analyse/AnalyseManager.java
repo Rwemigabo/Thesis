@@ -13,27 +13,30 @@ import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
 
 /**
- *
+ * 
  * @author eric
+ *
  */
-public class AnalyseManager implements Observable{
+public class AnalyseManager implements Observable, Observer{
 
     private final ArrayList<Analyser> analysers = new ArrayList<>();
     private static final AnalyseManager inst = new AnalyseManager();
     private final ArrayList<Observer> obs;
-    private ArrayList<AdaptationRequest> ars;
+    private final ArrayList<SystemState> systState;
+    private final ArrayList<AdaptationRequest> adaptationReq;
     
     private AnalyseManager(){
     	this.obs = new ArrayList<>();
-    	this.ars = new ArrayList<AdaptationRequest>();
+    	this.adaptationReq = new ArrayList<>();
+    	this.systState = new ArrayList<SystemState>();
     }
     
     public void newAnalyser(Cluster c){
-        int newID = analysers.size() + 1;
-        Analyser ana = new Analyser(newID, c);
+        Analyser ana = new Analyser(c);
+        setObservable(ana);
         ana.initiate();
         analysers.add(ana);
-
+        
     }
     
     public static AnalyseManager getInstance() {
@@ -67,14 +70,55 @@ public class AnalyseManager implements Observable{
 																		// Tools | Templates.
 	}
 
-	public ArrayList<AdaptationRequest> getArs() {
-		return ars;
+	public ArrayList<SystemState> getArs() {
+		return systState;
 	}
 
-	public void setArs(ArrayList<AdaptationRequest> ars) {
-		this.ars = ars;
+
+	@Override
+	public synchronized void update() {
+		newSystemState();
+	}
+
+	@Override
+	public void update(String context, double metric) {
+		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+																		// Tools | Templates.
+	}
+
+	@Override
+	public void setObservable(Observable ob) {
+		ob.addObserver(this);
+	}
+	
+	/*
+	 * Creates a new system state stores it in the list
+	 */
+	public void newSystemState() {
+		SystemState state = new SystemState();
+		for(Analyser ana: analysers) {
+			Cluster s = ana.getCluster();
+			state.addSymptom(s, ana.getLatest());
+		}
+		systState.add(state);// should be persisted.
+		checkState(state);
+	}
+	
+	/*
+	 * Checks the new state to make sure that it is within parameters and if not creates an adaptation request
+	 */
+	public void checkState(SystemState state) {
+		if(state.getState()) {
+			AdaptationRequest ar = new AdaptationRequest();
+			for(Analyser ana: analysers) {
+				Cluster s = ana.getCluster();
+				double conts = s.getContainers().size() + state.getAdapt().get(s).getCondition();
+				ar.addItem(ana.getAnId(), conts);
+			}
+			this.adaptationReq.add(ar);
+			notifyObservers();
+		}
 	}
 	
 	
-
 }

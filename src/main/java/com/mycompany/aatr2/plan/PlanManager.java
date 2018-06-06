@@ -7,8 +7,10 @@ package com.mycompany.aatr2.plan;
 
 import java.util.ArrayList;
 
+import com.mycompany.aatr2.DockerManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
+import com.mycompany.aatr2.analyse.AdaptationRequest;
 import com.mycompany.aatr2.analyse.AnalyseManager;
 
 /**
@@ -20,6 +22,7 @@ public class PlanManager implements Observable, Observer{
 	private static final PlanManager inst = new PlanManager();
 	private final ArrayList<Observer> obs;
 	private AnalyseManager am;
+	private DockerManager dm = DockerManager.getInstance();
 	
 	
 	public PlanManager() {
@@ -36,14 +39,29 @@ public class PlanManager implements Observable, Observer{
 		
 	}
 
-	public void changePlan() {
-		// TODO Auto-generated method stub
+//	public void changePlan() {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+	@Override
+	public void update() {
+		getRequest();
+	}
+
+	private void getRequest() {
+		AdaptationRequest ar = dm.getCurrentTopology().latestRequest();
+		processRequest(ar);
 		
 	}
 
-	@Override
-	public synchronized void update() {
-		// TODO call to check adaptation requests.
+	/*
+	 * compares available topologies to adaptation request and returns the most relevant/ suitable topology
+	 * calls the notify observers method
+	 * 
+	 */
+	private void processRequest(AdaptationRequest ar) {
+		// TODO Auto-generated method stub
 		
 	}
 

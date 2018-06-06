@@ -9,6 +9,7 @@ import com.mycompany.aatr2.Cluster;
 //import com.mycompany.aatr2.MonitorManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
+import com.mycompany.aatr2.RandomString;
 import com.mycompany.aatr2.monitor.MonitorManager;
 
 import flanagan.math.Gradient;
@@ -30,21 +31,22 @@ import net.sourceforge.jFuzzyLogic.FIS;
  * 
  * @author eric
  */
-public class Analyser implements Observer {
+public class Analyser implements Observer, Observable {
 
-	private final int anId;
+	private final String anId;
+	private final ArrayList<Observer> obs;
 	
 	// private Observable obvle = null;
 	private ArrayList<Symptom> symplogs = new ArrayList<>();
-	private Cluster cluster;
+	private final Cluster cluster;
 	private MonitorManager mm;
 	private static final long THIRTY_MINUTES = 1 * 60 * 1000;
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-	public Analyser(int id, Cluster c) {
-		this.anId = id;
-		
+	public Analyser(Cluster c) {
+		this.anId = new RandomString(8).nextString();
+		this.obs = new ArrayList<>();
 		this.cluster = c;
 		// this.obvle = new ArrayList<>();
 
@@ -144,7 +146,7 @@ public class Analyser implements Observer {
 	 *
 	 * @return the value of anId
 	 */
-	public int getAnId() {
+	public String getAnId() {
 		return anId;
 	}
 
@@ -164,6 +166,29 @@ public class Analyser implements Observer {
 	@Override
 	public void setObservable(Observable ob) {
 		ob.addObserver(this);
+	}
+	
+	@Override
+	public void addObserver(Observer o) {
+		obs.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		obs.remove(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		obs.forEach((Observer ob) -> {
+			ob.update();
+		});
+	}
+
+	@Override
+	public void notifyObservers(double metric) {
+		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+																		// Tools | Templates.
 	}
 
 	/**
@@ -228,6 +253,41 @@ public class Analyser implements Observer {
 	public void setSymplogs(ArrayList<Symptom> symplogs) {
 		this.symplogs = symplogs;
 	}
+	
+	public Symptom getLatest() {
+		return this.symplogs.get(symplogs.size() - 1);
+	}
 
+	/**
+	 * Using the result, a symptom is created and logged in the symptoms log list and if the result is more or less than 0.5 then the 
+	 * Analysis manager is notified and the current symptoms for the whole topology are logged in a new system state.
+	 * 
+	 * @param result from the diagnosis
+	 */
+	public void createSymptom(double result) {
+		if(result > 0 && result < 0.5) {
+			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
+			symplogs.add(nSymp);
+		}
+		else if(result < 0  && result > -0.5 ){
+			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
+			symplogs.add(nSymp);
+		}else if (result > 0.5) {
+			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
+			symplogs.add(nSymp);
+			notifyObservers();
+			
+		}else if (result < -0.5) {
+			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
+			symplogs.add(nSymp);
+			notifyObservers();
+		}
+	}
+
+	public Cluster getCluster() {
+		return cluster;
+	}
+
+	
 	
 }

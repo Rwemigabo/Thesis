@@ -89,6 +89,12 @@ public class Cluster {
 		this.slo = slo;
 	}
     
+	public boolean compareCluster(Cluster c) {
+		if(c.getServName().equals(this.servName) && this.containers.size() == c.getContainers().size()) {
+			return true;
+		}
+		return false;
+	}
     
      
 }

@@ -34,7 +34,8 @@ public class DockerManager {
 	private final ArrayList<Cluster> appServices;
 	private List<Container> containers;
 	private final ArrayList<String> monitored;
-	//private List<Topology> topologies;
+	private List<Topology> topologies = new ArrayList<>();
+	private Topology currentTopology;
 
 	private static DockerManager instance;
 
@@ -65,6 +66,16 @@ public class DockerManager {
 		}
 	}
 
+	
+	
+	public Topology getCurrentTopology() {
+		return currentTopology;
+	}
+
+	public void setCurrentTopology(Topology currentTopology) {
+		this.currentTopology = currentTopology;
+	}
+
 	public Container getContainer(String id) {
 		for (Container cont : containers) {
 			if (cont.id().equals(id)) {
@@ -80,7 +91,7 @@ public class DockerManager {
 		//PlanManager pm = PlanManager.getInstance();
 		//ExecuteManager em = ExecuteManager.getInstance();
 		defineServices();
-		//createTopology();
+		newTopology();
 		System.out.println("Service count: " + appServices.size());
 		for (Cluster serv : appServices) {
 			mm.newMonitor(serv);
@@ -219,6 +230,28 @@ public class DockerManager {
 		return appServices;
 	}
 
-	
+	public List<Topology> getTopologies() {
+		return topologies;
+	}
+
+	public boolean exists(Topology topol) {
+		for(Topology top: topologies) {
+			if(top.compare(topol)) {
+				return true;
+			}
+		}
+		return false;	
+	}
+	/*
+	 * Creates a new topology if it doesn't already exist and adds it to list and returns it  
+	 * Else returns the topology that already exists
+	 */
+	public void newTopology() {
+		Topology newtop = new Topology(appServices);
+		if(!exists(newtop)) {
+			topologies.add(newtop);
+		}else {System.out.println("Topology already exists");}
+		this.setCurrentTopology(newtop);
+	}
 
 }

@@ -6,21 +6,24 @@
 package com.mycompany.aatr2.analyse;
 
 /**
- * this class indicates to what level the Service level objectives are being met
+ * this class creates a symptom object, which indicates how many containers need to be added or removed in order to
+ * optimize the application's service.
  * 
  * @author eric
  */
 public class Symptom {
     private final String name;
-    private String event;
-    private String condition;
+    private final String event;
+    private final double condition;
 
-    public Symptom(String name, String event, String condition) {
+    public Symptom(String name, String event, double condition) {
         this.name = name;
         this.event = event;
         this.condition = condition;
     }
 
+    
+    
     public String getName() {
         return name;
     }
@@ -29,18 +32,8 @@ public class Symptom {
         return event;
     }
 
-    public String getCondition() {
+    public double getCondition() {
         return condition;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-    
-    
-    
 }
