@@ -49,7 +49,7 @@ public class SystemState {
 	/*
 	 * Method to indicate the current state of the system by counting the number of reported symptoms by the analysis process
 	 * if the number of values that need adjustment is more than half, then the state is set to true.
-	 * true state means the system needs to adapt to the current situation
+	 * true state means the system needs a new adaptation plan to be formed to follow the slos
 	 */
 	public void setState() {
 		int count = 0;

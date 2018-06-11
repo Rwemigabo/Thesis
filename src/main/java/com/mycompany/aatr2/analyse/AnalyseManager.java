@@ -117,7 +117,7 @@ public class AnalyseManager implements Observable, Observer{
 			}
 			this.adaptationReq.add(ar);
 			notifyObservers();
-		}
+		}else {System.out.println("System state stable");}
 	}
 	
 	

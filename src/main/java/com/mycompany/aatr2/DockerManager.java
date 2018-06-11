@@ -14,9 +14,13 @@ import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerStats;
 import com.spotify.docker.client.messages.Image;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +40,8 @@ public class DockerManager {
 	private final ArrayList<String> monitored;
 	private List<Topology> topologies = new ArrayList<>();
 	private Topology currentTopology;
+	private HashMap<Timestamp, Topology> executions;
+	private Timestamp lastExecTime;
 
 	private static DockerManager instance;
 
@@ -44,6 +50,7 @@ public class DockerManager {
 		this.images = cli.listImages();
 		this.monitored = new ArrayList<>();
 		this.appServices = new ArrayList<>();
+		this.executions = new HashMap<>();
 	}
 
 	public static DockerManager getInstance() {
@@ -66,14 +73,14 @@ public class DockerManager {
 		}
 	}
 
-	
-	
 	public Topology getCurrentTopology() {
 		return currentTopology;
 	}
 
-	public void setCurrentTopology(Topology currentTopology) {
-		this.currentTopology = currentTopology;
+	public void setCurrentTopology(Topology newTopology) {
+		if (!currentTopology.equals(newTopology)) {
+			this.currentTopology = newTopology;
+		}
 	}
 
 	public Container getContainer(String id) {
@@ -88,8 +95,8 @@ public class DockerManager {
 	private void newMapeLoop() throws DockerException, InterruptedException {
 		MonitorManager mm = MonitorManager.getInstance();
 		AnalyseManager am = AnalyseManager.getInstance();
-		//PlanManager pm = PlanManager.getInstance();
-		//ExecuteManager em = ExecuteManager.getInstance();
+		// PlanManager pm = PlanManager.getInstance();
+		// ExecuteManager em = ExecuteManager.getInstance();
 		defineServices();
 		newTopology();
 		System.out.println("Service count: " + appServices.size());
@@ -156,11 +163,13 @@ public class DockerManager {
 	public List<Container> getContainers() {
 		return Collections.unmodifiableList(containers);
 	}
-	
+
 	public boolean isMonitored(Container cont) {
-		if(this.monitored.contains(cont.id())) {
+		if (this.monitored.contains(cont.id())) {
 			return true;
-		}else {return false;}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -190,13 +199,15 @@ public class DockerManager {
 
 		return null;
 	}
-	
-//	public Topology createTopology() {
-//		//if topology doesn't exist then create and store it's id in the list of topologies
-		//TBD: how to check if a topology exists (Structural specifications like containers and number of VMS)
-//		
-//	}
-	
+
+	// public Topology createTopology() {
+	// //if topology doesn't exist then create and store it's id in the list of
+	// topologies
+	// TBD: how to check if a topology exists (Structural specifications like
+	// containers and number of VMS)
+	//
+	// }
+
 	/**
 	 * return the specified cluster
 	 * 
@@ -235,23 +246,59 @@ public class DockerManager {
 	}
 
 	public boolean exists(Topology topol) {
-		for(Topology top: topologies) {
-			if(top.compare(topol)) {
+		for (Topology top : topologies) {
+			if (top.compare(topol)) {
 				return true;
 			}
 		}
-		return false;	
+		return false;
 	}
+
 	/*
-	 * Creates a new topology if it doesn't already exist and adds it to list and returns it  
-	 * Else returns the topology that already exists
+	 * Creates a new topology if it doesn't already exist and adds it to list and
+	 * returns it Else returns the topology that already exists
 	 */
 	public void newTopology() {
 		Topology newtop = new Topology(appServices);
-		if(!exists(newtop)) {
+		if (!exists(newtop)) {
 			topologies.add(newtop);
-		}else {System.out.println("Topology already exists");}
+		} else {
+			System.out.println("Topology already exists");
+		}
 		this.setCurrentTopology(newtop);
+	}
+	
+	
+
+	public HashMap<Timestamp, Topology> getExecutions() {
+		return executions;
+	}
+	
+	public Topology getPendingExecution() {
+		Topology top = null;
+		for(Map.Entry<Timestamp, Topology> entry : executions.entrySet()) {
+			if(entry.getKey().after(lastExecTime)) {
+				top = entry.getValue();
+				break;
+			}
+		}return top;
+	}
+
+	
+	public Timestamp getLastExecTime() {
+		return lastExecTime;
+	}
+
+	public void setLastExecTime(Timestamp lastExecTime) {
+		this.lastExecTime = lastExecTime;
+	}
+
+	public void setExecutions(HashMap<Timestamp, Topology>executions) {
+		this.executions = executions;
+	}
+
+	public void prepareForExecution(Topology selected) {
+		executions.put(new Timestamp(System.currentTimeMillis()), selected);
 	}
 
 }

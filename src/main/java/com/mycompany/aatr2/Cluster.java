@@ -89,6 +89,10 @@ public class Cluster {
 		this.slo = slo;
 	}
     
+	/*
+	 * Returns true if the clusters have the same name and number of containers false otherwise.
+	 * 
+	 */
 	public boolean compareCluster(Cluster c) {
 		if(c.getServName().equals(this.servName) && this.containers.size() == c.getContainers().size()) {
 			return true;
@@ -96,5 +100,18 @@ public class Cluster {
 		return false;
 	}
     
-     
+	/*
+	 * Returns how closely related the clusters are 0 being the closest.
+	 * 
+	 */
+	public int compare(int c) {
+		int relation = 0;
+		if(this.containers.size() == c) {
+			return relation;
+		}else{
+			relation = c - this.containers.size();
+			return relation;
+		}
+		
+	}
 }
