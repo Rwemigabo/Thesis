@@ -78,7 +78,7 @@ public class DockerManager {
 	}
 
 	public void setCurrentTopology(Topology newTopology) {
-		if (!currentTopology.equals(newTopology)) {
+		if (currentTopology == null || !currentTopology.compare(newTopology)) {
 			this.currentTopology = newTopology;
 		}
 	}
@@ -246,12 +246,13 @@ public class DockerManager {
 	}
 
 	public boolean exists(Topology topol) {
-		for (Topology top : topologies) {
-			if (top.compare(topol)) {
-				return true;
+		if (topologies.size() > 0) {
+			for (Topology top : topologies) {
+				if (top.compare(topol)) {
+					return true;
+				}
 			}
-		}
-		return false;
+		} return false;
 	}
 
 	/*
@@ -267,24 +268,22 @@ public class DockerManager {
 		}
 		this.setCurrentTopology(newtop);
 	}
-	
-	
 
 	public HashMap<Timestamp, Topology> getExecutions() {
 		return executions;
 	}
-	
+
 	public Topology getPendingExecution() {
 		Topology top = null;
-		for(Map.Entry<Timestamp, Topology> entry : executions.entrySet()) {
-			if(entry.getKey().after(lastExecTime)) {
+		for (Map.Entry<Timestamp, Topology> entry : executions.entrySet()) {
+			if (entry.getKey().after(lastExecTime)) {
 				top = entry.getValue();
 				break;
 			}
-		}return top;
+		}
+		return top;
 	}
 
-	
 	public Timestamp getLastExecTime() {
 		return lastExecTime;
 	}
@@ -293,7 +292,7 @@ public class DockerManager {
 		this.lastExecTime = lastExecTime;
 	}
 
-	public void setExecutions(HashMap<Timestamp, Topology>executions) {
+	public void setExecutions(HashMap<Timestamp, Topology> executions) {
 		this.executions = executions;
 	}
 

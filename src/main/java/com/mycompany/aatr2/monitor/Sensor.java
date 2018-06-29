@@ -40,6 +40,8 @@ public class Sensor extends Thread implements Observable {
 	private double free;
 	private final DockerManager dm = DockerManager.getInstance();
 	private final String contNm;
+	private long preCpu = 0;
+	private long preSystem = 0;
 
 	/**
 	 * 
@@ -60,6 +62,13 @@ public class Sensor extends Thread implements Observable {
 		this.contID = cid;
 		this.property = new ContextElement(max, min, context);
 		this.contNm = dm.getContainer(cid).image();
+		try {
+			this.preCpu =dm.getContainerStats(this.contID).precpuStats().cpuUsage().totalUsage();
+			this.preSystem = dm.getContainerStats(this.contID).precpuStats().systemCpuUsage();
+		} catch (DockerException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -71,14 +80,16 @@ public class Sensor extends Thread implements Observable {
 	public void watchCPU() throws DockerException, InterruptedException {
 		this.cpu = dm.getContainerStats(this.contID).cpuStats();
 
-		if (dm.getContainer(this.contID).state().contains("running")) {
-			this.cpuPerc = calculateCPU(cpu.cpuUsage().totalUsage(),
-					dm.getContainerStats(this.contID).precpuStats().cpuUsage().totalUsage(), cpu.systemCpuUsage(),
-					dm.getContainerStats(this.contID).precpuStats().systemCpuUsage(),
-					cpu.cpuUsage().percpuUsage().size());
+		if (dm.getContainer(this.contID).state() != null) {// .contains("running")
+			this.cpuPerc = calculateCPU(this.cpu.cpuUsage().totalUsage(),
+					this.preCpu, this.cpu.systemCpuUsage(),
+					this.preSystem,
+					this.cpu.cpuUsage().percpuUsage().size());
 			checkThreshold(this.cpuPerc, contNm);
 
-		}else {System.out.print("Not running anymore");}
+		} else {
+			System.out.print("Not running anymore");
+		}
 	}
 
 	/**
@@ -105,7 +116,8 @@ public class Sensor extends Thread implements Observable {
 
 	@Override
 	/**
-	 * checks the current metric every 2 seconds and returns the statistic if the threshold has been crossed.
+	 * checks the current metric every 2 seconds and returns the statistic if the
+	 * threshold has been crossed.
 	 */
 	public void run() {
 		if (this.name.equals("CPU")) {
@@ -151,8 +163,7 @@ public class Sensor extends Thread implements Observable {
 	public void checkThreshold(final double metric, final String cont) {
 		if (metric > this.property.getThreshold().getUpperBound()
 				|| metric < this.property.getThreshold().getLowerBound()) {
-			System.out.print(
-					"\n Notifying monitor of container " + cont + " " + this.property.getName() + " " + metric + "%");
+			System.out.print("\n Notifying monitor of container " + cont + " about " + this.name + " " + metric + "%");
 			// notifyObservers(metric);
 			notifyObservers();
 		} else {
@@ -177,15 +188,15 @@ public class Sensor extends Thread implements Observable {
 	 * @return the CPU percentage being used
 	 */
 	public double calculateCPU(long totalUsage, long prevCPU, long totalSystUse, long prevSystem, int perCpuUsage) {
-
+		
 		double cpuP = 0;
-		long cpuDelta = totalUsage - prevCPU;
-		long systemDelta = totalSystUse - prevSystem;
-
+		float cpuDelta = (float) totalUsage - (float) prevCPU;
+		float systemDelta = (float) totalSystUse - (float) prevSystem;
+		System.out.println("\n cpuDelta "+ cpuDelta+"systemDelta "+ systemDelta  + " Container "+ this.contID);
 		if (systemDelta > 0.0 && cpuDelta > 0.0) {
 			cpuP = ((cpuDelta / systemDelta) * (perCpuUsage)) * 100;
 		}
-
+		System.out.println("\n CPU percentage "+ cpuP + " Container "+ this.contID);
 		return cpuP;
 
 	}
@@ -197,8 +208,7 @@ public class Sensor extends Thread implements Observable {
 	 * @return percentage of the memory used.
 	 */
 	public double memoryStat(long limit, long usage) {
-
-		double memMetric = (usage / limit) * 100;
+		double memMetric = ((double) usage / (double) limit) * 100;
 		return memMetric;
 	}
 
@@ -232,12 +242,15 @@ public class Sensor extends Thread implements Observable {
 	}
 
 	public double getLogValue() {
-
 		if (this.name.equals("Memory")) {
+			System.out.println("Returned Memory" + free);
 			return this.free;
+
 		} else if (this.name.equals("CPU")) {
+			System.out.println("Returned CPU" + this.cpuPerc);
 			return this.cpuPerc;
 		}
+		System.out.println("Returned NULL");
 		return 0;
 	}
 

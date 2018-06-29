@@ -28,6 +28,7 @@ public class PlanManager implements Observable, Observer {
 	private AnalyseManager am;
 	private DockerManager dm = DockerManager.getInstance();
 	private ViableTopologies vt = ViableTopologies.getInstance();
+	private Topology newT = null;
 
 	public PlanManager() {
 		this.obs = new ArrayList<>();
@@ -55,6 +56,7 @@ public class PlanManager implements Observable, Observer {
 
 	private void getRequest() {
 		AdaptationRequest ar = dm.getCurrentTopology().latestRequest();
+		vt.defineTestTopologies();
 		processRequest(ar);
 
 	}
@@ -66,7 +68,7 @@ public class PlanManager implements Observable, Observer {
 	 * calls the notify observers method
 	 * 
 	 */
-	private void processRequest(AdaptationRequest ar) {
+	public void processRequest(AdaptationRequest ar) {
 		Topology r_top = ar.recommended(); // new recommended topology
 		Topology selected = null; // topology selected to replace currently running topology.
 		double s_diff = 0;
@@ -101,8 +103,9 @@ public class PlanManager implements Observable, Observer {
 			}
 
 		}
-		dm.prepareForExecution(selected);
-		notifyObservers();
+		//dm.prepareForExecution(selected);
+		setNewT(selected);
+		//notifyObservers();
 	}
 	
 	/*
@@ -157,5 +160,15 @@ public class PlanManager implements Observable, Observer {
 		// TODO Auto-generated method stub
 
 	}
+
+	public Topology getNewT() {
+		return newT;
+	}
+
+	public void setNewT(Topology newT) {
+		this.newT = newT;
+	}
+	
+	
 
 }

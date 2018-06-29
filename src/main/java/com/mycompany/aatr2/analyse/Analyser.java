@@ -89,6 +89,7 @@ public class Analyser implements Observer, Observable {
 		}
 
 		double avg = calculateAverage(eval); //average of the number of containers to be added or removed
+		createSymptom(avg);
 		System.out.println("Average = " + avg);
 
 	}

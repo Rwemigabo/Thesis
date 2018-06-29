@@ -68,9 +68,9 @@ public class Monitor implements Observer, Observable {
 		for (Container container : conts) {
 			StatisticsLog sl = new StatisticsLog(container.id());
 			stats.add(sl);
-			addSensor(sm.newSensor("CPU", 0.00, 75.00, container.id()));
-			addSensor(sm.newSensor("Memory", 0, 5, container.id()));
-			if (container.state() != null && container.state().equals("running")) {
+			this.sens.add(sm.newSensor("CPU", 0.00, 75.00, container.id()));
+			this.sens.add(sm.newSensor("Memory", 0.00, 75.00, container.id()));
+			if (container.state().equals("running")) { // && container.state().equals("running")
 				System.out.print("\n Accessing sensors to initiate metric watch");
 				startMonitoring(container.id());
 			} else {
@@ -83,7 +83,7 @@ public class Monitor implements Observer, Observable {
 
 	@Override
 	public synchronized void update() {
-		System.out.println("whaaatttt");
+		// System.out.println("whaaatttt");
 		newStatistic();
 	}
 
@@ -143,10 +143,6 @@ public class Monitor implements Observer, Observable {
 		});
 	}
 
-	public void addSensor(Sensor s) {
-		this.sens.add(s);
-	}
-
 	/**
 	 * updates the log with a new statistic every x seconds.
 	 */
@@ -161,33 +157,45 @@ public class Monitor implements Observer, Observable {
 		}, 1 * 5000, 1 * 5000);
 	}
 
-	public void newStatistic() {
+	/**
+	 * Creates a new statistic if both sensors for the container are already up.
+	 * Only notifies the observers/ creates new statistics if all containers in the
+	 * service have sensors set up.
+	 */
+	public synchronized void newStatistic() {
 		double metric1 = 0;
 		double metric2 = 0;
+		boolean notify = true;
 		for (Container cont : conts) {
-			for (Sensor sen : this.sens) {
-				if (sen.getContID().equals(cont.id())) {
-					if (sen.getName().equals("CPU")) {
-						metric1 = sen.getLogValue();
-					} else {
-						metric2 = sen.getLogValue();
+			if (sens.contains(getSensor(cont.id(), "CPU")) && sens.contains(getSensor(cont.id(), "Memory"))) {
+				for (Sensor sen : this.sens) {
+					if (sen.getContID().equals(cont.id())) {
+						if (sen.getName().equals("CPU")) {
+							metric1 = sen.getLogValue();
+							Sensor s = getSensor(sen.getContID(), "Memory");
+							metric2 = s.getLogValue();
+						} else {
+							metric2 = sen.getLogValue();
+							Sensor s = getSensor(sen.getContID(), "CPU");
+							metric1 = s.getLogValue();
+						}
 					}
 				}
+			} else {
+				System.out.println("Only one sensor Started for this container");
+				notify = false;
+				break;
 			}
+
 			// create new stat and add it to the container's log
-
 			this.service.addStat(cont.id(), metric2, metric1);
+			System.out.println(
+					"\n New Stat log from " + this.service.getServName() + " Memory " + metric2 + " CPU " + metric1);
 		}
-		System.out.println(
-				"\n New Stat log from " + this.service.getServName() + " Memory " + metric2 + " CPU " + metric1);
-		notifyObservers();
-		// setNewStat(true);
+		if (notify) {
+			notifyObservers();
+		}
 	}
-
-	// private void setNewStat(boolean b) {
-	// TODO Auto-generated method stub
-
-	// }
 
 	public int getID() {
 		return this.ID;
@@ -215,6 +223,24 @@ public class Monitor implements Observer, Observable {
 
 	public void setService(Cluster serv) {
 		this.service = serv;
+	}
+
+	/**
+	 * Returns the sensor with the given params
+	 * 
+	 * @param cid
+	 * @param context
+	 * @return
+	 */
+	public Sensor getSensor(String cid, String context) {
+		for (Sensor sen : this.sens) {
+			if (sen.getContID().equals(cid) && sen.sensorContext().equals(context)) {
+				return sen;
+			}
+		}
+		System.out.println("Didn't find this sensor" + cid + context);
+		return null;
+
 	}
 
 }
