@@ -16,6 +16,7 @@ import flanagan.math.Gradient;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class Analyser implements Observer, Observable {
 
 	private final String anId;
 	private final ArrayList<Observer> obs;
-	
+
 	// private Observable obvle = null;
 	private ArrayList<Symptom> symplogs = new ArrayList<>();
 	private final Cluster cluster;
@@ -68,7 +69,8 @@ public class Analyser implements Observer, Observable {
 	public void diagnose(double[] cpugrad, double[] memgrad) {
 		String fileName = "/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/src/main/java/com/mycompany/aatr2/analyse/SystAnalysis.fcl";
 		FIS fis = FIS.load(fileName, true);
-		List<Double> eval = new ArrayList<Double>(); //List of the evaluation results based on the data from the last hour or half hour
+		List<Double> eval = new ArrayList<Double>(); // List of the evaluation results based on the data from the last
+														// hour or half hour
 
 		if (fis == null) {
 			System.err.println("Can't load file: '" + fileName + "'");
@@ -76,19 +78,17 @@ public class Analyser implements Observer, Observable {
 		}
 
 		// Set inputs and evaluate then create new symptom
-		for (int i=0, x = 0; i < cpugrad.length && x < memgrad.length; i++, x++) {
-			
-			//for (int x = 0; x < memgrad.length; x++) {
-				fis.setVariable("MEM_load_delta", memgrad[x]);
-				fis.setVariable("CPU_load_delta", cpugrad[i]);
-				fis.evaluate();
-				double result = fis.getVariable("replicas").getValue();
-				eval.add(result);
-				System.out.println("Number of replicas required = " + result);
-			//}
+		for (int i = 0, x = 0; i < cpugrad.length && x < memgrad.length; i++, x++) {
+			System.out.println("\n Memory value to be processed = " + memgrad[x] + " CPU value to be processed = " + cpugrad[x]);
+			fis.setVariable("MEM_load_delta", memgrad[x]);
+			fis.setVariable("CPU_load_delta", cpugrad[i]);
+			fis.evaluate();
+			double result = fis.getVariable("replicas").getValue();
+			eval.add(result);
+			System.out.println("Number of replicas required = " + result);
 		}
 
-		double avg = calculateAverage(eval); //average of the number of containers to be added or removed
+		double avg = calculateAverage(eval); // average of the number of containers to be added or removed
 		createSymptom(avg);
 		System.out.println("Average = " + avg);
 
@@ -118,26 +118,35 @@ public class Analyser implements Observer, Observable {
 		double[] cy = new double[c_map.size()];
 		double[] mx = new double[m_map.size()];
 		double[] my = new double[m_map.size()];
+		int countCPU = 0;
+		int countMEM = 0;
+		if (countCPU < c_map.size()) {
+			for (Map.Entry<Timestamp, Double> entry : c_map.entrySet()) {
+				cx[countCPU] = entry.getKey().getTime();
+				cy[countCPU] = entry.getValue();
+				countCPU++;
+			}
+		}
 
-		for (Map.Entry<Timestamp, Double> entry : c_map.entrySet()) {
-			for (int i = 0; i < c_map.size(); i++) {
-				cx[i] = entry.getKey().getTime();
-				cy[i] = entry.getValue();
+		if (countMEM < m_map.size()) {
+			for (Map.Entry<Timestamp, Double> entry : m_map.entrySet()) {
+				mx[countMEM] = entry.getKey().getTime();
+				my[countMEM] = entry.getValue();
+				countMEM++;
 			}
 		}
-		for (Map.Entry<Timestamp, Double> entry : m_map.entrySet()) {
-			for (int i = 0; i < m_map.size(); i++) {
-				mx[i] = entry.getKey().getTime();
-				my[i] = entry.getValue();
-			}
-		}
+
+//		System.out.println("CPU timestamps: " + Arrays.toString(cx));
+		System.out.println("CPU values: " + Arrays.toString(cy));
+//		System.out.println("Memory values: " + Arrays.toString(my));
+//		System.out.println("Memory timestamps: " + Arrays.toString(mx));
 		Gradient cg = new Gradient(cx, cy);
 		Gradient mg = new Gradient(mx, my);
 
 		double[] cpu_gradients = cg.numDeriv_1D_array();// deltas in cpu usage
-		System.out.println("CPU gradients: " + cpu_gradients.length);
 		double[] mem_gradients = mg.numDeriv_1D_array();// deltas in memory usage
-		System.out.println("Memory gradients: " + mem_gradients.length);
+		System.out.println("cpu Grads: " + Arrays.toString(cpu_gradients));
+		System.out.println("Memory gradients: " + Arrays.toString(mem_gradients));
 		diagnose(cpu_gradients, mem_gradients);
 
 	}
@@ -151,7 +160,6 @@ public class Analyser implements Observer, Observable {
 		return anId;
 	}
 
-	
 	@Override
 
 	public void update() {
@@ -168,7 +176,7 @@ public class Analyser implements Observer, Observable {
 	public void setObservable(Observable ob) {
 		ob.addObserver(this);
 	}
-	
+
 	@Override
 	public void addObserver(Observer o) {
 		obs.add(o);
@@ -198,46 +206,47 @@ public class Analyser implements Observer, Observable {
 	 */
 	public void windowCheck() {
 		cluster.getLogs().forEach((log) -> {
-			
+
 			if (log != null) {
-				System.out.println("Number of stats :"+ log.getMonitorstats().size());
+				System.out.println("Number of stats :" + log.getMonitorstats().size());
 				System.out.println("Checking window");
 				if (log.getminCheckpoint() == 0) {// if it's the first value to be recorded
 					log.setminCheckpoint(System.currentTimeMillis());
 					log.setHrCheckpoint(System.currentTimeMillis());
 				} else {
-						System.out.println("latest log" + log.getLatest());
-						Timestamp latest = log.getLatest().getTimestamp();
-						Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
-						Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
+					System.out.println("latest log" + log.getLatest().getTimestamp());
+					Timestamp latest = log.getLatest().getTimestamp();
+					Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
+					System.out.println("Minutes Timestamp" + mincheckpt);
+					Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
 
-						long m_window = System.currentTimeMillis() - log.getminCheckpoint();
-						long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
-						
-						if (m_window > THIRTY_MINUTES) {// if X mins have passed run short term analysis
-							System.out.println("\n 30 min window");
-							runAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
-							log.setminCheckpoint(latest.getTime());
-						} else {
-						}
-						
-						if (h_window > THIRTY_MINUTES * 2) {// if 2X mins have passed run long term analysis
-							System.out.println("\n 1 hr window");
-							runAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
-							log.setHrCheckpoint(latest.getTime());
-						} else {
-							
-							//TBD check critical values (Reactive analysis)
-							//check SLOs are followed using symptom repository method checkSLO()
-							//if not, request adaptation from plan.
-							//NB: consider writing the method in Statistics Log class and call it here.
-							
-						}
-						log.removeProcessed();
-						// }
-//					} else {
-//						System.out.println("\n No new values ");
-//					}
+					long m_window = System.currentTimeMillis() - log.getminCheckpoint();
+					long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
+
+					if (m_window > THIRTY_MINUTES) {// if X mins have passed run short term analysis
+						System.out.println("\n 30 min window");
+						runAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
+						log.setminCheckpoint(latest.getTime());
+					} else {
+					}
+
+					if (h_window > THIRTY_MINUTES * 2) {// if 2X mins have passed run long term analysis
+						System.out.println("\n 1 hr window");
+						runAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
+						log.setHrCheckpoint(latest.getTime());
+					} else {
+
+						// TBD check critical values (Reactive analysis)
+						// check SLOs are followed using symptom repository method checkSLO()
+						// if not, request adaptation from plan.
+						// NB: consider writing the method in Statistics Log class and call it here.
+
+					}
+					log.removeProcessed();
+					// }
+					// } else {
+					// System.out.println("\n No new values ");
+					// }
 
 				}
 
@@ -254,31 +263,33 @@ public class Analyser implements Observer, Observable {
 	public void setSymplogs(ArrayList<Symptom> symplogs) {
 		this.symplogs = symplogs;
 	}
-	
+
 	public Symptom getLatest() {
 		return this.symplogs.get(symplogs.size() - 1);
 	}
 
 	/**
-	 * Using the result, a symptom is created and logged in the symptoms log list and if the result is more or less than 0.5 then the 
-	 * Analysis manager is notified and the current symptoms for the whole topology are logged in a new system state.
+	 * Using the result, a symptom is created and logged in the symptoms log list
+	 * and if the result is more or less than 0.5 then the Analysis manager is
+	 * notified and the current symptoms for the whole topology are logged in a new
+	 * system state.
 	 * 
-	 * @param result from the diagnosis
+	 * @param result
+	 *            from the diagnosis
 	 */
 	public void createSymptom(double result) {
-		if(result > 0 && result < 0.5) {
+		if (result > 0 && result < 0.5) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
 			symplogs.add(nSymp);
-		}
-		else if(result < 0  && result > -0.5 ){
+		} else if (result < 0 && result > -0.5) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
 			symplogs.add(nSymp);
-		}else if (result > 0.5) {
+		} else if (result > 0.5) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
 			symplogs.add(nSymp);
 			notifyObservers();
-			
-		}else if (result < -0.5) {
+
+		} else if (result < -0.5) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
 			symplogs.add(nSymp);
 			notifyObservers();
@@ -289,6 +300,4 @@ public class Analyser implements Observer, Observable {
 		return cluster;
 	}
 
-	
-	
 }
