@@ -122,4 +122,8 @@ public class StatisticsLog {
 	public long getHrCheckpoint() {
 		return hr_checkpoint;
 	}
+	
+	public String container() {
+		return this.container;
+	}
 }

@@ -61,7 +61,7 @@ public class Cluster {
     }
 
 	public ArrayList<StatisticsLog> getLogs() {
-		return logs;
+		return this.logs;
 	}
 	
 	public StatisticsLog getLog(String sname) {

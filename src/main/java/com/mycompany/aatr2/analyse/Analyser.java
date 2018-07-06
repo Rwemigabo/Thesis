@@ -32,8 +32,7 @@ import net.sourceforge.jFuzzyLogic.FIS;
  * 
  * @author eric
  */
-public class Analyser implements Observer, Observable {
-
+public class Analyser implements Observer, Observable  {
 	private final String anId;
 	private final ArrayList<Observer> obs;
 
@@ -79,7 +78,8 @@ public class Analyser implements Observer, Observable {
 
 		// Set inputs and evaluate then create new symptom
 		for (int i = 0, x = 0; i < cpugrad.length && x < memgrad.length; i++, x++) {
-			System.out.println("\n Memory value to be processed = " + memgrad[x] + " CPU value to be processed = " + cpugrad[x]);
+			System.out.println(
+					"\n Memory value to be processed = " + memgrad[x] + " CPU value to be processed = " + cpugrad[x]);
 			fis.setVariable("MEM_load_delta", memgrad[x]);
 			fis.setVariable("CPU_load_delta", cpugrad[i]);
 			fis.evaluate();
@@ -114,6 +114,10 @@ public class Analyser implements Observer, Observable {
 		// double previous_entry = 0;
 		Map<Timestamp, Double> c_map = new TreeMap<>(cpu);// order by the timestamp
 		Map<Timestamp, Double> m_map = new TreeMap<>(mem);// order by the timestamp
+		Plot cpugradPlot = new Plot(this.cluster.getServName(), "CPU Gradient");
+		Plot memgradPlot = new Plot(this.cluster.getServName(), "Memory Gradient");
+		Plot cpudataPlot = new Plot(this.cluster.getServName(), "CPU Utilization");
+		Plot memdataPlot = new Plot(this.cluster.getServName(), "Memory Utilization");
 		double[] cx = new double[c_map.size()];
 		double[] cy = new double[c_map.size()];
 		double[] mx = new double[m_map.size()];
@@ -126,6 +130,10 @@ public class Analyser implements Observer, Observable {
 				cy[countCPU] = entry.getValue();
 				countCPU++;
 			}
+			cpudataPlot.plot(cx, cy);
+			cpudataPlot.pack();
+			cpudataPlot.setVisible(true);
+
 		}
 
 		if (countMEM < m_map.size()) {
@@ -134,17 +142,29 @@ public class Analyser implements Observer, Observable {
 				my[countMEM] = entry.getValue();
 				countMEM++;
 			}
+			memdataPlot.plot(cx, cy);
+			memdataPlot.pack();
+			memdataPlot.setVisible(true);
+
 		}
 
-//		System.out.println("CPU timestamps: " + Arrays.toString(cx));
+		// System.out.println("CPU timestamps: " + Arrays.toString(cx));
 		System.out.println("CPU values: " + Arrays.toString(cy));
-//		System.out.println("Memory values: " + Arrays.toString(my));
-//		System.out.println("Memory timestamps: " + Arrays.toString(mx));
+		// System.out.println("Memory values: " + Arrays.toString(my));
+		// System.out.println("Memory timestamps: " + Arrays.toString(mx));
 		Gradient cg = new Gradient(cx, cy);
 		Gradient mg = new Gradient(mx, my);
 
 		double[] cpu_gradients = cg.numDeriv_1D_array();// deltas in cpu usage
+		cpugradPlot.plot(cx, cpu_gradients);
+		cpugradPlot.pack();
+		cpugradPlot.setVisible(true);
+
 		double[] mem_gradients = mg.numDeriv_1D_array();// deltas in memory usage
+		memgradPlot.plot(mx, mem_gradients);
+		memgradPlot.pack();
+		memgradPlot.setVisible(true);
+
 		System.out.println("cpu Grads: " + Arrays.toString(cpu_gradients));
 		System.out.println("Memory gradients: " + Arrays.toString(mem_gradients));
 		diagnose(cpu_gradients, mem_gradients);
@@ -162,7 +182,7 @@ public class Analyser implements Observer, Observable {
 
 	@Override
 
-	public void update() {
+	public synchronized void update() {
 		windowCheck();
 	}
 
@@ -208,7 +228,7 @@ public class Analyser implements Observer, Observable {
 		cluster.getLogs().forEach((log) -> {
 
 			if (log != null) {
-				System.out.println("Number of stats :" + log.getMonitorstats().size());
+				System.out.println("||||||||||||||||||||||||||||||||||||\n Number of stats :" + log.getMonitorstats().size() + " for container "+ log.container());
 				System.out.println("Checking window");
 				if (log.getminCheckpoint() == 0) {// if it's the first value to be recorded
 					log.setminCheckpoint(System.currentTimeMillis());
@@ -300,4 +320,5 @@ public class Analyser implements Observer, Observable {
 		return cluster;
 	}
 
+	
 }
