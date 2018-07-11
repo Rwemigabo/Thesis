@@ -83,7 +83,7 @@ public class Monitor implements Observer, Observable {
 
 	@Override
 	public synchronized void update() {
-		// System.out.println("whaaatttt");
+		System.out.println("\n Out  of scope statistic reported");
 		newStatistic();
 	}
 
@@ -144,7 +144,7 @@ public class Monitor implements Observer, Observable {
 	}
 
 	/**
-	 * updates the log with a new statistic every x seconds.
+	 * updates the log with a new statistic every 2 seconds.
 	 */
 	public void scheduleNotification() {
 		Timer timer = new Timer();
@@ -154,7 +154,7 @@ public class Monitor implements Observer, Observable {
 			public void run() {
 				newStatistic();
 			}
-		}, 1 * 5000, 1 * 5000);
+		}, 1 * 2000, 1 * 2000);
 	}
 
 	/**

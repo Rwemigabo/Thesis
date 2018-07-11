@@ -11,8 +11,9 @@ import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
 import com.mycompany.aatr2.RandomString;
 import com.mycompany.aatr2.monitor.MonitorManager;
+//import com.mycompany.aatr2.monitor.data.Statistic;
 
-import flanagan.math.Gradient;
+//import flanagan.math.Gradient;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import net.sourceforge.jFuzzyLogic.FIS;
  * 
  * @author eric
  */
-public class Analyser implements Observer, Observable  {
+public class Analyser implements Observer, Observable {
 	private final String anId;
 	private final ArrayList<Observer> obs;
 
@@ -40,7 +41,9 @@ public class Analyser implements Observer, Observable  {
 	private ArrayList<Symptom> symplogs = new ArrayList<>();
 	private final Cluster cluster;
 	private MonitorManager mm;
-	private static final long THIRTY_MINUTES = 1 * 60 * 1000;
+	private static final long THIRTY_MINUTES = 10 * 60 * 1000;
+	// private final ArrayList<Statistic> spike = new ArrayList<>();
+	 private int analysisCount = 0;
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -114,10 +117,10 @@ public class Analyser implements Observer, Observable  {
 		// double previous_entry = 0;
 		Map<Timestamp, Double> c_map = new TreeMap<>(cpu);// order by the timestamp
 		Map<Timestamp, Double> m_map = new TreeMap<>(mem);// order by the timestamp
-		Plot cpugradPlot = new Plot(this.cluster.getServName(), "CPU Gradient");
-		Plot memgradPlot = new Plot(this.cluster.getServName(), "Memory Gradient");
-		Plot cpudataPlot = new Plot(this.cluster.getServName(), "CPU Utilization");
-		Plot memdataPlot = new Plot(this.cluster.getServName(), "Memory Utilization");
+		Plot cpugradPlot = new Plot(this.cluster.getServName(), "CPU Gradient", Integer.toString(analysisCount));
+		Plot memgradPlot = new Plot(this.cluster.getServName(), "Memory Gradient",Integer.toString(analysisCount));
+		Plot cpudataPlot = new Plot(this.cluster.getServName(), "CPU Data points",Integer.toString(analysisCount));
+		Plot memdataPlot = new Plot(this.cluster.getServName(), "Memory Data points",Integer.toString(analysisCount));
 		double[] cx = new double[c_map.size()];
 		double[] cy = new double[c_map.size()];
 		double[] mx = new double[m_map.size()];
@@ -130,9 +133,9 @@ public class Analyser implements Observer, Observable  {
 				cy[countCPU] = entry.getValue();
 				countCPU++;
 			}
-			cpudataPlot.plot(cx, cy);
-			cpudataPlot.pack();
-			cpudataPlot.setVisible(true);
+			 cpudataPlot.plot(cx, cy);
+//			 cpudataPlot.pack();
+//			 cpudataPlot.setVisible(true);
 
 		}
 
@@ -142,31 +145,37 @@ public class Analyser implements Observer, Observable  {
 				my[countMEM] = entry.getValue();
 				countMEM++;
 			}
-			memdataPlot.plot(cx, cy);
-			memdataPlot.pack();
-			memdataPlot.setVisible(true);
+			 memdataPlot.plot(mx, my);
+//			 memdataPlot.pack();
+//			 memdataPlot.setVisible(true);
 
 		}
 
-		// System.out.println("CPU timestamps: " + Arrays.toString(cx));
+		System.out.println("CPU timestamps: " + Arrays.toString(cx));
 		System.out.println("CPU values: " + Arrays.toString(cy));
-		// System.out.println("Memory values: " + Arrays.toString(my));
-		// System.out.println("Memory timestamps: " + Arrays.toString(mx));
-		Gradient cg = new Gradient(cx, cy);
-		Gradient mg = new Gradient(mx, my);
-
-		double[] cpu_gradients = cg.numDeriv_1D_array();// deltas in cpu usage
-		cpugradPlot.plot(cx, cpu_gradients);
-		cpugradPlot.pack();
-		cpugradPlot.setVisible(true);
-
-		double[] mem_gradients = mg.numDeriv_1D_array();// deltas in memory usage
+		System.out.println("Memory values: " + Arrays.toString(my));
+		System.out.println("Memory timestamps: " + Arrays.toString(mx));
+		// Gradient cgg = new Gradient(cx, cy);
+		// Gradient mgg = new Gradient(mx, my);
+		// GradientDescent cg = new GradientDescent(cx, cy);
+		// GradientDescent mg = new GradientDescent(mx, my);
+		// cg.execute();
+		// mg.execute();
+		// cg.printConvergence();
+		// mg.printConvergence();
+		double[] mem_gradients = gradient(mx, my);// deltas in memory usage
+		double[] cpu_gradients = gradient(cx, cy);// deltas in cpu usage
 		memgradPlot.plot(mx, mem_gradients);
-		memgradPlot.pack();
-		memgradPlot.setVisible(true);
+//		memgradPlot.pack();
+//		memgradPlot.setVisible(true);
+		
+		cpugradPlot.plot(cx, cpu_gradients);
+//		cpugradPlot.pack();
+//		cpugradPlot.setVisible(true);
 
 		System.out.println("cpu Grads: " + Arrays.toString(cpu_gradients));
 		System.out.println("Memory gradients: " + Arrays.toString(mem_gradients));
+		analysisCount++;
 		diagnose(cpu_gradients, mem_gradients);
 
 	}
@@ -222,14 +231,16 @@ public class Analyser implements Observer, Observable  {
 
 	/**
 	 * call either short term or long term analysis based on the time passed between
-	 * the last analysis/ checkpoint and this current statistic's timestamp.
+	 * the last analysis/ checkpoint and this current statistic's time stamp.
+	 * 
 	 */
 	public void windowCheck() {
 		cluster.getLogs().forEach((log) -> {
 
 			if (log != null) {
-				System.out.println("||||||||||||||||||||||||||||||||||||\n Number of stats :" + log.getMonitorstats().size() + " for container "+ log.container());
-				System.out.println("Checking window");
+
+				System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n Number of stats :"
+						+ log.getMonitorstats().size() + " for container " + log.container());
 				if (log.getminCheckpoint() == 0) {// if it's the first value to be recorded
 					log.setminCheckpoint(System.currentTimeMillis());
 					log.setHrCheckpoint(System.currentTimeMillis());
@@ -244,14 +255,14 @@ public class Analyser implements Observer, Observable  {
 					long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
 
 					if (m_window > THIRTY_MINUTES) {// if X mins have passed run short term analysis
-						System.out.println("\n 30 min window");
+						System.out.println("Checking 1 minute window");
 						runAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
 						log.setminCheckpoint(latest.getTime());
 					} else {
 					}
 
 					if (h_window > THIRTY_MINUTES * 2) {// if 2X mins have passed run long term analysis
-						System.out.println("\n 1 hr window");
+						System.out.println("Checking 1 minute window");
 						runAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
 						log.setHrCheckpoint(latest.getTime());
 					} else {
@@ -320,5 +331,35 @@ public class Analyser implements Observer, Observable  {
 		return cluster;
 	}
 
-	
+	/**
+	 * calculate gradients and return the values
+	 * 
+	 * @param x
+	 * @param y
+	 * @return list of gradient results otherwise null
+	 */
+	public double[] gradient(double[] x, double[] y) {
+
+		if (x.length != y.length) {
+			System.out.println("ARRAYS X AND Y ARE OF DIFFERENT SIZE. CANNOT CALCULATE GRADIENT");
+		} else {
+			double[] grad = new double[x.length];
+			for (int i = 0, j = 0; i <= x.length - 1 && j <= y.length - 1; i++, j++) {
+				if (i != x.length - 1 || j != y.length - 1) {
+					double thisgrad = (y[j+1] - y[j]) / (x[i+1] - x[i]);
+					grad[i] = thisgrad;
+				} else {
+					System.out.println("\n LAST VALUES IN ARRAYS");
+					double windowgrad = (y[j] - y[0]) / (x[i] - x[0]);
+					grad[i] = windowgrad;
+					System.out.println("\n LAST VALUES IN ARRAYS, SETTING TIME WINDOW GRAD = " + windowgrad);
+					break;
+
+				}
+			}
+			return grad;
+		}
+		return null;
+	}
+
 }

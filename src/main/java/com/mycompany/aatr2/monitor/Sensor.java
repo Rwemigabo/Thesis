@@ -63,7 +63,7 @@ public class Sensor extends Thread implements Observable {
 		this.property = new ContextElement(max, min, context);
 		this.contNm = dm.getContainer(cid).image();
 		try {
-			this.preCpu =dm.getContainerStats(this.contID).precpuStats().cpuUsage().totalUsage();
+			this.preCpu = dm.getContainerStats(this.contID).precpuStats().cpuUsage().totalUsage();
 			this.preSystem = dm.getContainerStats(this.contID).precpuStats().systemCpuUsage();
 		} catch (DockerException | InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -81,10 +81,8 @@ public class Sensor extends Thread implements Observable {
 		this.cpu = dm.getContainerStats(this.contID).cpuStats();
 
 		if (dm.getContainer(this.contID).state() != null) {// .contains("running")
-			this.cpuPerc = calculateCPU(this.cpu.cpuUsage().totalUsage(),
-					this.preCpu, this.cpu.systemCpuUsage(),
-					this.preSystem,
-					this.cpu.cpuUsage().percpuUsage().size());
+			this.cpuPerc = calculateCPU(this.cpu.cpuUsage().totalUsage(), this.preCpu, this.cpu.systemCpuUsage(),
+					this.preSystem, this.cpu.cpuUsage().percpuUsage().size());
 			checkThreshold(this.cpuPerc, contNm);
 
 		} else {
@@ -188,15 +186,16 @@ public class Sensor extends Thread implements Observable {
 	 * @return the CPU percentage being used
 	 */
 	public double calculateCPU(long totalUsage, long prevCPU, long totalSystUse, long prevSystem, int perCpuUsage) {
-		
+
 		double cpuP = 0;
 		float cpuDelta = (float) totalUsage - (float) prevCPU;
 		float systemDelta = (float) totalSystUse - (float) prevSystem;
-		System.out.println("\n cpuDelta "+ cpuDelta+"systemDelta "+ systemDelta  + " Container "+ this.contID);
+		// System.out.println("\n cpuDelta "+ cpuDelta+"systemDelta "+ systemDelta + "
+		// Container "+ this.contID);
 		if (systemDelta > 0.0 && cpuDelta > 0.0) {
 			cpuP = ((cpuDelta / systemDelta) * (perCpuUsage)) * 100;
 		}
-		System.out.println("\n CPU percentage "+ cpuP + " Container "+ this.contID);
+		// System.out.println("\n CPU percentage "+ cpuP + " Container "+ this.contID);
 		return cpuP;
 
 	}

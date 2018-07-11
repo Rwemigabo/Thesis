@@ -29,6 +29,13 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jFuzzyLogic.jar"/>
 	<classpathentry kind="lib" path="lib/flanagan.jar" sourcepath="lib/flanagan.jar"/>
+	<classpathentry kind="lib" path="/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/lib/jmathio.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/lib/jmathplot.jar" sourcepath="lib">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Users/eric/Desktop/Repos/jmathplot/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/eric/Desktop/Repos/jmathplot/src/main/java/org/math/plot"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
