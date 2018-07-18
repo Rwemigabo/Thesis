@@ -47,8 +47,8 @@ public class StatisticsLog {
 	public ArrayList<Statistic> getSystemStats(Timestamp t1, Timestamp t2) {
 
 		ArrayList<Statistic> s = new ArrayList<>();
-		for(Statistic stat : monitorstats) {
-			if(stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2)) {
+		for (Statistic stat : monitorstats) {
+			if (stat.getTimestamp().after(t1) && stat.getTimestamp().before(t2)) {
 				s.add(stat);
 			}
 		}
@@ -66,7 +66,7 @@ public class StatisticsLog {
 	}
 
 	public Statistic getLatest() {
-		System.out.println("\n Queue size : " + queue.size()+" for "+container );
+		System.out.println("\n Queue size : " + queue.size() + " for " + container);
 		Statistic s = null;
 		if (this.queue.size() > 0) {
 			s = this.queue.get(0);
@@ -78,6 +78,7 @@ public class StatisticsLog {
 	public void removeProcessed() {
 		this.queue.remove(0);
 	}
+
 	/*
 	 * returns cpu stats between the given timestamps.
 	 */
@@ -122,8 +123,29 @@ public class StatisticsLog {
 	public long getHrCheckpoint() {
 		return hr_checkpoint;
 	}
-	
+
 	public String container() {
 		return this.container;
+	}
+
+	public HashMap<Timestamp, Double> getMemStats() {
+		// TODO Auto-generated method stub
+		HashMap<Timestamp, Double> mem = new HashMap<>();
+		for (Statistic stat : this.monitorstats) {
+			Timestamp t2 = stat.getTimestamp();
+			double m = stat.getMemory();
+			mem.put(t2, m);
+		}
+		return mem;
+	}
+
+	public HashMap<Timestamp, Double> getCPUStats() {
+		HashMap<Timestamp, Double> cpu = new HashMap<>();
+		for (Statistic stat : this.monitorstats) {
+			Timestamp t2 = stat.getTimestamp();
+			double m = stat.getCpu();
+			cpu.put(t2, m);
+		}
+		return cpu;
 	}
 }

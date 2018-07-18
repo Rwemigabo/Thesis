@@ -58,7 +58,7 @@ public class Plot extends ApplicationFrame {
 		chartPanel.setPreferredSize(new java.awt.Dimension(560, 370));
 		setContentPane(chartPanel);
 
-		File n_Chart = new File("Plots/"+ getTitle()+ "_"+titleExt+"_"+sTitle+".jpeg");
+		File n_Chart = new File("./Plots/"+ getTitle()+ "_"+titleExt+"_"+sTitle+".jpeg");
 		try {
 			ChartUtilities.saveChartAsJPEG(n_Chart, chart, 560, 370);
 		} catch (IOException e) {
