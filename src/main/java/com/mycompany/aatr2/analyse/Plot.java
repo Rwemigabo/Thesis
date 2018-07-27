@@ -46,11 +46,11 @@ public class Plot extends ApplicationFrame {
 	 * @param y
 	 *            axis data
 	 */
-	public void plot(double[] x, double[] y) {
+	public void plot(long[] x, double[] y) {
 
 		for (int i = 0, j = 0; i < x.length && j < y.length; i++, j++) {
 			Second time1 = new Second(new Date((long) x[i]));
-			series.add(time1, y[j]);
+			series.addOrUpdate(time1, y[j]);
 		}
 		XYDataset data = new TimeSeriesCollection(series);
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(this.getTitle()+" " + titleExt, "X", "Y", data, true, true, false);
@@ -58,7 +58,7 @@ public class Plot extends ApplicationFrame {
 		chartPanel.setPreferredSize(new java.awt.Dimension(560, 370));
 		setContentPane(chartPanel);
 
-		File n_Chart = new File("./Plots/"+ getTitle()+ "_"+titleExt+"_"+sTitle+".jpeg");
+		File n_Chart = new File("../Plots/"+ getTitle()+ "_"+titleExt+"_"+sTitle+".jpeg");
 		try {
 			ChartUtilities.saveChartAsJPEG(n_Chart, chart, 560, 370);
 		} catch (IOException e) {

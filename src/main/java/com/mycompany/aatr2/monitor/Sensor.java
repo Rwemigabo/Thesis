@@ -83,7 +83,7 @@ public class Sensor extends Thread implements Observable {
 		if (dm.getContainer(this.contID).state() != null) {// .contains("running")
 			this.cpuPerc = calculateCPU(this.cpu.cpuUsage().totalUsage(), this.preCpu, this.cpu.systemCpuUsage(),
 					this.preSystem, this.cpu.cpuUsage().percpuUsage().size());
-			checkThreshold(this.cpuPerc, contNm);
+			//checkThreshold(this.cpuPerc, contNm);
 
 		} else {
 			System.out.print("Not running anymore");
@@ -108,7 +108,7 @@ public class Sensor extends Thread implements Observable {
 		this.mem = dm.getContainerStats(this.contID).memoryStats();
 		if (dm.getContainer(this.contID).state().contains("running")) {
 			this.free = memoryStat(this.mem.limit(), this.mem.usage());
-			checkThreshold(free, contNm);
+			//checkThreshold(free, contNm);
 		}
 	}
 

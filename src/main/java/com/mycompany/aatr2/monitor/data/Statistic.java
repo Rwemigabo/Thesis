@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package com.mycompany.aatr2.monitor.data;
+import java.io.Serializable;
 import java.sql.Timestamp;
 /**
  *
  * @author eric
  */
-public class Statistic {
+public class Statistic implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
     private final String containerID;
     private final String servicenm;
     private final double cpu;
@@ -73,6 +76,12 @@ public class Statistic {
 		
 	}
 	
+//	@Override
+//	public String toString() {
+//		return new StringBuffer(" Street : ")
+//				.append(this.street).append(" Country : ")
+//				.append(this.country).toString();
+//	}
     
     
 }

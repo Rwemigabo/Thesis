@@ -5,6 +5,8 @@
  */
 package com.mycompany.aatr2.monitor.data;
 
+import java.io.File;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,20 +15,24 @@ import java.util.HashMap;
  *
  * @author eric
  */
-public class StatisticsLog {
+public class StatisticsLog implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Statistic> monitorstats;
 	private ArrayList<Statistic> queue;
 	private final String container;
 	private long min_checkpoint = 0;
 	private long hr_checkpoint = 0;
+	private  final File newstatLog;
 
 	public StatisticsLog(String snm) {
 		this.container = snm;
 		this.monitorstats = new ArrayList<>();
 		this.queue = new ArrayList<>();
+		this.newstatLog  = new File("../dataoutputs/" + container+".ser");
 	}
 
+	
 	public ArrayList<Statistic> getMonitorstats() {
 		return monitorstats;
 	}
@@ -148,4 +154,11 @@ public class StatisticsLog {
 		}
 		return cpu;
 	}
+
+
+	public File getstatLogFile() {
+		return newstatLog;
+	}
+	
+	
 }

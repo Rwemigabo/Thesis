@@ -12,17 +12,20 @@ import com.mycompany.aatr2.Observer;
 import com.mycompany.aatr2.RandomString;
 import com.mycompany.aatr2.monitor.MonitorManager;
 //import com.mycompany.aatr2.monitor.data.Statistic;
+import com.mycompany.aatr2.monitor.data.StatisticsLog;
 
 //import flanagan.math.Gradient;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import net.sourceforge.jFuzzyLogic.FIS;
 
@@ -41,7 +44,7 @@ public class Analyser implements Observer, Observable {
 	private ArrayList<Symptom> symplogs = new ArrayList<>();
 	private final Cluster cluster;
 	private MonitorManager mm;
-	private long MINUTES_WINDOW = 20 * 60 * 1000;
+	private long MINUTES_WINDOW = 5 * 60 * 1000;
 	// private final ArrayList<Statistic> spikestats = new ArrayList<>();
 	private int analysisCount = 0;
 
@@ -54,6 +57,15 @@ public class Analyser implements Observer, Observable {
 		// this.obvle = new ArrayList<>();
 
 		this.mm = MonitorManager.getInstance();
+	}
+
+	/**
+	 * testing purposes.
+	 */
+	public Analyser() {
+		this.anId = new RandomString(8).nextString();
+		this.obs = new ArrayList<>();
+		this.cluster = null;
 	}
 
 	public void initiate() {
@@ -97,6 +109,50 @@ public class Analyser implements Observer, Observable {
 
 	}
 
+	/**
+	 * Takes a list of the prediction of the cpu metric and the prediction of the memory metric within the next set minutes
+	 * and uses fuzzy logic analysis to estimate the containers needed to be added
+	 * or removed to optimize the service
+	 * 
+	 * @param avrcpu
+	 * @param avrmem
+	 */
+	public void diagnose(double cpupred, double mempred) {
+		String fileName = "/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/src/main/java/com/mycompany/aatr2/analyse/SystAnalysis.fcl";
+		FIS fis = FIS.load(fileName, true);
+		if (fis == null) {
+			System.err.println("Can't load file: '" + fileName + "'");
+			return;
+		}
+
+		// Set inputs and evaluate then create new symptom
+			System.out.println(
+					"\n Memory value to be processed = " + mempred + " CPU value to be processed = " + cpupred);
+			fis.setVariable("MEM_load_delta", mempred);
+			fis.setVariable("CPU_load_delta", cpupred);
+			fis.evaluate();
+			double result = fis.getVariable("replicas").getValue();
+			System.out.println("Number of replicas required = " + result);
+
+		
+		createSymptom(result);
+		System.out.println("Average = " + result);
+
+	}
+	
+	// /**
+	// * Use classic integral control to perform a diagnosis and request a topology
+	// type
+	// *
+	// */
+	// public void newDiagnosis(double[] cpugrad, double[] cy) {
+	//
+	// }
+	//
+	// public double integCalculate() {
+	// double cont_count
+	// }
+
 	private double calculateAverage(List<Double> results) {
 		double sum = 0;
 		if (!results.isEmpty()) {
@@ -119,15 +175,15 @@ public class Analyser implements Observer, Observable {
 	 */
 	public void runWindowAnalysis(HashMap<Timestamp, Double> cpu, HashMap<Timestamp, Double> mem) {
 		// double previous_entry = 0;
- 		Map<Timestamp, Double> c_map = new TreeMap<>(cpu);// order by the timestamp
-		Map<Timestamp, Double> m_map = new TreeMap<>(mem);// order by the timestamp
-		//Plot cpugradPlot = new Plot(this.cluster.getServName(), "CPU Gradient", Integer.toString(analysisCount));
-		//Plot memgradPlot = new Plot(this.cluster.getServName(), "Memory Gradient", Integer.toString(analysisCount));
+		TreeMap<Timestamp, Double> c_map = new TreeMap<>(cpu);// order by the timestamp
+		TreeMap<Timestamp, Double> m_map = new TreeMap<>(mem);// order by the timestamp
+		Plot cpugradPlot = new Plot(this.cluster.getServName(), "CPU Gradient", Integer.toString(analysisCount));
+		Plot memgradPlot = new Plot(this.cluster.getServName(), "Memory Gradient", Integer.toString(analysisCount));
 		Plot cpudataPlot = new Plot(this.cluster.getServName(), "CPU Data points", Integer.toString(analysisCount));
 		Plot memdataPlot = new Plot(this.cluster.getServName(), "Memory Data points", Integer.toString(analysisCount));
-		double[] cx = new double[c_map.size()];
+		long[] cx = new long[c_map.size()];
 		double[] cy = new double[c_map.size()];
-		double[] mx = new double[m_map.size()];
+		long[] mx = new long[m_map.size()];
 		double[] my = new double[m_map.size()];
 		int countCPU = 0;
 		int countMEM = 0;
@@ -167,113 +223,124 @@ public class Analyser implements Observer, Observable {
 		// mg.execute();
 		// cg.printConvergence();
 		// mg.printConvergence();
-//		
-		
+		//
+
 		double[] min_mem_gradients = runMinuteMemoryAnalysis(mx, my, "Window Minute Memory Gradient");
-		double[] min_cpu_gradients =runMinuteCPUAnalysis(cx, cy, "Window Minute CPU Gradient");
+		double[] min_cpu_gradients = runMinuteCPUAnalysis(cx, cy, "Window Minute CPU Gradient");
 		double[] mem_gradients = gradient(mx, my);// deltas in memory usage
 		double[] cpu_gradients = gradient(cx, cy);// deltas in cpu usage
-		//memgradPlot.plot(mx, mem_gradients);
+		memgradPlot.plot(mx, mem_gradients);
 		// memgradPlot.pack();
 		// memgradPlot.setVisible(true);
 
-		//cpugradPlot.plot(cx, cpu_gradients);
+		cpugradPlot.plot(cx, cpu_gradients);
 		// cpugradPlot.pack();
 		// cpugradPlot.setVisible(true);
+		
 
 		System.out.println("cpu Grads: " + Arrays.toString(cpu_gradients));
 		System.out.println("Memory gradients: " + Arrays.toString(mem_gradients));
 		analysisCount++;
-		if(cpu_gradients != null && cpu_gradients != null) {
+		if (cpu_gradients != null && mem_gradients != null) {
 			diagnose(cpu_gradients, mem_gradients);
-		}else {System.out.println("NULL gradients");}
-		if(min_cpu_gradients != null && min_cpu_gradients != null) {
-			diagnose(min_cpu_gradients ,min_mem_gradients);
-		}else {System.out.println("NULL minute gradients");}
-		
+		} else {
+			System.out.println("NULL gradients");
+		}
+		if (min_cpu_gradients != null && min_mem_gradients != null) {
+			diagnose(min_cpu_gradients, min_mem_gradients);
+		} else {
+			System.out.println("NULL minute gradients");
+		}
 
 	}
 
 	/**
-	 * runs an gradient calculations on each of the minutes in the set time frame of the memory data depending on the set window
-	 * calls to plot the gradients
+	 * runs an gradient calculations on each of the minutes in the set time frame of
+	 * the memory data depending on the set window calls to plot the gradients
+	 * 
 	 * @param mx
 	 * @param my
 	 * @param graphtitle
 	 * @return list of gradients
 	 */
-	private double[] runMinuteMemoryAnalysis(double[] mx, double[] my, String graphtitle) {
-		Plot minmemgradPlot = new Plot(this.cluster.getServName(), graphtitle, Integer.toString(analysisCount));
-		if(MINUTES_WINDOW >= 10* 60 * 1000 && MINUTES_WINDOW <= 20* 60 * 1000) {
-			//include gradients for every 2 minutes
+	private double[] runMinuteMemoryAnalysis(long[] mx, double[] my, String graphtitle) {
+		// Plot minmemgradPlot = new Plot(this.cluster.getServName(), graphtitle,
+		// Integer.toString(analysisCount));
+		if (MINUTES_WINDOW >= 10 * 60 * 1000 && MINUTES_WINDOW <= 20 * 60 * 1000) {
+			// include gradients for every 2 minutes
 			double[] min_mem_gradients = gradient(mx, my, 2);
-			minmemgradPlot.plot(mx, min_mem_gradients);
+			// minmemgradPlot.plot(mx, min_mem_gradients);
 			// memgradPlot.pack();
 			// memgradPlot.setVisible(true);
 			return min_mem_gradients;
 
-		}else if(MINUTES_WINDOW >= 20 * 60 * 1000 && MINUTES_WINDOW <= 30* 60 * 1000) {
-			//include gradients for every 4 minutes
+		} else if (MINUTES_WINDOW >= 20 * 60 * 1000 && MINUTES_WINDOW <= 30 * 60 * 1000) {
+			// include gradients for every 4 minutes
 			double[] min_mem_gradients = gradient(mx, my, 4);
-			
-			minmemgradPlot.plot(mx, min_mem_gradients);
+
+			// minmemgradPlot.plot(mx, min_mem_gradients);
 			// memgradPlot.pack();
 			// memgradPlot.setVisible(true);
 			return min_mem_gradients;
 
-		}else if(MINUTES_WINDOW >= 5 * 60 * 1000&& MINUTES_WINDOW < 10* 60 * 1000) {
-			//include gradients for every 1 minutes
+		} else if (MINUTES_WINDOW >= 5 * 60 * 1000 && MINUTES_WINDOW < 10 * 60 * 1000) {
+			// include gradients for every 1 minutes
 			double[] min_mem_gradients = gradient(mx, my, 1);
-			
-			minmemgradPlot.plot(mx, min_mem_gradients);
+
+			// minmemgradPlot.plot(mx, min_mem_gradients);
 			// memgradPlot.pack();
 			// memgradPlot.setVisible(true);
 			return min_mem_gradients;
-		}else {return null;}
-		
+		} else {
+			return null;
+		}
+
 	}
 
 	/**
-	 * runs an gradient calculations on each of the minutes in the set time frame of the cpu data depending on the set window
-	 * calls to plot the gradients
+	 * runs an gradient calculations on each of the minutes in the set time frame of
+	 * the cpu data depending on the set window calls to plot the gradients
+	 * 
 	 * @param cx
 	 * @param cy
 	 * @param graphtitle
 	 * @return list of cpu gradients
 	 */
-	private double[] runMinuteCPUAnalysis(double[] cx, double[] cy, String graphtitle) {
-		Plot mincpugradPlot = new Plot(this.cluster.getServName(), graphtitle, Integer.toString(analysisCount));
-		if(MINUTES_WINDOW >= 10* 60 * 1000 && MINUTES_WINDOW <= 20* 60 * 1000) {
-			//include gradients for every 2 minutes
+	private double[] runMinuteCPUAnalysis(long[] cx, double[] cy, String graphtitle) {
+		// Plot mincpugradPlot = new Plot(this.cluster.getServName(), graphtitle,
+		// Integer.toString(analysisCount));
+		if (MINUTES_WINDOW >= 10 * 60 * 1000 && MINUTES_WINDOW <= 20 * 60 * 1000) {
+			// include gradients for every 2 minutes
 			double[] min_cpu_gradients = gradient(cx, cy, 2);
-			
-			mincpugradPlot.plot(cx, min_cpu_gradients);
+
+			// mincpugradPlot.plot(cx, min_cpu_gradients);
 			// cpugradPlot.pack();
 			// cpugradPlot.setVisible(true);
 			return min_cpu_gradients;
 
-		}else if((MINUTES_WINDOW >= 20 * 60 * 1000 && MINUTES_WINDOW <= 30* 60 * 1000)) {
-			//include gradients for every 4 minutes
+		} else if ((MINUTES_WINDOW >= 20 * 60 * 1000 && MINUTES_WINDOW <= 30 * 60 * 1000)) {
+			// include gradients for every 4 minutes
 			double[] min_cpu_gradients = gradient(cx, cy, 4);
-			
-			mincpugradPlot.plot(cx, min_cpu_gradients);
+
+			// mincpugradPlot.plot(cx, min_cpu_gradients);
 			// cpugradPlot.pack();
 			// cpugradPlot.setVisible(true);
 			return min_cpu_gradients;
 
-		}else if(MINUTES_WINDOW >= 5 * 60 * 1000 && MINUTES_WINDOW < 10* 60 * 1000) {
-			//include gradients for every 1 minutes
+		} else if (MINUTES_WINDOW >= 5 * 60 * 1000 && MINUTES_WINDOW < 10 * 60 * 1000) {
+			// include gradients for every 1 minutes
 			double[] min_cpu_gradients = gradient(cx, cy, 1);
-			
-			mincpugradPlot.plot(cx, min_cpu_gradients);
+
+			// mincpugradPlot.plot(cx, min_cpu_gradients);
 			// cpugradPlot.pack();
 			// cpugradPlot.setVisible(true);
 			return min_cpu_gradients;
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
+
 	/**
 	 * Get the value of analyzer Id
 	 *
@@ -330,7 +397,7 @@ public class Analyser implements Observer, Observable {
 	 */
 	public void windowCheck() {
 		cluster.getLogs().forEach((log) -> {
-
+			cluster.writeToFile(log);
 			if (log != null) {
 
 				System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n Number of stats :"
@@ -341,21 +408,21 @@ public class Analyser implements Observer, Observable {
 				} else {
 					System.out.println("latest log" + log.getLatest().getTimestamp());
 					Timestamp latest = log.getLatest().getTimestamp();
-					Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
-					//System.out.println("Minutes Timestamp" + mincheckpt);
-					Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
+					//Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
+					// System.out.println("Minutes Timestamp" + mincheckpt);
+					//Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
 
 					long m_window = System.currentTimeMillis() - log.getminCheckpoint();
 					long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
 
-					if (m_window > MINUTES_WINDOW) {// if X mins have passed run short term analysis
+					if (m_window >= MINUTES_WINDOW) {// if X mins have passed run short term analysis
 						System.out.println("Checking 1 minute window");
-						runWindowAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
+						//unWindowAnalysis(log.getCPUStats(latest, mincheckpt), log.getMemStats(latest, mincheckpt));
 						runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
 						log.setminCheckpoint(latest.getTime());
-					} else if (h_window > MINUTES_WINDOW * 2) {// if 2X mins have passed run long term analysis
+					} else if (h_window >= MINUTES_WINDOW * 2) {// if 2X mins have passed run long term analysis
 						System.out.println("Checking 1 minute window");
-						runWindowAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
+						//runWindowAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest, hrcheckpt));
 						runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
 						log.setHrCheckpoint(latest.getTime());
 					} else {
@@ -382,17 +449,20 @@ public class Analyser implements Observer, Observable {
 
 	/**
 	 * Runs a fill analysis on the whole dataset since the first recorded data point
+	 * 
 	 * @param cpuStats
 	 * @param memStats
 	 */
 	private void runFullDataAnalysis(HashMap<Timestamp, Double> cpuStats, HashMap<Timestamp, Double> memStats) {
-		Map<Timestamp, Double> c_map = new TreeMap<>(cpuStats);// order by the timestamp
-		Map<Timestamp, Double> m_map = new TreeMap<>(memStats);// order by the timestamp
-		Plot cpudataPlot = new Plot(this.cluster.getServName(), "Full CPU Data points", Integer.toString(analysisCount));
-		Plot memdataPlot = new Plot(this.cluster.getServName(), "Full Memory Data points", Integer.toString(analysisCount));
-		double[] cx = new double[c_map.size()];
+		TreeMap<Timestamp, Double> c_map = new TreeMap<>(cpuStats);// order by the timestamp
+		TreeMap<Timestamp, Double> m_map = new TreeMap<>(memStats);// order by the timestamp
+		Plot cpudataPlot = new Plot(this.cluster.getServName(), "Full CPU Data points",
+				Integer.toString(analysisCount));
+		Plot memdataPlot = new Plot(this.cluster.getServName(), "Full Memory Data points",
+				Integer.toString(analysisCount));
+		long[] cx = new long[c_map.size()];
 		double[] cy = new double[c_map.size()];
-		double[] mx = new double[m_map.size()];
+		long[] mx = new long[m_map.size()];
 		double[] my = new double[m_map.size()];
 		int countCPU = 0;
 		int countMEM = 0;
@@ -418,17 +488,19 @@ public class Analyser implements Observer, Observable {
 		System.out.println("Full CPU values: " + Arrays.toString(cy));
 		System.out.println("Full Memory values: " + Arrays.toString(my));
 		System.out.println("Full Memory timestamps: " + Arrays.toString(mx));
-		
-		double[] min_mem_gradients = runMinuteMemoryAnalysis(mx, my, "Full Minute Memory Gradient");
-		double[] min_cpu_gradients =runMinuteCPUAnalysis(cx, cy, "Full Minute CPU Gradient");
-		//double[] mem_gradients = gradient(mx, my);// deltas in memory usage
-		//double[] cpu_gradients = gradient(cx, cy);// deltas in cpu usage
 
-		//System.out.println("Full cpu Grads: " + Arrays.toString(cpu_gradients));
-		//System.out.println("Full Memory gradients: " + Arrays.toString(mem_gradients));
-		System.out.println("Full cpu Grads: " + Arrays.toString(min_cpu_gradients));
-		System.out.println("Full Memory gradients: " + Arrays.toString(min_mem_gradients));
+		//double[] min_mem_gradients = runMinuteMemoryAnalysis(mx, my, "Full Memory Gradient");
+		//double[] min_cpu_gradients = runMinuteCPUAnalysis(cx, cy, "Full CPU Gradient");
 		
+
+		double CPU_prediction = makePrediction(c_map);
+		double Mem_prediction = makePrediction(m_map);
+		
+		diagnose(CPU_prediction, Mem_prediction);
+		
+		//System.out.println("Full cpu Grads: " + Arrays.toString(min_cpu_gradients));
+		//System.out.println("Full Memory gradients: " + Arrays.toString(min_mem_gradients));
+
 	}
 
 	public ArrayList<Symptom> getSymplogs() {
@@ -484,15 +556,16 @@ public class Analyser implements Observer, Observable {
 	 *            metric values
 	 * @return list of gradient results otherwise null
 	 */
-	public double[] gradient(double[] x, double[] y) {
+	public double[] gradient(long[] x, double[] y) {
 
 		if (x.length != y.length) {
 			System.out.println("ARRAYS X AND Y ARE OF DIFFERENT SIZE. CANNOT CALCULATE GRADIENT");
 		} else {
 			double[] grad = new double[x.length];
+			double secs = 1000;
 			for (int i = 0, j = 0; i <= x.length - 1 && j <= y.length - 1; i++, j++) {
 				if (i != x.length - 1 || j != y.length - 1) {
-					double thisgrad = (y[j + 1] - y[j]) / (x[i + 1] - x[i]);
+					double thisgrad = (y[j + 1] - y[j]) / ((x[i + 1] - x[i]) / secs);
 					grad[i] = thisgrad;
 				} else {
 					System.out.println("\n LAST VALUES IN ARRAYS");
@@ -520,7 +593,7 @@ public class Analyser implements Observer, Observable {
 	 *            the requred minute diffrence
 	 * @return list of gradient results otherwise null
 	 */
-	public double[] gradient(double[] x, double[] y, int min) {
+	public double[] gradient(long[] x, double[] y, int min) {
 
 		if (x.length != y.length) {
 			System.out.println("ARRAYS X AND Y ARE OF DIFFERENT SIZE. CANNOT CALCULATE GRADIENT");
@@ -529,19 +602,19 @@ public class Analyser implements Observer, Observable {
 			for (int i = 0, j = 0; i <= x.length - 1 && j <= y.length - 1; i++, j++) {
 				if (i != x.length - 1 || j != y.length - 1) {
 					if (checkNext(i, x, min) > 0) {
-						double nextX = x[checkNext(i, x, min)];
+						long nextX = x[checkNext(i, x, min)];
 						double nextY = y[checkNext(i, x, min)];
-						double thisgrad = (nextY - y[j]) / (nextX - x[i]);
+						double thisgrad = (nextY - y[j]) / ((nextX - x[i]) / 1000);
 						grad[i] = thisgrad;
-					}else {
+					} else {
 						System.out.println("\n NO MORE VALUES FURTHER THAN " + min + " Minutes. Breaking loop");
-						double thisgrad = (y[y.length-1] - y[j]) / (x[x.length-1] - x[i]);
+						double thisgrad = (y[y.length - 1] - y[j]) / ((x[i + 1] - x[i]) / 1000);
 						grad[i] = thisgrad;
 						break;
 					}
 				} else {
 					System.out.println("\n LAST VALUES IN ARRAYS");
-					double windowgrad = (y[j] - y[0]) / (x[i] - x[0]);
+					double windowgrad = (y[j] - y[y.length - 1]) / ((x[i] - x[x.length - 1]) / 1000);
 					grad[i] = windowgrad;
 					System.out.println("\n LAST VALUES IN ARRAYS, SETTING TIME WINDOW GRAD = " + windowgrad);
 					break;
@@ -563,7 +636,7 @@ public class Analyser implements Observer, Observable {
 	 *            required minute difference
 	 * @return next position of the next minute required
 	 */
-	public int checkNext(int x, double[] xlist, int mins) {
+	public int checkNext(int x, long[] xlist, int mins) {
 		for (int i = x + 1; i <= xlist.length - 1; i++) {
 			if (checkMinute(xlist[x], xlist[i], mins)) {
 				return i;
@@ -584,8 +657,8 @@ public class Analyser implements Observer, Observable {
 	 *            how many minnutes apart are required
 	 * @return true or false whether they are the required difference apart.
 	 */
-	public boolean checkMinute(double current_min, double next_min, int diff) {
-		long difference = (long) next_min - (long) current_min;
+	public boolean checkMinute(long current_min, long next_min, int diff) {
+		long difference = next_min - current_min;
 		long reqired_diff = diff * 60 * 1000;
 		if (difference >= reqired_diff) {
 			return true;
@@ -593,4 +666,94 @@ public class Analyser implements Observer, Observable {
 			return false;
 		}
 	}
+
+	// /**
+	// *
+	// * @param y
+	// * @return the max value in the array.
+	// */
+	// public double getMax(List<Double> y) {
+	// List<Double> b = Arrays.asList(ArrayUtils.toObject(y));
+	// return Collections.max(b);
+	// }
+
+	/**
+	 * call either short term or long term analysis based on the time passed between
+	 * the last analysis/ checkpoint and this current statistic's time stamp.
+	 * 
+	 */
+	public void filewindowCheck(StatisticsLog sl) {
+
+		if (sl != null) {
+
+			System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n Number of stats :"
+					+ sl.getMonitorstats().size() + " for container " + sl.container());
+			runFullDataAnalysis(sl.getCPUStats(), sl.getMemStats());
+
+		} else {
+			System.out.println("\n No logs found ");
+		}
+		// });
+	}
+
+	// /**
+	// * change the dataset to average value of every "X" seconds
+	// *
+	// * @param x
+	// * array of x values
+	// * @param y
+	// * array of y values
+	// * @param frame
+	// * the amount of time in each frame in seconds.
+	// * @return array of x, 'Max' y values.
+	// */
+	// public double[][] XSecFrames(double[] x, double[] y, int frame) {
+	// double[][] X_secs = new double[10][10];
+	// for (int i = 0; i < x.length; i++) {
+	// for (int j = 0; i < y.length; j++) {
+	// // if() {
+	// //
+	// // }
+	// }
+	// }
+	// return X_secs;
+	// }
+
+	/**
+	 * Performs a prediction for the next time Window.
+	 * @param treemap of data to perform prediction on
+	 * @return
+	 */
+	private double makePrediction(TreeMap<Timestamp, Double> trendList) {
+		if (trendList.size() == 0) {
+			System.out.println("Nothhing in list for prediction to be made");
+			return 0;
+		}
+		SimpleRegression regression = new SimpleRegression();
+		double prediction = 0;
+		List<Double> y_predicts = new ArrayList<>();
+
+		for (Map.Entry<Timestamp, Double> entry : trendList.entrySet()) {
+			regression.addData(entry.getKey().getTime(), entry.getValue());
+		}
+
+		long frame = 10 * 1000;// 10 second frames
+		long lastvalue = trendList.lastEntry().getKey().getTime() + MINUTES_WINDOW; //last timestamp in the prediction values
+		for (long afterlast = trendList.lastEntry().getKey().getTime()+100; afterlast < lastvalue; afterlast += frame) {
+			double metric = regression.predict(afterlast);
+			y_predicts.add(metric);
+		}
+
+		prediction = Collections.max(y_predicts);
+		return prediction;
+
+		// glucoseSlopeRaw = regression.getSlope();
+		// confidenceInterval = regression.getSlopeConfidenceInterval();
+		// int ageInSensorMinutes = trendList.get(trendList.size() -
+		// 1).getAgeInSensorMinutes() + PREDICTION_TIME;
+		// glucoseData = new GlucoseData(trendList.get(0).getSensor(),
+		// ageInSensorMinutes,
+		// trendList.get(0).getTimezoneOffsetInMinutes(), glucoseLevelRaw, true);
+	}
+
 }
