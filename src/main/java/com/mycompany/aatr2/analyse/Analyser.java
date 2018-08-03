@@ -44,11 +44,12 @@ public class Analyser implements Observer, Observable {
 	private ArrayList<Symptom> symplogs = new ArrayList<>();
 	private final Cluster cluster;
 	private MonitorManager mm;
-	private long MINUTES_WINDOW = 5 * 60 * 1000;
+	private long MINUTES_WINDOW = 5 * 60 * 1000;// how often to run analysis
 	// private final ArrayList<Statistic> spikestats = new ArrayList<>();
 	private int analysisCount = 0;
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+	private TreeMap<Long, Double> full_pred_data = new TreeMap<>();
 
 	public Analyser(Cluster c) {
 		this.anId = new RandomString(8).nextString();
@@ -743,7 +744,8 @@ public class Analyser implements Observer, Observable {
 	// }
 
 	/**
-	 * Performs a prediction for the next time Window.
+	 * Performs a prediction for the next time Window, plots the predictions for the next window and plots the predictions for 
+	 * all the full data including previous predictions.
 	 * @param treemap of data to perform prediction on
 	 * @return
 	 */
@@ -766,11 +768,13 @@ public class Analyser implements Observer, Observable {
 			double metric = regression.predict(afterlast);
 			y_predicts.add(metric);
 			plot_data.put(afterlast, metric);
+			full_pred_data.put(afterlast, metric);
 			
 		}
 		
 		prediction = Collections.max(y_predicts);
-		plotData(plot_data, "Prediction for "+ metric_nm);
+		plotData(plot_data, "Window Prediction for "+ metric_nm);
+		plotData(full_pred_data, "Full Prediction Data for "+ metric_nm);
 		return prediction;
 
 		// glucoseSlopeRaw = regression.getSlope();

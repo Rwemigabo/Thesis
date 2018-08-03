@@ -242,11 +242,11 @@ public class Sensor extends Thread implements Observable {
 
 	public double getLogValue() {
 		if (this.name.equals("Memory")) {
-			System.out.println("Returned Memory" + free);
+			//System.out.println("Returned Memory" + free);
 			return this.free;
 
 		} else if (this.name.equals("CPU")) {
-			System.out.println("Returned CPU" + this.cpuPerc);
+			//System.out.println("Returned CPU" + this.cpuPerc);
 			return this.cpuPerc;
 		}
 		System.out.println("Returned NULL");
