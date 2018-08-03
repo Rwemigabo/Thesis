@@ -163,6 +163,29 @@ public class Analyser implements Observer, Observable {
 		}
 		return sum;
 	}
+	
+	private void plotData(TreeMap<Long, Double> map, String title) {
+		Plot p = new Plot(this.cluster.getServName(), title, Integer.toString(analysisCount));
+		long[] cx = new long[map.size()];
+		double[] cy = new double[map.size()];
+		
+		int countCPU = 0;
+		if (countCPU < map.size()) {
+			for (Map.Entry<Long, Double> entry : map.entrySet()) {
+				cx[countCPU] = entry.getKey();
+				cy[countCPU] = entry.getValue();
+				countCPU++;
+			}
+			p.plot(cx, cy);
+			// cpudataPlot.pack();
+			// cpudataPlot.setVisible(true);
+
+		}
+		
+		System.out.println(title+": Timestamps " + Arrays.toString(cx));
+		System.out.println(title+" values: " + Arrays.toString(cy));
+		
+	}
 
 	/**
 	 * Analyzes data in the given hashmap by calculating the gradients at each point
@@ -493,8 +516,8 @@ public class Analyser implements Observer, Observable {
 		//double[] min_cpu_gradients = runMinuteCPUAnalysis(cx, cy, "Full CPU Gradient");
 		
 
-		double CPU_prediction = makePrediction(c_map);
-		double Mem_prediction = makePrediction(m_map);
+		double CPU_prediction = makePrediction(c_map, "CPU");
+		double Mem_prediction = makePrediction(m_map, "Memory");
 		
 		diagnose(CPU_prediction, Mem_prediction);
 		
@@ -724,7 +747,7 @@ public class Analyser implements Observer, Observable {
 	 * @param treemap of data to perform prediction on
 	 * @return
 	 */
-	private double makePrediction(TreeMap<Timestamp, Double> trendList) {
+	private double makePrediction(TreeMap<Timestamp, Double> trendList, String metric_nm) {
 		if (trendList.size() == 0) {
 			System.out.println("Nothhing in list for prediction to be made");
 			return 0;
@@ -732,19 +755,22 @@ public class Analyser implements Observer, Observable {
 		SimpleRegression regression = new SimpleRegression();
 		double prediction = 0;
 		List<Double> y_predicts = new ArrayList<>();
-
+		TreeMap<Long, Double> plot_data = new TreeMap<>();
 		for (Map.Entry<Timestamp, Double> entry : trendList.entrySet()) {
 			regression.addData(entry.getKey().getTime(), entry.getValue());
 		}
 
 		long frame = 10 * 1000;// 10 second frames
 		long lastvalue = trendList.lastEntry().getKey().getTime() + MINUTES_WINDOW; //last timestamp in the prediction values
-		for (long afterlast = trendList.lastEntry().getKey().getTime()+100; afterlast < lastvalue; afterlast += frame) {
+		for (long afterlast = trendList.lastEntry().getKey().getTime()+100; afterlast <= lastvalue; afterlast += frame) {
 			double metric = regression.predict(afterlast);
 			y_predicts.add(metric);
+			plot_data.put(afterlast, metric);
+			
 		}
-
+		
 		prediction = Collections.max(y_predicts);
+		plotData(plot_data, "Prediction for "+ metric_nm);
 		return prediction;
 
 		// glucoseSlopeRaw = regression.getSlope();
@@ -755,5 +781,7 @@ public class Analyser implements Observer, Observable {
 		// ageInSensorMinutes,
 		// trendList.get(0).getTimezoneOffsetInMinutes(), glucoseLevelRaw, true);
 	}
+	
+	
 
 }
