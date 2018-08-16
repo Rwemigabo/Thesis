@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class StatisticsLog implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Statistic> monitorstats;
+	private ArrayList<Statistic> monitorstats;//to knowledge
 	private ArrayList<Statistic> queue;
 	private final String container;
 	private long min_checkpoint = 0;

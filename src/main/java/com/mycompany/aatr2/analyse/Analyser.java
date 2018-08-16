@@ -41,7 +41,7 @@ public class Analyser implements Observer, Observable {
 	private final ArrayList<Observer> obs;
 
 	// private Observable obvle = null;
-	private ArrayList<Symptom> symplogs = new ArrayList<>();
+	private ArrayList<Symptom> symplogs = new ArrayList<>();//to knowledge
 	private final Cluster cluster;
 	private MonitorManager mm;
 	private long MINUTES_WINDOW = 5 * 60 * 1000;// how often to run analysis
@@ -49,7 +49,8 @@ public class Analyser implements Observer, Observable {
 	private int analysisCount = 0;
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-	private TreeMap<Long, Double> full_pred_data = new TreeMap<>();
+	private TreeMap<Long, Double> full_pred_data = new TreeMap<>();//to knowledge
+	private final DynamicLineAndTimeSeriesChart dynamic_pred_chart = new DynamicLineAndTimeSeriesChart("");
 
 	public Analyser(Cluster c) {
 		this.anId = new RandomString(8).nextString();
@@ -534,33 +535,35 @@ public class Analyser implements Observer, Observable {
 	public void setSymplogs(ArrayList<Symptom> symplogs) {
 		this.symplogs = symplogs;
 	}
-
+	/**
+	 * 
+	 * @return latest system state
+	 */
 	public Symptom getLatest() {
 		return this.symplogs.get(symplogs.size() - 1);
 	}
 
 	/**
-	 * Using the result, a symptom is created and logged in the symptoms log list
+	 * Using the result from the diagnosis, a symptom is created and logged in the symptoms log list
 	 * and if the result is more or less than 0.5 then the Analysis manager is
 	 * notified and the current symptoms for the whole topology are logged in a new
 	 * system state.
 	 * 
-	 * @param result
-	 *            from the diagnosis
+	 * @param result from the diagnosis
 	 */
 	public void createSymptom(double result) {
-		if (result > 0 && result < 0.5) {
+		if (result > 0 && result < 1) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
 			symplogs.add(nSymp);
-		} else if (result < 0 && result > -0.5) {
+		} else if (result < 0 && result > -1) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
 			symplogs.add(nSymp);
-		} else if (result > 0.5) {
+		} else if (result >= 1) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
 			symplogs.add(nSymp);
 			notifyObservers();
 
-		} else if (result < -0.5) {
+		} else if (result <= -1) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
 			symplogs.add(nSymp);
 			notifyObservers();
@@ -690,17 +693,7 @@ public class Analyser implements Observer, Observable {
 			return false;
 		}
 	}
-
-	// /**
-	// *
-	// * @param y
-	// * @return the max value in the array.
-	// */
-	// public double getMax(List<Double> y) {
-	// List<Double> b = Arrays.asList(ArrayUtils.toObject(y));
-	// return Collections.max(b);
-	// }
-
+	
 	/**
 	 * call either short term or long term analysis based on the time passed between
 	 * the last analysis/ checkpoint and this current statistic's time stamp.
@@ -720,28 +713,6 @@ public class Analyser implements Observer, Observable {
 		// });
 	}
 
-	// /**
-	// * change the dataset to average value of every "X" seconds
-	// *
-	// * @param x
-	// * array of x values
-	// * @param y
-	// * array of y values
-	// * @param frame
-	// * the amount of time in each frame in seconds.
-	// * @return array of x, 'Max' y values.
-	// */
-	// public double[][] XSecFrames(double[] x, double[] y, int frame) {
-	// double[][] X_secs = new double[10][10];
-	// for (int i = 0; i < x.length; i++) {
-	// for (int j = 0; i < y.length; j++) {
-	// // if() {
-	// //
-	// // }
-	// }
-	// }
-	// return X_secs;
-	// }
 
 	/**
 	 * Performs a prediction for the next time Window, plots the predictions for the next window and plots the predictions for 
@@ -751,7 +722,7 @@ public class Analyser implements Observer, Observable {
 	 */
 	private double makePrediction(TreeMap<Timestamp, Double> trendList, String metric_nm) {
 		if (trendList.size() == 0) {
-			System.out.println("Nothhing in list for prediction to be made");
+			System.out.println("Nothing in list for prediction to be made");
 			return 0;
 		}
 		SimpleRegression regression = new SimpleRegression();
@@ -776,16 +747,7 @@ public class Analyser implements Observer, Observable {
 		plotData(plot_data, "Window Prediction for "+ metric_nm);
 		plotData(full_pred_data, "Full Prediction Data for "+ metric_nm);
 		return prediction;
-
-		// glucoseSlopeRaw = regression.getSlope();
-		// confidenceInterval = regression.getSlopeConfidenceInterval();
-		// int ageInSensorMinutes = trendList.get(trendList.size() -
-		// 1).getAgeInSensorMinutes() + PREDICTION_TIME;
-		// glucoseData = new GlucoseData(trendList.get(0).getSensor(),
-		// ageInSensorMinutes,
-		// trendList.get(0).getTimezoneOffsetInMinutes(), glucoseLevelRaw, true);
 	}
 	
 	
-
 }

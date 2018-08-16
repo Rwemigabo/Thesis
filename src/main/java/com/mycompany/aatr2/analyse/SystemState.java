@@ -64,6 +64,11 @@ public class SystemState {
 		}
 	}
 	
+	/**
+	 * calls the set state function to set the state of the system.
+	 * 
+	 * @return true state meaning the system needs a new adaptation plan and false otherwise
+	 */
 	public boolean getState() {
 		setState();
 		return this.state;

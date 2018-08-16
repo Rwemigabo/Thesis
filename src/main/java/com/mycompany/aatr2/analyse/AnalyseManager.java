@@ -5,7 +5,6 @@
  */
 package com.mycompany.aatr2.analyse;
 
-
 import java.util.ArrayList;
 
 import com.mycompany.aatr2.Cluster;
@@ -17,36 +16,36 @@ import com.mycompany.aatr2.Observer;
  * @author eric
  *
  */
-public class AnalyseManager implements Observable, Observer{
+public class AnalyseManager implements Observable, Observer {
 
-    private final ArrayList<Analyser> analysers = new ArrayList<>();
-    private static final AnalyseManager inst = new AnalyseManager();
-    private final ArrayList<Observer> obs;
-    private final ArrayList<SystemState> systState;
-    private final ArrayList<AdaptationRequest> adaptationReq;
-    
-    private AnalyseManager(){
-    	this.obs = new ArrayList<>();
-    	this.adaptationReq = new ArrayList<>();
-    	this.systState = new ArrayList<SystemState>();
-    }
-    
-    public void newAnalyser(Cluster c){
-        Analyser ana = new Analyser(c);
-        setObservable(ana);
-        ana.initiate();
-        analysers.add(ana);
-        
-    }
-    
-    public static AnalyseManager getInstance() {
-        return inst;
-    }
+	private final ArrayList<Analyser> analysers = new ArrayList<>();
+	private static final AnalyseManager inst = new AnalyseManager();
+	private final ArrayList<Observer> obs;
+	private final ArrayList<SystemState> systState;// to knowledge
+	private final ArrayList<AdaptationRequest> adaptationReq;// to knowledge
 
-    public ArrayList<Analyser> getAnalysers() {
-        return analysers;
-    }
-    
+	private AnalyseManager() {
+		this.obs = new ArrayList<>();
+		this.adaptationReq = new ArrayList<>();
+		this.systState = new ArrayList<SystemState>();
+	}
+
+	public void newAnalyser(Cluster c) {
+		Analyser ana = new Analyser(c);
+		setObservable(ana);
+		ana.initiate();
+		analysers.add(ana);
+
+	}
+
+	public static AnalyseManager getInstance() {
+		return inst;
+	}
+
+	public ArrayList<Analyser> getAnalysers() {
+		return analysers;
+	}
+
 	@Override
 	public void addObserver(Observer o) {
 		obs.add(o);
@@ -74,7 +73,6 @@ public class AnalyseManager implements Observable, Observer{
 		return systState;
 	}
 
-
 	@Override
 	public synchronized void update() {
 		newSystemState();
@@ -90,35 +88,37 @@ public class AnalyseManager implements Observable, Observer{
 	public void setObservable(Observable ob) {
 		ob.addObserver(this);
 	}
-	
+
 	/*
 	 * Creates a new system state stores it in the list
 	 */
 	public void newSystemState() {
 		SystemState state = new SystemState();
-		for(Analyser ana: analysers) {
+		for (Analyser ana : analysers) {
 			Cluster s = ana.getCluster();
 			state.addSymptom(s, ana.getLatest());
 		}
-		systState.add(state);// should be persisted.
+		systState.add(state);
 		checkState(state);
 	}
-	
+
 	/*
-	 * Checks the new state to make sure that it is within parameters and if not creates an adaptation request
+	 * Checks the new state to make sure that it is within parameters and if not
+	 * creates an adaptation request if get state returns true
 	 */
 	public void checkState(SystemState state) {
-		if(state.getState()) {
+		if (state.getState()) {
 			AdaptationRequest ar = new AdaptationRequest();
-			for(Analyser ana: analysers) {
+			for (Analyser ana : analysers) {
 				Cluster s = ana.getCluster();
-				double conts = s.getContainers().size() + state.getAdapt().get(s).getCondition();
+				int conts = (int) (s.getContainers().size() + state.getAdapt().get(s).getCondition());
 				ar.addItem(ana.getAnId(), conts);
 			}
 			this.adaptationReq.add(ar);
 			notifyObservers();
-		}else {System.out.println("System state stable");}
+		} else {
+			System.out.println("System state stable (" + state.getState() + ")");
+		}
 	}
-	
-	
+
 }

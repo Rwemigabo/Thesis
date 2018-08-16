@@ -1,0 +1,62 @@
+\BOOKMARK [1][-]{Dedication.1}{Dedication}{}% 1
+\BOOKMARK [1][-]{Abstract.1}{Abstract}{}% 2
+\BOOKMARK [1][-]{acknowledgments.1}{Acknowledgments}{}% 3
+\BOOKMARK [1][-]{tableofcontents.1}{Contents}{}% 4
+\BOOKMARK [1][-]{lof.1}{List of Figures}{}% 5
+\BOOKMARK [1][-]{lot.1}{List of Tables}{}% 6
+\BOOKMARK [1][-]{lol.1}{Listings}{}% 7
+\BOOKMARK [1][-]{acronyms.1}{Acronyms}{}% 8
+\BOOKMARK [0][]{chapter.1}{1 Introduction}{}% 9
+\BOOKMARK [1][-]{section.1.1}{1.1 Problem Statement}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.2}{1.2 Project Details}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.3}{1.3 Document analysis.}{chapter.1}% 12
+\BOOKMARK [0][]{chapter.2}{2 Background and Related work}{}% 13
+\BOOKMARK [1][-]{section.2.1}{2.1 Background }{chapter.2}% 14
+\BOOKMARK [2][-]{subsection.2.1.1}{2.1.1 \040Topologies}{section.2.1}% 15
+\BOOKMARK [2][-]{subsection.2.1.2}{2.1.2 Auto-scaling \(Autonomous Computing\)}{section.2.1}% 16
+\BOOKMARK [2][-]{subsection.2.1.3}{2.1.3 Control Loops \(MAPE-K\)}{section.2.1}% 17
+\BOOKMARK [2][-]{subsection.2.1.4}{2.1.4 Microservices Architecture}{section.2.1}% 18
+\BOOKMARK [2][-]{subsection.2.1.5}{2.1.5 Fuzzy logic}{section.2.1}% 19
+\BOOKMARK [1][-]{section.2.2}{2.2 Related work}{chapter.2}% 20
+\BOOKMARK [2][-]{subsection.2.2.1}{2.2.1 MODA Clouds}{section.2.2}% 21
+\BOOKMARK [2][-]{subsection.2.2.2}{2.2.2 Other work}{section.2.2}% 22
+\BOOKMARK [0][]{chapter.3}{3 Specification and Design}{}% 23
+\BOOKMARK [1][-]{section.3.1}{3.1 Requirements Specification}{chapter.3}% 24
+\BOOKMARK [2][-]{subsection.3.1.1}{3.1.1 System requirements}{section.3.1}% 25
+\BOOKMARK [2][-]{subsection.3.1.2}{3.1.2 Component Requirements}{section.3.1}% 26
+\BOOKMARK [1][-]{section.3.2}{3.2 Design Documentation}{chapter.3}% 27
+\BOOKMARK [2][-]{subsection.3.2.1}{3.2.1 Use Cases}{section.3.2}% 28
+\BOOKMARK [2][-]{subsection.3.2.2}{3.2.2 Use Case Diagram}{section.3.2}% 29
+\BOOKMARK [1][-]{section.3.3}{3.3 Complete System Architecture?}{chapter.3}% 30
+\BOOKMARK [0][]{chapter.4}{4 Implementation}{}% 31
+\BOOKMARK [1][-]{section.4.1}{4.1 Component Diagram And Patterns}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.1.1}{4.1.1 Component Diagram}{section.4.1}% 33
+\BOOKMARK [2][-]{subsection.4.1.2}{4.1.2 Design Patterns}{section.4.1}% 34
+\BOOKMARK [1][-]{section.4.2}{4.2 Technologies and their utilisation in the system}{chapter.4}% 35
+\BOOKMARK [2][-]{subsection.4.2.1}{4.2.1 Java}{section.4.2}% 36
+\BOOKMARK [2][-]{subsection.4.2.2}{4.2.2 Docker}{section.4.2}% 37
+\BOOKMARK [2][-]{subsection.4.2.3}{4.2.3 MySQL}{section.4.2}% 38
+\BOOKMARK [2][-]{subsection.4.2.4}{4.2.4 Fuzzy Logic}{section.4.2}% 39
+\BOOKMARK [1][-]{section.4.3}{4.3 Application Components}{chapter.4}% 40
+\BOOKMARK [2][-]{subsection.4.3.1}{4.3.1 Monitor}{section.4.3}% 41
+\BOOKMARK [2][-]{subsection.4.3.2}{4.3.2 Analyse}{section.4.3}% 42
+\BOOKMARK [2][-]{subsection.4.3.3}{4.3.3 Plan}{section.4.3}% 43
+\BOOKMARK [2][-]{subsection.4.3.4}{4.3.4 Execute}{section.4.3}% 44
+\BOOKMARK [2][-]{subsection.4.3.5}{4.3.5 Knowledge base}{section.4.3}% 45
+\BOOKMARK [1][-]{section.4.4}{4.4 Algorithms and data structure??}{chapter.4}% 46
+\BOOKMARK [0][]{chapter.5}{5 System Testing and Evaluation}{}% 47
+\BOOKMARK [1][-]{section.5.1}{5.1 Monitor and Analysis Component Testing.}{chapter.5}% 48
+\BOOKMARK [1][-]{section.5.2}{5.2 Plan and Execution Testing.}{chapter.5}% 49
+\BOOKMARK [1][-]{section.5.3}{5.3 Full System Testing and Evaluation.}{chapter.5}% 50
+\BOOKMARK [0][]{chapter.6}{6 Conclusions}{}% 51
+\BOOKMARK [1][-]{section.6.1}{6.1 Interpretation of Results}{chapter.6}% 52
+\BOOKMARK [1][-]{section.6.2}{6.2 Unresolved issues}{chapter.6}% 53
+\BOOKMARK [1][-]{section.6.3}{6.3 Future work}{chapter.6}% 54
+\BOOKMARK [-1][]{part.1}{ Appendix}{}% 55
+\BOOKMARK [0][]{appendix.A}{A Appendix}{part.1}% 56
+\BOOKMARK [1][-]{section.A.1}{A.1 User Manual}{appendix.A}% 57
+\BOOKMARK [1][-]{section.A.2}{A.2 Design Documents}{appendix.A}% 58
+\BOOKMARK [1][-]{section.A.3}{A.3 Source Code}{appendix.A}% 59
+\BOOKMARK [1][-]{section.A.4}{A.4 Test Suite}{appendix.A}% 60
+\BOOKMARK [0][]{section*.1}{ Bibliography}{part.1}% 61
+\BOOKMARK [0][]{declaration.0}{Declaration}{part.1}% 62

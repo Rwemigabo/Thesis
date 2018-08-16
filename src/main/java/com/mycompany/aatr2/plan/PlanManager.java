@@ -64,7 +64,7 @@ public class PlanManager implements Observable, Observer {
 	/*
 	 * compares viable topologies to adaptation request and returns the most
 	 * relevant/ suitable topology (closest to the recommended adaptation)
-	 * saves the recommendation to the 
+	 * saves the recommendation to the list
 	 * calls the notify observers method
 	 * 
 	 */

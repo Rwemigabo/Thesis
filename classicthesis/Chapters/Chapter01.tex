@@ -1,0 +1,44 @@
+%************************************************
+\chapter{Introduction}\label{ch:introduction}
+%************************************************
+After years of advancement in Cloud Computing, including a significant increase in the number of Cloud service providers within a short period of time, application developers and enterprises have been left with a wide range of choice to fill their need for cloud services. Therefore, with this wide range of choices, one may find themselves making a choice of using a service that is cheaper on paper but ends up costing them more in the long run.
+
+Optimisation refers to the minimisation of allocated resources conditional to keeping the quality of a service at an acceptable level \cite{quarati2012delivering}. If the use of the resources one is paying cheaply for isn't optimised, it will end up costing them in the long run through various ways like affecting the performance of their services, over provisioning certain services to mention but a few.
+
+\section{Problem Statement}
+One argument for the use of Cloud Computing(CC) from an enterprise perspective is it makes it easier for enterprises to scale their services, which are increasingly reliant on accurate information according to client demand \cite{avram2014advantages}. Given this aspect, we can then go further and conclude that the optimal scaling of their services would be important to them because they would want to get the best utilisation of these services in order to get the most out of their money especially for a start up with a limited budget that would go with cloud computing as a cheaper and more flexible option. In order to achieve the optimal utilisation of resources provided by CC services, the enterprise has to have a way to monitor and analyse how their services use the allocated resources and then make changes if necessary.
+
+A number of projects have been taken on to work on the optimisation of systems with different architectural structures and using different approaches to implement their automation systems. However, many of these systems tackle one or two areas which the system I have developed for this project covers.
+In this project, I design and develop a component-based architecture, which uses MAPE-K loops introduced and explained in a following chapter to perform the optimisation of the cloud based application with a micro service style architecture that it is deployed on. This strategy ensures the coverage of the missing areas like the implementation of a plan and Knowledge base component that can make use of other data otherwise unavailable or unused by the automation system and hence try and make better decisions in the automation of the application being monitored.
+
+\section{Project Details}
+
+As seen in the paper \cite{andrikopoulos2017engineering}, a CBA Lifecycle is proposed, which can be viewed as a set of MAPE-K loops \cite{kephart2003vision} shifting between the defined architectural models (alpha-topologies). These shifts are caused by controllers that provide coordination across the different stages of the lifecycle and in order to validate this, an IDE in the manner discussed by the MODAClouds approach \cite{ardagna2012modaclouds} is required therefore for field study validation of the lifecycle through collaboration with the industry.
+
+The system I have developed is meant to realise the for the above mentioned proposal through the implementation of the back end functionalities by the use of the aforementioned MAPE-K loops. MAPE-K stands for Monitor, Analyse, Plan and Execute by using Knowledge about the system's configuration and/ or including other information like the historical data. For the implementation of my system, I develop each of these as separate components, which interact with oneanother in order to complete this loop. This system's loop is run on top of a cloud container application and uses the available APIs from the container provider to monitor and record statistics of each of the containers in the particular micro service. These statistics are the start point at which the cloud application can be monitored and then optimised by switching between the different topologies provided by the owner of the application (System user). A switch occurs if the application topology doesn't meet the service level objectives specified by the owner of the application and it is either under using or over using the resources provided to it hence costing the application owner either financially or in terms of loss of users due to poor response times.
+
+
+
+\section{Document analysis.}\label{sec:issues}
+In the chapters that follow; Chapter 2 starts off with a literature review, which covers some of the fundamental concepts that make up the project hence providing some insight into Autonomic Computing. I then go ahead and provide the details of the system including the full system's requirements and additionally looking at the requirements of the individual components of the system in detail. 
+
+In Chapter 3, I provide the important design documentation of the system. I start by presenting some of the design patterns used for the system to achieve communication between the various components and other useful aspects that help the system achieve its complete functionality. Additionally, the full system's architecture is also provided hence concluding the chapter.
+
+Chapter 4, provides the some of the other details of the system by looking at the Technologies that help the system be able to accomplish the different tasks involved in the MAPE-K process and additionally provides the details of each of the MAPE-K components and finally how they interact with each by providing the full system's Architecture I then close off the chapter by describing some of the important algorithms used in the project.
+
+Chapter 5 presents the Evaluation of the system this will introduce the applications that were chosen for testing my system, and then go further to include the different battery of tests run in order to confirm the functionality of the components of the system. The results of these tests will be presented and then data presented about the complete system's functionality.
+
+Finally, in Chapter 6, I present the final review of the complete system by providing details of the various functionalities that I was able to implement and additionally, each of the unimplemented functionalities. This chapter is then closed off with a proposal of some of the future work that can be done in terms of both the extension of this system and in the field of Autonomous Application Topology Redistribution.
+
+%\section{}
+
+\clearpage
+
+
+
+
+%*****************************************
+%*****************************************
+%*****************************************
+%*****************************************
+%*****************************************

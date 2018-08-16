@@ -108,6 +108,10 @@ public class Topology {
 		this.adapts.add(ar);
 	}
 
+	/**
+	 * 
+	 * @return last adaptation request added by the analysis component manager.
+	 */
 	public AdaptationRequest latestRequest() {
 		int index = adapts.size() - 1;
 		return this.adapts.get(index);

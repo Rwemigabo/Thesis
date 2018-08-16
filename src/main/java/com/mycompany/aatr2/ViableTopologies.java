@@ -31,6 +31,9 @@ public class ViableTopologies {
 		tops.add(ntop);
 	}
 	
+	/**
+	 * creates test/ example representations of viable topologies
+	 */
 	public void defineTestTopologies() {
 		Topology vtop2 = new Topology("top1");
 		Topology vtop3 = new Topology("top2");
