@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.24)  16 AUG 2018 11:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.24)  20 AUG 2018 15:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2347,7 +2347,7 @@ Package microtype Info: Loading generic settings for font family
 
 
 ]
-<gfx/TFZsuperellipse_bw.pdf, id=266, 260.5755pt x 203.14595pt>
+<gfx/TFZsuperellipse_bw.pdf, id=254, 260.5755pt x 203.14595pt>
 File: gfx/TFZsuperellipse_bw.pdf Graphic file (type pdf)
 
 <use gfx/TFZsuperellipse_bw.pdf>
@@ -2520,32 +2520,32 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 LaTeX Font Warning: Font shape `LGR/pplj/m/it' undefined
 (Font)              using `LGR/pplj/m/n' instead on input line 12.
 
-[5] [6]) [7]
+[5] [6] [7]) [8] [9]
 \openout2 = `Chapters/Chapter03.aux'.
 
  (./Chapters/Chapter03.tex
 Chapter 3.
-[8
-
-
-
-
-]) [9]
-\openout2 = `Chapters/Chapter04.aux'.
-
- (./Chapters/Chapter04.tex
-Chapter 4.
 [10
 
 
 
 
-]) [11] [12]
+]) [11]
+\openout2 = `Chapters/Chapter04.aux'.
+
+ (./Chapters/Chapter04.tex
+Chapter 4.
+[12
+
+
+
+
+]) [13] [14]
 \openout2 = `Chapters/Chapter05.aux'.
 
  (./Chapters/Chapter05.tex
 Chapter 5.
-) [13
+) [15
 
 
 
@@ -2555,28 +2555,28 @@ Chapter 5.
 
  (./Chapters/Chapter06.tex
 Chapter 6.
-[14
+[16
 
 
 
 
-]) [15] [16
+]) [17] [18
 
 
 
-] [17] [18]
+] [19] [20]
 \openout2 = `Chapters/Chapter0A.aux'.
 
  (./Chapters/Chapter0A.tex
 Appendix A.
-) [19
+) [21
 
 
 
 ]
 \openout2 = `FrontBackmatter/Bibliography.aux'.
 
- (./FrontBackmatter/Bibliography.tex [20
+ (./FrontBackmatter/Bibliography.tex [22
 
 
 
@@ -2584,6 +2584,12 @@ Appendix A.
 ]
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
 (Font)              scaled to size 9.30756pt on input line 15.
+
+Overfull \hbox (14.08844pt too wide) in paragraph at lines 15--15
+\T1/pplj/m/it/10.95 2013 IEEE 5th In-ter-na-tional Con-fer-ence on\T1/pplj/m/n/
+10.95 . Vol. 2. IEEE. 2013, pp. 256^^U
+ []
+
 
 Overfull \hbox (7.07852pt too wide) in paragraph at lines 15--15
 []\T1/pplj/m/n/10.95 Vasilios An-drikopou-los. ^^P  En-gi-neer-ing Cloud-based 
@@ -2600,6 +2606,24 @@ ews,
 Overfull \hbox (12.10455pt too wide) in paragraph at lines 15--15
 []\T1/pplj/m/n/10.95 Maricela-Georgiana Avram. ^^P  Ad-van-tages and chal-lenge
 s of adopt-
+ []
+
+
+Overfull \hbox (3.54631pt too wide) in paragraph at lines 15--15
+[]\T1/pplj/m/n/10.95 Wesam Da-woud, Ibrahim Tak-ouna, and Christoph Meinel. ^^P
+  Elas-
+ []
+
+
+Overfull \hbox (5.36168pt too wide) in paragraph at lines 15--15
+[]\T1/pplj/m/n/10.95 Stefan Frey, Clau-dia Lüthje, Christoph Re-ich, and Nathan
+ Clarke.
+ []
+
+[23]
+Overfull \hbox (2.37001pt too wide) in paragraph at lines 15--15
+[]\T1/pplj/m/n/10.95 Santiago Gómez Sáez, Vasil-ios An-drikopou-los, Flo-rian W
+essling,
  []
 
 
@@ -2620,15 +2644,15 @@ Overfull \hbox (8.88503pt too wide) in paragraph at lines 15--15
 -els\T1/pplj/m/n/10.95 . Springer.
  []
 
-) [21]
+[24]) [25]
 \openout2 = `FrontBackmatter/Declaration.aux'.
 
- (./FrontBackmatter/Declaration.tex [22
+ (./FrontBackmatter/Declaration.tex [26
 
 
 
 
-]) [23]
+]) [27]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 126.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 126.
  (./ClassicThesis.aux
@@ -2840,8 +2864,14 @@ FrontBackmatter/Declaration.tex
  ***********
 
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 126.
-Package rerunfilecheck Info: File `ClassicThesis.out' has not changed.
-(rerunfilecheck)             Checksum: 53F47A5FBC48A9FEAD0D34C568E9A374;4141.
+
+Package rerunfilecheck Warning: File `ClassicThesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ClassicThesis.out':
+(rerunfilecheck)             Before: CE93FBA6265CD63768398CE986A5130A;3909
+(rerunfilecheck)             After:  04F8B706BA6A1604C4353D07DF353C4E;3984.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2861,13 +2891,13 @@ Package logreq Info: Writing requests to 'ClassicThesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32474 strings out of 493014
- 593728 string characters out of 6133351
- 1011670 words of memory out of 5000000
- 35296 multiletter control sequences out of 15000+600000
+ 32519 strings out of 493014
+ 595186 string characters out of 6133351
+ 1021057 words of memory out of 5000000
+ 35326 multiletter control sequences out of 15000+600000
  64583 words of font info for 86 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
- 68i,23n,90p,10515b,2040s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,23n,90p,10515b,2799s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/euler/eurb10.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/fpl/fplbj8a.pfb></usr/local/texlive
@@ -2878,10 +2908,10 @@ type1/public/cbfonts/grmn1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
 e1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/
 palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatin
 o/uplri8a.pfb>
-Output written on ClassicThesis.pdf (37 pages, 179859 bytes).
+Output written on ClassicThesis.pdf (41 pages, 190409 bytes).
 PDF statistics:
- 577 PDF objects out of 1000 (max. 8388607)
- 521 compressed objects within 6 object streams
- 122 named destinations out of 1000 (max. 500000)
- 14838 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 611 PDF objects out of 1000 (max. 8388607)
+ 551 compressed objects within 6 object streams
+ 137 named destinations out of 1000 (max. 500000)
+ 14814 words of extra memory for PDF output out of 17280 (max. 10000000)
 

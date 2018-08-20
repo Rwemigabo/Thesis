@@ -38,45 +38,45 @@ Warning--I didn't find a database entry for "knuth:1974"
 Biblatex version: 3.3
 Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 12 entries,
+You've used 25 entries,
             6256 wiz_defined-function locations,
-            1260 strings with 11184 characters,
-and the built_in function-call counts, 65343 in all, are:
-= -- 4566
-> -- 1103
-< -- 327
-+ -- 1595
-- -- 427
-* -- 4904
-:= -- 6709
+            1332 strings with 13866 characters,
+and the built_in function-call counts, 148698 in all, are:
+= -- 10465
+> -- 2677
+< -- 779
++ -- 3689
+- -- 1026
+* -- 11325
+:= -- 15195
 add.period$ -- 0
-call.type$ -- 12
-change.case$ -- 11
+call.type$ -- 25
+change.case$ -- 24
 chr.to.int$ -- 30
-cite$ -- 22
-duplicate$ -- 6964
-empty$ -- 6184
-format.name$ -- 708
-if$ -- 13375
+cite$ -- 48
+duplicate$ -- 15899
+empty$ -- 13786
+format.name$ -- 1714
+if$ -- 30433
 int.to.chr$ -- 0
-int.to.str$ -- 29
+int.to.str$ -- 70
 missing$ -- 0
-newline$ -- 388
-num.names$ -- 452
-pop$ -- 3852
+newline$ -- 864
+num.names$ -- 1127
+pop$ -- 8399
 preamble$ -- 1
-purify$ -- 221
+purify$ -- 541
 quote$ -- 0
-skip$ -- 1988
+skip$ -- 4628
 stack$ -- 0
-substring$ -- 7879
-swap$ -- 1690
-text.length$ -- 303
-text.prefix$ -- 11
+substring$ -- 17868
+swap$ -- 3851
+text.length$ -- 685
+text.prefix$ -- 25
 top$ -- 1
-type$ -- 396
+type$ -- 838
 warning$ -- 0
-while$ -- 818
+while$ -- 1845
 width$ -- 0
-write$ -- 377
+write$ -- 840
 (There was 1 warning)

@@ -26,6 +26,45 @@
     \field{title}{AWS Auto Scaling}
   \endentry
 
+  \entry{al2013impact}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=AHF}{%
+         family={Al-Haidari},
+         family_i={A\bibinitperiod-H\bibinitperiod},
+         given={Fahd},
+         given_i={F\bibinitperiod},
+      }}%
+      {{hash=SM}{%
+         family={Sqalli},
+         family_i={S\bibinitperiod},
+         given={M},
+         given_i={M},
+      }}%
+      {{hash=SK}{%
+         family={Salah},
+         family_i={S\bibinitperiod},
+         given={Khaled},
+         given_i={K\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{AHFSMSK1}
+    \strng{fullhash}{AHFSMSK1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{booktitle}{Cloud Computing Technology and Science (CloudCom), 2013
+  IEEE 5th International Conference on}
+    \field{pages}{256\bibrangedash 261}
+    \field{title}{Impact of cpu utilization thresholds and scaling size on
+  autoscaling cloud resources}
+    \field{volume}{2}
+    \field{year}{2013}
+  \endentry
+
   \entry{andrikopoulos2017engineering}{inproceedings}{}
     \name{author}{1}{}{%
       {{hash=AV}{%
@@ -202,6 +241,337 @@
     \field{year}{2014}
   \endentry
 
+  \entry{binz2012portable}{article}{}
+    \name{author}{4}{}{%
+      {{hash=BT}{%
+         family={Binz},
+         family_i={B\bibinitperiod},
+         given={Tobias},
+         given_i={T\bibinitperiod},
+      }}%
+      {{hash=BG}{%
+         family={Breiter},
+         family_i={B\bibinitperiod},
+         given={Gerd},
+         given_i={G\bibinitperiod},
+      }}%
+      {{hash=LF}{%
+         family={Leyman},
+         family_i={L\bibinitperiod},
+         given={Frank},
+         given_i={F\bibinitperiod},
+      }}%
+      {{hash=ST}{%
+         family={Spatzier},
+         family_i={S\bibinitperiod},
+         given={Thomas},
+         given_i={T\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{BT+1}
+    \strng{fullhash}{BTBGLFST1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{number}{3}
+    \field{pages}{80\bibrangedash 85}
+    \field{title}{Portable cloud services using tosca}
+    \field{volume}{16}
+    \field{journaltitle}{IEEE Internet Computing}
+    \field{year}{2012}
+  \endentry
+
+  \entry{cingolani2013jfuzzylogic}{article}{}
+    \name{author}{2}{}{%
+      {{hash=CP}{%
+         family={Cingolani},
+         family_i={C\bibinitperiod},
+         given={Pablo},
+         given_i={P\bibinitperiod},
+      }}%
+      {{hash=AFJ}{%
+         family={Alcal{\'a}-Fdez},
+         family_i={A\bibinitperiod-F\bibinitperiod},
+         given={Jes{\'u}s},
+         given_i={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Taylor \& Francis}%
+    }
+    \strng{namehash}{CPAFJ1}
+    \strng{fullhash}{CPAFJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{number}{sup1}
+    \field{pages}{61\bibrangedash 75}
+    \field{title}{jFuzzyLogic: a java library to design fuzzy logic controllers
+  according to the standard for fuzzy control programming}
+    \field{volume}{6}
+    \field{journaltitle}{International Journal of Computational Intelligence
+  Systems}
+    \field{year}{2013}
+  \endentry
+
+  \entry{dawoud2012elastic}{incollection}{}
+    \name{author}{3}{}{%
+      {{hash=DW}{%
+         family={Dawoud},
+         family_i={D\bibinitperiod},
+         given={Wesam},
+         given_i={W\bibinitperiod},
+      }}%
+      {{hash=TI}{%
+         family={Takouna},
+         family_i={T\bibinitperiod},
+         given={Ibrahim},
+         given_i={I\bibinitperiod},
+      }}%
+      {{hash=MC}{%
+         family={Meinel},
+         family_i={M\bibinitperiod},
+         given={Christoph},
+         given_i={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer}%
+    }
+    \strng{namehash}{DWTIMC1}
+    \strng{fullhash}{DWTIMC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{booktitle}{Global Trends in Computing and Communication Systems}
+    \field{pages}{11\bibrangedash 25}
+    \field{title}{Elastic virtual machine for fine-grained cloud resource
+  provisioning}
+    \field{year}{2012}
+  \endentry
+
+  \entry{fang2012rpps}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=FW}{%
+         family={Fang},
+         family_i={F\bibinitperiod},
+         given={Wei},
+         given_i={W\bibinitperiod},
+      }}%
+      {{hash=LZ}{%
+         family={Lu},
+         family_i={L\bibinitperiod},
+         given={ZhiHui},
+         given_i={Z\bibinitperiod},
+      }}%
+      {{hash=WJ}{%
+         family={Wu},
+         family_i={W\bibinitperiod},
+         given={Jie},
+         given_i={J\bibinitperiod},
+      }}%
+      {{hash=CZ}{%
+         family={Cao},
+         family_i={C\bibinitperiod},
+         given={ZhenYin},
+         given_i={Z\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{FW+1}
+    \strng{fullhash}{FWLZWJCZ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{booktitle}{Services Computing (SCC), 2012 IEEE Ninth International
+  Conference on}
+    \field{pages}{609\bibrangedash 616}
+    \field{title}{RPPS: a novel resource prediction and provisioning scheme in
+  cloud data center}
+    \field{year}{2012}
+  \endentry
+
+  \entry{frey2014cloud}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=FS}{%
+         family={Frey},
+         family_i={F\bibinitperiod},
+         given={Stefan},
+         given_i={S\bibinitperiod},
+      }}%
+      {{hash=LC}{%
+         family={L{\"u}thje},
+         family_i={L\bibinitperiod},
+         given={Claudia},
+         given_i={C\bibinitperiod},
+      }}%
+      {{hash=RC}{%
+         family={Reich},
+         family_i={R\bibinitperiod},
+         given={Christoph},
+         given_i={C\bibinitperiod},
+      }}%
+      {{hash=CN}{%
+         family={Clarke},
+         family_i={C\bibinitperiod},
+         given={Nathan},
+         given_i={N\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{FS+1}
+    \strng{fullhash}{FSLCRCCN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{booktitle}{Cloud Engineering (IC2E), 2014 IEEE International
+  Conference on}
+    \field{pages}{343\bibrangedash 348}
+    \field{title}{Cloud QoS scaling by fuzzy logic}
+    \field{year}{2014}
+  \endentry
+
+  \entry{garcia2017automated}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=GJM}{%
+         family={Garc{\'\i}a},
+         family_i={G\bibinitperiod},
+         given={Jos{\'e}\bibnamedelima Mar{\'\i}a},
+         given_i={J\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+      {{hash=MDO}{%
+         family={Mart{\'\i}n-D{\'\i}az},
+         family_i={M\bibinitperiod-D\bibinitperiod},
+         given={Octavio},
+         given_i={O\bibinitperiod},
+      }}%
+      {{hash=FP}{%
+         family={Fernandez},
+         family_i={F\bibinitperiod},
+         given={Pablo},
+         given_i={P\bibinitperiod},
+      }}%
+      {{hash=RCA}{%
+         family={Ruiz-Cort{\'e}s},
+         family_i={R\bibinitperiod-C\bibinitperiod},
+         given={Antonio},
+         given_i={A\bibinitperiod},
+      }}%
+      {{hash=TM}{%
+         family={Toro},
+         family_i={T\bibinitperiod},
+         given={Miguel},
+         given_i={M\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {Springer}%
+    }
+    \strng{namehash}{GJM+1}
+    \strng{fullhash}{GJMMDOFPRCATM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{booktitle}{International Conference on Service-Oriented Computing}
+    \field{pages}{331\bibrangedash 339}
+    \field{title}{Automated analysis of cloud offerings for optimal service
+  provisioning}
+    \field{year}{2017}
+  \endentry
+
+  \entry{ghobaei2018autonomic}{article}{}
+    \name{author}{3}{}{%
+      {{hash=GAM}{%
+         family={Ghobaei-Arani},
+         family_i={G\bibinitperiod-A\bibinitperiod},
+         given={Mostafa},
+         given_i={M\bibinitperiod},
+      }}%
+      {{hash=JS}{%
+         family={Jabbehdari},
+         family_i={J\bibinitperiod},
+         given={Sam},
+         given_i={S\bibinitperiod},
+      }}%
+      {{hash=PMA}{%
+         family={Pourmina},
+         family_i={P\bibinitperiod},
+         given={Mohammad\bibnamedelima Ali},
+         given_i={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Elsevier}%
+    }
+    \strng{namehash}{GAMJSPMA1}
+    \strng{fullhash}{GAMJSPMA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{pages}{191\bibrangedash 210}
+    \field{title}{An autonomic resource provisioning approach for service-based
+  cloud applications: A hybrid approach}
+    \field{volume}{78}
+    \field{journaltitle}{Future Generation Computer Systems}
+    \field{year}{2018}
+  \endentry
+
+  \entry{gomez2014cloud}{article}{}
+    \true{moreauthor}
+    \name{author}{4}{}{%
+      {{hash=GSS}{%
+         family={G{\'o}mez\bibnamedelima S{\'a}ez},
+         family_i={G\bibinitperiod\bibinitdelim S\bibinitperiod},
+         given={Santiago},
+         given_i={S\bibinitperiod},
+      }}%
+      {{hash=AV}{%
+         family={Andrikopoulos},
+         family_i={A\bibinitperiod},
+         given={Vasilios},
+         given_i={V\bibinitperiod},
+      }}%
+      {{hash=WF}{%
+         family={Wessling},
+         family_i={W\bibinitperiod},
+         given={Florian},
+         given_i={F\bibinitperiod},
+      }}%
+      {{hash=CMC}{%
+         family={Cassales\bibnamedelima Marquezan},
+         family_i={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+         given={Clarissa},
+         given_i={C\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE Computer Society Press}%
+    }
+    \strng{namehash}{GSS+1}
+    \strng{fullhash}{GSSAVWFCMC+1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{Cloud Adaptation \& Application (Re-) Distribution: Bridging
+  the two Perspectives}
+    \field{year}{2014}
+  \endentry
+
   \entry{iglesia2015mape}{article}{}
     \name{author}{2}{}{%
       {{hash=IDGDL}{%
@@ -267,6 +637,43 @@
     \field{volume}{36}
     \field{journaltitle}{Computer}
     \field{year}{2003}
+  \endentry
+
+  \entry{lim2010automated}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=LHC}{%
+         family={Lim},
+         family_i={L\bibinitperiod},
+         given={Harold\bibnamedelima C},
+         given_i={H\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=BS}{%
+         family={Babu},
+         family_i={B\bibinitperiod},
+         given={Shivnath},
+         given_i={S\bibinitperiod},
+      }}%
+      {{hash=CJS}{%
+         family={Chase},
+         family_i={C\bibinitperiod},
+         given={Jeffrey\bibnamedelima S},
+         given_i={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{LHCBSCJS1}
+    \strng{fullhash}{LHCBSCJS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{booktitle}{Proceedings of the 7th international conference on
+  Autonomic computing}
+    \field{pages}{1\bibrangedash 10}
+    \field{title}{Automated control for elastic storage}
+    \field{year}{2010}
   \endentry
 
   \entry{loff2014vadara}{inproceedings}{}
@@ -396,6 +803,89 @@
     \field{title}{Delivering cloud services with QoS requirements: an
   opportunity for ICT SMEs}
     \field{year}{2012}
+  \endentry
+
+  \entry{yazdanov2012vertical}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=YL}{%
+         family={Yazdanov},
+         family_i={Y\bibinitperiod},
+         given={Lenar},
+         given_i={L\bibinitperiod},
+      }}%
+      {{hash=FC}{%
+         family={Fetzer},
+         family_i={F\bibinitperiod},
+         given={Christof},
+         given_i={C\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{YLFC1}
+    \strng{fullhash}{YLFC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Y}
+    \field{sortinithash}{Y}
+    \field{booktitle}{Cloud and Green Computing (CGC), 2012 Second
+  International Conference on}
+    \field{pages}{118\bibrangedash 125}
+    \field{title}{Vertical scaling for prioritized vms provisioning}
+    \field{year}{2012}
+  \endentry
+
+  \entry{zadeh1973outline}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ZLA}{%
+         family={Zadeh},
+         family_i={Z\bibinitperiod},
+         given={Lotfi\bibnamedelima A},
+         given_i={L\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{ZLA1}
+    \strng{fullhash}{ZLA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{number}{1}
+    \field{pages}{28\bibrangedash 44}
+    \field{title}{Outline of a new approach to the analysis of complex systems
+  and decision processes}
+    \field{journaltitle}{IEEE Transactions on systems, Man, and Cybernetics}
+    \field{year}{1973}
+  \endentry
+
+  \entry{zadeh1996fuzzy}{article}{}
+    \name{author}{1}{}{%
+      {{hash=ZLA}{%
+         family={Zadeh},
+         family_i={Z\bibinitperiod},
+         given={Lotfi\bibnamedelima A},
+         given_i={L\bibinitperiod\bibinitdelim A\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{ZLA1}
+    \strng{fullhash}{ZLA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{number}{2}
+    \field{pages}{103\bibrangedash 111}
+    \field{title}{Fuzzy logic= computing with words}
+    \field{volume}{4}
+    \field{journaltitle}{IEEE transactions on fuzzy systems}
+    \field{year}{1996}
   \endentry
 \endsortlist
 \endinput
