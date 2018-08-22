@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.24)  20 AUG 2018 15:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.24)  22 AUG 2018 14:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1210,6 +1210,26 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
 LaTeX Info: Redefining \[ on input line 2739.
 LaTeX Info: Redefining \] on input line 2740.
 )
+(/usr/local/texlive/2016/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2016/04/27 v1.618033 publication quality tables
+\heavyrulewidth=\dimen113
+\lightrulewidth=\dimen114
+\cmidrulewidth=\dimen115
+\belowrulesep=\dimen116
+\belowbottomsep=\dimen117
+\aboverulesep=\dimen118
+\abovetopsep=\dimen119
+\cmidrulesep=\dimen120
+\cmidrulekern=\dimen121
+\defaultaddspace=\dimen122
+\@cmidla=\count307
+\@cmidlb=\count308
+\@aboverulesep=\dimen123
+\@belowrulesep=\dimen124
+\@thisruleclass=\count309
+\@lastruleclass=\count310
+\@thisrulewidth=\dimen125
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
@@ -1390,31 +1410,31 @@ L3 Module: l3tl 2016/03/26 v6465 L3 Token lists
 L3 Module: l3str 2016/03/24 v6441 L3 Strings
 L3 Module: l3seq 2015/08/05 v5777 L3 Sequences and stacks
 L3 Module: l3int 2016/03/24 v6441 L3 Integers
-\c_max_int=\count307
-\l_tmpa_int=\count308
-\l_tmpb_int=\count309
-\g_tmpa_int=\count310
-\g_tmpb_int=\count311
+\c_max_int=\count311
+\l_tmpa_int=\count312
+\l_tmpb_int=\count313
+\g_tmpa_int=\count314
+\g_tmpb_int=\count315
 L3 Module: l3quark 2015/08/17 v5855 L3 Quarks
 L3 Module: l3prg 2015/11/01 v6216 L3 Control structures
-\g__prg_map_int=\count312
+\g__prg_map_int=\count316
 L3 Module: l3clist 2015/09/02 v5901 L3 Comma separated lists
 L3 Module: l3token 2016/04/03 v6470 L3 Experimental token manipulation
 L3 Module: l3prop 2016/01/05 v6366 L3 Property lists
 L3 Module: l3msg 2016/03/26 v6464 L3 Messages
 L3 Module: l3file 2016/03/25 v6458 L3 File and I/O operations
-\l_iow_line_count_int=\count313
-\l__iow_target_count_int=\count314
-\l__iow_current_line_int=\count315
-\l__iow_current_word_int=\count316
-\l__iow_current_indentation_int=\count317
+\l_iow_line_count_int=\count317
+\l__iow_target_count_int=\count318
+\l__iow_current_line_int=\count319
+\l__iow_current_word_int=\count320
+\l__iow_current_indentation_int=\count321
 L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
-\c_zero_dim=\dimen113
-\c_max_dim=\dimen114
-\l_tmpa_dim=\dimen115
-\l_tmpb_dim=\dimen116
-\g_tmpa_dim=\dimen117
-\g_tmpb_dim=\dimen118
+\c_zero_dim=\dimen126
+\c_max_dim=\dimen127
+\l_tmpa_dim=\dimen128
+\l_tmpb_dim=\dimen129
+\g_tmpa_dim=\dimen130
+\g_tmpb_dim=\dimen131
 \c_zero_skip=\skip74
 \c_max_skip=\skip75
 \l_tmpa_skip=\skip76
@@ -1428,18 +1448,18 @@ L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
 \g_tmpa_muskip=\muskip16
 \g_tmpb_muskip=\muskip17
 L3 Module: l3keys 2015/11/17 v6284 L3 Key-value interfaces
-\g__keyval_level_int=\count318
-\l_keys_choice_int=\count319
+\g__keyval_level_int=\count322
+\l_keys_choice_int=\count323
 L3 Module: l3fp 2016/03/26 v6465 L3 Floating points
-\c__fp_leading_shift_int=\count320
-\c__fp_middle_shift_int=\count321
-\c__fp_trailing_shift_int=\count322
-\c__fp_big_leading_shift_int=\count323
-\c__fp_big_middle_shift_int=\count324
-\c__fp_big_trailing_shift_int=\count325
-\c__fp_Bigg_leading_shift_int=\count326
-\c__fp_Bigg_middle_shift_int=\count327
-\c__fp_Bigg_trailing_shift_int=\count328
+\c__fp_leading_shift_int=\count324
+\c__fp_middle_shift_int=\count325
+\c__fp_trailing_shift_int=\count326
+\c__fp_big_leading_shift_int=\count327
+\c__fp_big_middle_shift_int=\count328
+\c__fp_big_trailing_shift_int=\count329
+\c__fp_Bigg_leading_shift_int=\count330
+\c__fp_Bigg_middle_shift_int=\count331
+\c__fp_Bigg_trailing_shift_int=\count332
 L3 Module: l3box 2015/08/09 v5822 L3 Experimental boxes
 \c_empty_box=\box30
 \l_tmpa_box=\box31
@@ -1448,13 +1468,13 @@ L3 Module: l3box 2015/08/09 v5822 L3 Experimental boxes
 \g_tmpb_box=\box34
 L3 Module: l3coffins 2016/05/17 v6508 L3 Coffin code layer
 \l__coffin_internal_box=\box35
-\l__coffin_internal_dim=\dimen119
-\l__coffin_offset_x_dim=\dimen120
-\l__coffin_offset_y_dim=\dimen121
-\l__coffin_x_dim=\dimen122
-\l__coffin_y_dim=\dimen123
-\l__coffin_x_prime_dim=\dimen124
-\l__coffin_y_prime_dim=\dimen125
+\l__coffin_internal_dim=\dimen132
+\l__coffin_offset_x_dim=\dimen133
+\l__coffin_offset_y_dim=\dimen134
+\l__coffin_x_dim=\dimen135
+\l__coffin_y_dim=\dimen136
+\l__coffin_x_prime_dim=\dimen137
+\l__coffin_y_prime_dim=\dimen138
 \c_empty_coffin=\box36
 \l__coffin_aligned_coffin=\box37
 \l__coffin_aligned_internal_coffin=\box38
@@ -1463,44 +1483,44 @@ L3 Module: l3coffins 2016/05/17 v6508 L3 Coffin code layer
 \l__coffin_display_coffin=\box41
 \l__coffin_display_coord_coffin=\box42
 \l__coffin_display_pole_coffin=\box43
-\l__coffin_display_offset_dim=\dimen126
-\l__coffin_display_x_dim=\dimen127
-\l__coffin_display_y_dim=\dimen128
+\l__coffin_display_offset_dim=\dimen139
+\l__coffin_display_x_dim=\dimen140
+\l__coffin_display_y_dim=\dimen141
 L3 Module: l3color 2014/08/23 v5354 L3 Experimental color support
 L3 Module: l3sys 2015/09/25 v6087 L3 Experimental system/runtime functions
 L3 Module: l3candidates 2016/05/13 v6484 L3 Experimental additions to l3kernel
-\l__box_top_dim=\dimen129
-\l__box_bottom_dim=\dimen130
-\l__box_left_dim=\dimen131
-\l__box_right_dim=\dimen132
-\l__box_top_new_dim=\dimen133
-\l__box_bottom_new_dim=\dimen134
-\l__box_left_new_dim=\dimen135
-\l__box_right_new_dim=\dimen136
+\l__box_top_dim=\dimen142
+\l__box_bottom_dim=\dimen143
+\l__box_left_dim=\dimen144
+\l__box_right_dim=\dimen145
+\l__box_top_new_dim=\dimen146
+\l__box_bottom_new_dim=\dimen147
+\l__box_left_new_dim=\dimen148
+\l__box_right_new_dim=\dimen149
 \l__box_internal_box=\box44
-\l__coffin_bounding_shift_dim=\dimen137
-\l__coffin_left_corner_dim=\dimen138
-\l__coffin_right_corner_dim=\dimen139
-\l__coffin_bottom_corner_dim=\dimen140
-\l__coffin_top_corner_dim=\dimen141
-\l__coffin_scaled_total_height_dim=\dimen142
-\l__coffin_scaled_width_dim=\dimen143
+\l__coffin_bounding_shift_dim=\dimen150
+\l__coffin_left_corner_dim=\dimen151
+\l__coffin_right_corner_dim=\dimen152
+\l__coffin_bottom_corner_dim=\dimen153
+\l__coffin_top_corner_dim=\dimen154
+\l__coffin_scaled_total_height_dim=\dimen155
+\l__coffin_scaled_width_dim=\dimen156
 L3 Module: l3luatex 2016/03/26 v6465 L3 Experimental LuaTeX-specific functions
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
 File: l3pdfmode.def 2016/03/26 v6465 L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count329
+\l__driver_color_stack_int=\count333
 \l__driver_tmp_box=\box45
 ))
 Package: xpatch 2012/10/02 v0.3 Extending etoolbox patching commands
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
 Package: xparse 2016/05/18 v6512 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count330
-\l__xparse_m_args_int=\count331
-\l__xparse_mandatory_args_int=\count332
-\l__xparse_processor_int=\count333
-\l__xparse_v_nesting_int=\count334
+\l__xparse_current_arg_int=\count334
+\l__xparse_m_args_int=\count335
+\l__xparse_mandatory_args_int=\count336
+\l__xparse_processor_int=\count337
+\l__xparse_v_nesting_int=\count338
 )
 .................................................
 . LaTeX info: "xparse/define-command"
@@ -1705,18 +1725,18 @@ Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/tools/array.sty
 Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen144
-\extrarowheight=\dimen145
+\col@sep=\dimen157
+\extrarowheight=\dimen158
 \NC@list=\toks32
 \extratabsurround=\skip80
 \backup@length=\skip81
 )
-\TX@col@width=\dimen146
-\TX@old@table=\dimen147
-\TX@old@col=\dimen148
-\TX@target=\dimen149
-\TX@delta=\dimen150
-\TX@cols=\count335
+\TX@col@width=\dimen159
+\TX@old@table=\dimen160
+\TX@old@col=\dimen161
+\TX@target=\dimen162
+\TX@delta=\dimen163
+\TX@cols=\count339
 \TX@ftn=\toks33
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/caption/caption.sty
@@ -1725,57 +1745,81 @@ Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 67.
-\captionmargin=\dimen151
-\captionmargin@=\dimen152
-\captionwidth=\dimen153
-\caption@tempdima=\dimen154
-\caption@indent=\dimen155
-\caption@parindent=\dimen156
-\caption@hangindent=\dimen157
+\captionmargin=\dimen164
+\captionmargin@=\dimen165
+\captionwidth=\dimen166
+\caption@tempdima=\dimen167
+\caption@indent=\dimen168
+\caption@parindent=\dimen169
+\caption@hangindent=\dimen170
 )
 Package caption Info: KOMA-Script document class.
-\c@ContinuedFloat=\count336
+\c@ContinuedFloat=\count340
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count337
+\c@KVtest=\count341
 \sf@farskip=\skip82
-\sf@captopadj=\dimen158
+\sf@captopadj=\dimen171
 \sf@capskip=\skip83
 \sf@nearskip=\skip84
-\c@subfigure=\count338
-\c@subfigure@save=\count339
-\c@lofdepth=\count340
-\c@subtable=\count341
-\c@subtable@save=\count342
-\c@lotdepth=\count343
+\c@subfigure=\count342
+\c@subfigure@save=\count343
+\c@lofdepth=\count344
+\c@subtable=\count345
+\c@subtable@save=\count346
+\c@lotdepth=\count347
 \sf@top=\skip85
 \sf@bottom=\skip86
 )
+(./usecases.sty
+(/usr/local/texlive/2016/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen172
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip87
+\LTright=\skip88
+\LTpre=\skip89
+\LTpost=\skip90
+\LTchunksize=\count348
+\LTcapwidth=\dimen173
+\LT@head=\box46
+\LT@firsthead=\box47
+\LT@foot=\box48
+\LT@lastfoot=\box49
+\LT@cols=\count349
+\LT@rows=\count350
+\c@LT@tables=\count351
+\c@LT@chunks=\count352
+\LT@p@ftn=\toks34
+)
+Class scrreprt Info: longtable captions redefined on input line 20.
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count344
-\lst@gtempboxa=\box46
-\lst@token=\toks34
-\lst@length=\count345
-\lst@currlwidth=\dimen159
-\lst@column=\count346
-\lst@pos=\count347
-\lst@lostspace=\dimen160
-\lst@width=\dimen161
-\lst@newlines=\count348
-\lst@lineno=\count349
-\lst@maxwidth=\dimen162
+\lst@mode=\count353
+\lst@gtempboxa=\box50
+\lst@token=\toks35
+\lst@length=\count354
+\lst@currlwidth=\dimen174
+\lst@column=\count355
+\lst@pos=\count356
+\lst@lostspace=\dimen175
+\lst@width=\dimen176
+\lst@newlines=\count357
+\lst@lineno=\count358
+\lst@maxwidth=\dimen177
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count350
-\lst@skipnumbers=\count351
-\lst@framebox=\box47
+\c@lstnumber=\count359
+\lst@skipnumbers=\count360
+\lst@framebox=\box51
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
-Package scrhack Info: loading listings hack on input line 151.
+Package scrhack Info: loading listings hack on input line 154.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/listings.hak
 File: listings.hak 2016/05/10 v3.20 KOMA-Script package (hacking package listin
@@ -1817,7 +1861,7 @@ File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 )
 Package scrhack Info: hyperref hack deactivated because of
 (scrhack)             detection of KOMA-Script class, that doesn't
-(scrhack)             need that hack, on input line 185.
+(scrhack)             need that hack, on input line 188.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2016/05/05 v6.83n Hypertext links for LaTeX
@@ -1861,16 +1905,16 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 (/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/auxhook.sty
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
-\@linkdim=\dimen163
-\Hy@linkcounter=\count352
-\Hy@pagecounter=\count353
+\@linkdim=\dimen178
+\Hy@linkcounter=\count361
+\Hy@pagecounter=\count362
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2016/05/05 v6.83n Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count354
+\Hy@SavedSpaceFactor=\count363
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -1884,12 +1928,12 @@ Package hyperref Info: Plain pages OFF on input line 4461.
 Package hyperref Info: Backreferencing OFF on input line 4466.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4691.
-\c@Hy@tempcnt=\count355
+\c@Hy@tempcnt=\count364
 LaTeX Info: Redefining \url on input line 5044.
-\XeTeXLinkMargin=\dimen164
-\Fld@menulength=\count356
-\Field@Width=\dimen165
-\Fld@charsize=\dimen166
+\XeTeXLinkMargin=\dimen179
+\Fld@menulength=\count365
+\Field@Width=\dimen180
+\Fld@charsize=\dimen181
 Package hyperref Info: Hyper figures OFF on input line 6298.
 Package hyperref Info: Link nesting OFF on input line 6303.
 Package hyperref Info: Hyper index ON on input line 6306.
@@ -1899,23 +1943,23 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6323.
 Package hyperref Info: PDF/A mode OFF on input line 6328.
 LaTeX Info: Redefining \ref on input line 6368.
 LaTeX Info: Redefining \pageref on input line 6372.
-\Hy@abspage=\count357
-\c@Item=\count358
+\Hy@abspage=\count366
+\c@Item=\count367
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2016/05/05 v6.83n Hyperref driver for pdfTeX
-\Fld@listcount=\count359
-\c@bookmark@seq@number=\count360
+\Fld@listcount=\count368
+\c@bookmark@seq@number=\count369
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip87
+\Hy@SectionHShift=\skip91
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
@@ -1933,20 +1977,20 @@ Package graphics Info: Driver file: pdftex.def on input line 96.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-\Gread@gobject=\count361
+\Gread@gobject=\count370
 ))
-\Gin@req@height=\dimen167
-\Gin@req@width=\dimen168
+\Gin@req@height=\dimen182
+\Gin@req@width=\dimen183
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 207.
-Package hyperref Info: Option `linktocpage' set `true' on input line 207.
-Package hyperref Info: Option `breaklinks' set `true' on input line 207.
-Package hyperref Info: Option `pageanchor' set `true' on input line 207.
-Package hyperref Info: Option `plainpages' set `false' on input line 207.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 207.
+Package hyperref Info: Option `colorlinks' set `true' on input line 210.
+Package hyperref Info: Option `linktocpage' set `true' on input line 210.
+Package hyperref Info: Option `breaklinks' set `true' on input line 210.
+Package hyperref Info: Option `pageanchor' set `true' on input line 210.
+Package hyperref Info: Option `plainpages' set `false' on input line 210.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 210.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 207.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 207.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 210.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 210.
 
 (./classicthesis.sty
 Package: classicthesis 2017/10/13 v4.4 Typographic style for a classic-looking 
@@ -1993,19 +2037,19 @@ File: ueur.fd 2013/01/14 v3.01 Euler Roman
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2016/05/14 v2.6a Micro-typographical refinements (RS)
-\MT@toks=\toks35
-\MT@count=\count362
+\MT@toks=\toks36
+\MT@count=\count371
 LaTeX Info: Redefining \textls on input line 774.
-\MT@outer@kern=\dimen169
+\MT@outer@kern=\dimen184
 LaTeX Info: Redefining \textmicrotypecontext on input line 1310.
-\MT@listname@count=\count363
+\MT@listname@count=\count372
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/microtype-pdftex.def
 File: microtype-pdftex.def 2016/05/14 v2.6a Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 916.
 LaTeX Info: Redefining \lslig on input line 916.
-\MT@outer@space=\skip88
+\MT@outer@space=\skip92
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
@@ -2030,26 +2074,6 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \baselineskip   = 13.6pt
 (typearea)              on input line 276.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2016/04/27 v1.618033 publication quality tables
-\heavyrulewidth=\dimen170
-\lightrulewidth=\dimen171
-\cmidrulewidth=\dimen172
-\belowrulesep=\dimen173
-\belowbottomsep=\dimen174
-\aboverulesep=\dimen175
-\abovetopsep=\dimen176
-\cmidrulesep=\dimen177
-\cmidrulekern=\dimen178
-\defaultaddspace=\dimen179
-\@cmidla=\count364
-\@cmidlb=\count365
-\@aboverulesep=\dimen180
-\@belowrulesep=\dimen181
-\@thisruleclass=\count366
-\@lastruleclass=\count367
-\@thisrulewidth=\dimen182
-)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/textcase/textcase.sty
 Package: textcase 2004/10/07 v0.07 Text only upper/lower case changing (DPC)
 )
@@ -2080,15 +2104,15 @@ Package scrlayer-scrpage Info: auto-selection of `pagestyleset=KOMA-Script'.
 1: section
 (/usr/local/texlive/2016/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
-\ttl@box=\box48
-\beforetitleunit=\skip89
-\aftertitleunit=\skip90
-\ttl@plus=\dimen183
-\ttl@minus=\dimen184
-\ttl@toksa=\toks36
-\titlewidth=\dimen185
-\titlewidthlast=\dimen186
-\titlewidthfirst=\dimen187
+\ttl@box=\box52
+\beforetitleunit=\skip93
+\aftertitleunit=\skip94
+\ttl@plus=\dimen185
+\ttl@minus=\dimen186
+\ttl@toksa=\toks37
+\titlewidth=\dimen187
+\titlewidthlast=\dimen188
+\titlewidthfirst=\dimen189
 )
 
 Package scrreprt Warning: Activating an ugly workaround for a missing
@@ -2097,60 +2121,60 @@ Package scrreprt Warning: Activating an ugly workaround for a missing
 (/usr/local/texlive/2016/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 44.
-\cftparskip=\skip91
-\cftbeforetoctitleskip=\skip92
-\cftaftertoctitleskip=\skip93
-\cftbeforepartskip=\skip94
-\cftpartnumwidth=\skip95
-\cftpartindent=\skip96
-\cftbeforechapskip=\skip97
-\cftchapindent=\skip98
-\cftchapnumwidth=\skip99
-\cftbeforesecskip=\skip100
-\cftsecindent=\skip101
-\cftsecnumwidth=\skip102
-\cftbeforesubsecskip=\skip103
-\cftsubsecindent=\skip104
-\cftsubsecnumwidth=\skip105
-\cftbeforesubsubsecskip=\skip106
-\cftsubsubsecindent=\skip107
-\cftsubsubsecnumwidth=\skip108
-\cftbeforeparaskip=\skip109
-\cftparaindent=\skip110
-\cftparanumwidth=\skip111
-\cftbeforesubparaskip=\skip112
-\cftsubparaindent=\skip113
-\cftsubparanumwidth=\skip114
-\cftbeforeloftitleskip=\skip115
-\cftafterloftitleskip=\skip116
-\cftbeforefigskip=\skip117
-\cftfigindent=\skip118
-\cftfignumwidth=\skip119
-\cftbeforelottitleskip=\skip120
-\cftafterlottitleskip=\skip121
-\cftbeforetabskip=\skip122
-\cfttabindent=\skip123
-\cfttabnumwidth=\skip124
-\cftbeforesubfigskip=\skip125
-\cftsubfigindent=\skip126
-\cftsubfignumwidth=\skip127
-\cftbeforesubtabskip=\skip128
-\cftsubtabindent=\skip129
-\cftsubtabnumwidth=\skip130
+\cftparskip=\skip95
+\cftbeforetoctitleskip=\skip96
+\cftaftertoctitleskip=\skip97
+\cftbeforepartskip=\skip98
+\cftpartnumwidth=\skip99
+\cftpartindent=\skip100
+\cftbeforechapskip=\skip101
+\cftchapindent=\skip102
+\cftchapnumwidth=\skip103
+\cftbeforesecskip=\skip104
+\cftsecindent=\skip105
+\cftsecnumwidth=\skip106
+\cftbeforesubsecskip=\skip107
+\cftsubsecindent=\skip108
+\cftsubsecnumwidth=\skip109
+\cftbeforesubsubsecskip=\skip110
+\cftsubsubsecindent=\skip111
+\cftsubsubsecnumwidth=\skip112
+\cftbeforeparaskip=\skip113
+\cftparaindent=\skip114
+\cftparanumwidth=\skip115
+\cftbeforesubparaskip=\skip116
+\cftsubparaindent=\skip117
+\cftsubparanumwidth=\skip118
+\cftbeforeloftitleskip=\skip119
+\cftafterloftitleskip=\skip120
+\cftbeforefigskip=\skip121
+\cftfigindent=\skip122
+\cftfignumwidth=\skip123
+\cftbeforelottitleskip=\skip124
+\cftafterlottitleskip=\skip125
+\cftbeforetabskip=\skip126
+\cfttabindent=\skip127
+\cfttabnumwidth=\skip128
+\cftbeforesubfigskip=\skip129
+\cftsubfigindent=\skip130
+\cftsubfignumwidth=\skip131
+\cftbeforesubtabskip=\skip132
+\cftsubtabindent=\skip133
+\cftsubtabnumwidth=\skip134
 )
-\newnumberwidth=\skip131
-\beforebibskip=\skip132
-\newchnumberwidth=\skip133
-\figurelabelwidth=\skip134
-\tablelabelwidth=\skip135
-\c@listings=\count368
-\cftbeforelistingsskip=\skip136
-\cftlistingsindent=\skip137
-\cftlistingsnumwidth=\skip138
-\c@loldepth=\count369
-\cftbeforeloltitleskip=\skip139
-\cftafterloltitleskip=\skip140
-\listingslabelwidth=\skip141
+\newnumberwidth=\skip135
+\beforebibskip=\skip136
+\newchnumberwidth=\skip137
+\figurelabelwidth=\skip138
+\tablelabelwidth=\skip139
+\c@listings=\count373
+\cftbeforelistingsskip=\skip140
+\cftlistingsindent=\skip141
+\cftlistingsnumwidth=\skip142
+\c@loldepth=\count374
+\cftbeforeloltitleskip=\skip143
+\cftafterloltitleskip=\skip144
+\listingslabelwidth=\skip145
 
 Using KOMA-command "deffootnote" for footnote setup
 (/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrtime.sty
@@ -2205,35 +2229,35 @@ LaTeX Warning: Label `ch:conclusions' multiply defined.
 (./FrontBackmatter/Declaration.aux))
 \openout1 = `ClassicThesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 60.
-LaTeX Font Info:    Try loading font information for LGR+cmr on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 62.
+LaTeX Font Info:    Try loading font information for LGR+cmr on input line 62.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
 File: lgrcmr.fd 2016/03/04 v1.1 Greek European Computer Regular
 )
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 60.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 62.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 62.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Try loading font information for T1+pplj on input line 60.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
+LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Try loading font information for T1+pplj on input line 62.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/t1pplj.fd
 File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
@@ -2250,17 +2274,22 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'ClassicThesis.bbl' found.
 
 (./ClassicThesis.bbl)
-Package biblatex Info: Reference section=0 on input line 60.
-Package biblatex Info: Reference segment=0 on input line 60.
+Package biblatex Info: Reference section=0 on input line 62.
+Package biblatex Info: Reference segment=0 on input line 62.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
+Package caption Info: longtable package is loaded.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
+)
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count370
-Package scrhack Info: undefining \float@addtolists on input line 60.
-\AtBeginShipoutBox=\box49
-Package hyperref Info: Link coloring ON on input line 60.
+\c@lstlisting=\count375
+Package scrhack Info: undefining \float@addtolists on input line 62.
+\AtBeginShipoutBox=\box53
+Package hyperref Info: Link coloring ON on input line 62.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -2268,11 +2297,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count371
+\c@section@level=\count376
 )
-LaTeX Info: Redefining \ref on input line 60.
-LaTeX Info: Redefining \pageref on input line 60.
-LaTeX Info: Redefining \nameref on input line 60.
+LaTeX Info: Redefining \ref on input line 62.
+LaTeX Info: Redefining \pageref on input line 62.
+LaTeX Info: Redefining \nameref on input line 62.
 
 (./ClassicThesis.out) (./ClassicThesis.out)
 \@outlinefile=\write5
@@ -2281,17 +2310,17 @@ LaTeX Info: Redefining \nameref on input line 60.
 
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count372
-\scratchdimen=\dimen188
-\scratchbox=\box50
-\nofMPsegments=\count373
-\nofMParguments=\count374
-\everyMPshowfont=\toks37
-\MPscratchCnt=\count375
-\MPscratchDim=\dimen189
-\MPnumerator=\count376
-\makeMPintoPDFobject=\count377
-\everyMPtoPDFconversion=\toks38
+\scratchcounter=\count377
+\scratchdimen=\dimen190
+\scratchbox=\box54
+\nofMPsegments=\count378
+\nofMParguments=\count379
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count380
+\MPscratchDim=\dimen191
+\MPnumerator=\count381
+\makeMPintoPDFobject=\count382
+\everyMPtoPDFconversion=\toks39
 ) (/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -2307,7 +2336,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \microtypecontext on input line 60.
+LaTeX Info: Redefining \microtypecontext on input line 62.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -2323,13 +2352,13 @@ ABD: EveryShipout initializing macros
 \openout2 = `FrontBackmatter/DirtyTitlepage.aux'.
 
  (./FrontBackmatter/DirtyTitlepage.tex)
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 71.
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 74.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 7.65005pt on input line 71.
+(Font)              scaled to size 7.65005pt on input line 74.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -2347,7 +2376,7 @@ Package microtype Info: Loading generic settings for font family
 
 
 ]
-<gfx/TFZsuperellipse_bw.pdf, id=254, 260.5755pt x 203.14595pt>
+<gfx/TFZsuperellipse_bw.pdf, id=250, 260.5755pt x 203.14595pt>
 File: gfx/TFZsuperellipse_bw.pdf Graphic file (type pdf)
 
 <use gfx/TFZsuperellipse_bw.pdf>
@@ -2376,31 +2405,31 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 \openout2 = `FrontBackmatter/Abstract.aux'.
 
  (./FrontBackmatter/Abstract.tex)
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 76.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 79.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 76.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 79.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 76.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 79.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 76.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 79.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 76.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 79.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1zplm.fd
@@ -2530,53 +2559,109 @@ Chapter 3.
 
 
 
-]) [11]
+] [11]
+LaTeX Font Info:    Font shape `T1/pplj/bx/it' in size <10.95> not available
+(Font)              Font shape `T1/pplj/b/it' tried instead on input line 26.
+ [12]
+Overfull \hbox (1.60992pt too wide) in paragraph at lines 62--63
+[]\T1/pplj/m/n/10.95 The Plan Com-po-nent should re-trieve the al-ter-na-tive v
+i-able topol-
+ []
+
+[13]
+Overfull \hbox (2.7816pt too wide) in paragraph at lines 85--86
+[]\T1/pplj/m/n/10.95 The Knowl-edge Base Com-po-nent should pro-vide an ac-cess
+ point
+ []
+
+
+Overfull \hbox (2.7816pt too wide) in paragraph at lines 86--87
+[]\T1/pplj/m/n/10.95 The Knowl-edge Base Com-po-nent should pro-vide an ac-cess
+ point
+ []
+
+
+Overfull \hbox (2.7816pt too wide) in paragraph at lines 87--88
+[]\T1/pplj/m/n/10.95 The Knowl-edge Base Com-po-nent should pro-vide an ac-cess
+ point
+ []
+
+
+Overfull \hbox (2.7816pt too wide) in paragraph at lines 88--89
+[]\T1/pplj/m/n/10.95 The Knowl-edge Base Com-po-nent should pro-vide an ac-cess
+ point
+ []
+
+[14]
+Overfull \hbox (51.5763pt too wide) in alignment at lines 102--124
+ [] [] 
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 124
+ []
+
+[15] [16]
+Overfull \hbox (51.5763pt too wide) in alignment at lines 126--159
+ [] [] 
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 159
+ []
+
+
+Overfull \hbox (51.5763pt too wide) in alignment at lines 159--160
+ [] [] 
+ []
+
+[17] [18] [19]) [20]
 \openout2 = `Chapters/Chapter04.aux'.
 
  (./Chapters/Chapter04.tex
 Chapter 4.
-[12
-
-
-
-
-]) [13] [14]
-\openout2 = `Chapters/Chapter05.aux'.
-
- (./Chapters/Chapter05.tex
-Chapter 5.
-) [15
+) [21
 
 
 
 
 ]
+\openout2 = `Chapters/Chapter05.aux'.
+
+ (./Chapters/Chapter05.tex
+Chapter 5.
+[22
+
+
+
+
+]) [23]
 \openout2 = `Chapters/Chapter06.aux'.
 
  (./Chapters/Chapter06.tex
 Chapter 6.
-[16
+[24
 
 
 
 
-]) [17] [18
+]) [25] [26
 
 
 
-] [19] [20]
+] [27] [28]
 \openout2 = `Chapters/Chapter0A.aux'.
 
  (./Chapters/Chapter0A.tex
 Appendix A.
-) [21
+) [29
 
 
 
 ]
 \openout2 = `FrontBackmatter/Bibliography.aux'.
 
- (./FrontBackmatter/Bibliography.tex [22
+ (./FrontBackmatter/Bibliography.tex [30
 
 
 
@@ -2620,7 +2705,7 @@ Overfull \hbox (5.36168pt too wide) in paragraph at lines 15--15
  Clarke.
  []
 
-[23]
+[31]
 Overfull \hbox (2.37001pt too wide) in paragraph at lines 15--15
 []\T1/pplj/m/n/10.95 Santiago Gómez Sáez, Vasil-ios An-drikopou-los, Flo-rian W
 essling,
@@ -2644,17 +2729,17 @@ Overfull \hbox (8.88503pt too wide) in paragraph at lines 15--15
 -els\T1/pplj/m/n/10.95 . Springer.
  []
 
-[24]) [25]
+[32]) [33]
 \openout2 = `FrontBackmatter/Declaration.aux'.
 
- (./FrontBackmatter/Declaration.tex [26
+ (./FrontBackmatter/Declaration.tex [34
 
 
 
 
-]) [27]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 126.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 126.
+]) [35]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 131.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 131.
  (./ClassicThesis.aux
 (./FrontBackmatter/DirtyTitlepage.aux) (./FrontBackmatter/Titlepage.aux)
 (./FrontBackmatter/Titleback.aux) (./FrontBackmatter/Dedication.aux)
@@ -2664,7 +2749,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 126.
 ) (./Chapters/Chapter05.aux) (./Chapters/Chapter06.aux)
 (./Chapters/Chapter0A.aux) (./FrontBackmatter/Bibliography.aux)
 (./FrontBackmatter/Declaration.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 126.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 131.
 
 
  *File List*
@@ -2730,6 +2815,7 @@ biblatex.cfg
   amsgen.sty    1999/11/30 v2.0 generic functions
   amsbsy.sty    1999/11/29 v1.2d Bold Symbols
   amsopn.sty    2016/03/08 v2.02 operator names
+booktabs.sty    2016/04/27 v1.618033 publication quality tables
  fontenc.sty
    t1enc.def    2005/09/27 v1.99g Standard LaTeX file
 textcomp.sty    2005/09/27 v1.99g Standard LaTeX package
@@ -2751,6 +2837,9 @@ tabularx.sty    2016/02/03 v2.11 `tabularx' package (DPC)
  caption.sty    2016/02/21 v3.3-144 Customizing captions (AR)
 caption3.sty    2016/02/04 v1.7-139 caption3 kernel (AR)
   subfig.sty    2005/06/28 ver: 1.3 subfig package
+usecases.sty    
+multirow.sty    
+longtable.sty    2014/10/28 v4.11 Multi-page Table package (DPC)
 listings.sty    2015/06/04 1.6 (Carsten Heinz)
  lstmisc.sty    2015/06/04 1.6 (Carsten Heinz)
 listings.cfg    2015/06/04 1.6 listings configuration
@@ -2807,7 +2896,6 @@ beramono.sty    2004/01/31 (WaS)
 microtype.sty    2016/05/14 v2.6a Micro-typographical refinements (RS)
 microtype-pdftex.def    2016/05/14 v2.6a Definitions specific to pdftex (RS)
 microtype.cfg    2016/05/14 v2.6a microtype main configuration file (RS)
-booktabs.sty    2016/04/27 v1.618033 publication quality tables
 textcase.sty    2004/10/07 v0.07 Text only upper/lower case changing (DPC)
 scrlayer-scrpage.sty    2016/05/10 v3.20 KOMA-Script package (end user interfac
 e for scrlayer)
@@ -2826,6 +2914,7 @@ american.lbx    2016/05/14 v3.4 biblatex localization (PK/JW/AB)
   ts1cmr.fd    2014/09/29 v2.5h Standard LaTeX font definitions
   t1pplj.fd    2004/09/06 font definitions for T1/pplj.
 ClassicThesis.bbl
+ltcaption.sty    2013/06/09 v1.4-94 longtable captions (AR)
  nameref.sty    2012/10/27 v2.43 Cross-referencing by name of section
 gettitlestring.sty    2016/05/16 v1.5 Cleanup title references (HO)
 ClassicThesis.out
@@ -2863,15 +2952,9 @@ FrontBackmatter/Bibliography.tex
 FrontBackmatter/Declaration.tex
  ***********
 
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 126.
-
-Package rerunfilecheck Warning: File `ClassicThesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `ClassicThesis.out':
-(rerunfilecheck)             Before: CE93FBA6265CD63768398CE986A5130A;3909
-(rerunfilecheck)             After:  04F8B706BA6A1604C4353D07DF353C4E;3984.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 131.
+Package rerunfilecheck Info: File `ClassicThesis.out' has not changed.
+(rerunfilecheck)             Checksum: D626EC662E80DD3781F12E866ED1CC79;3854.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -2891,11 +2974,11 @@ Package logreq Info: Writing requests to 'ClassicThesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32519 strings out of 493014
- 595186 string characters out of 6133351
- 1021057 words of memory out of 5000000
- 35326 multiletter control sequences out of 15000+600000
- 64583 words of font info for 86 fonts, out of 8000000 for 9000
+ 32731 strings out of 493014
+ 598138 string characters out of 6133351
+ 1040760 words of memory out of 5000000
+ 35483 multiletter control sequences out of 15000+600000
+ 67373 words of font info for 90 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
  68i,23n,90p,10515b,2799s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -2906,12 +2989,13 @@ xmf-dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/local/texlive/2016/texmf-dis
 t/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/
 type1/public/cbfonts/grmn1095.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
 e1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/
-palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatin
-o/uplri8a.pfb>
-Output written on ClassicThesis.pdf (41 pages, 190409 bytes).
+palatino/uplbi8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palati
+no/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr
+i8a.pfb>
+Output written on ClassicThesis.pdf (49 pages, 224313 bytes).
 PDF statistics:
- 611 PDF objects out of 1000 (max. 8388607)
- 551 compressed objects within 6 object streams
- 137 named destinations out of 1000 (max. 500000)
- 14814 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 685 PDF objects out of 1000 (max. 8388607)
+ 615 compressed objects within 7 object streams
+ 176 named destinations out of 1000 (max. 500000)
+ 15318 words of extra memory for PDF output out of 17280 (max. 10000000)
 
