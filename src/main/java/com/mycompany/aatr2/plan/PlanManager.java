@@ -25,14 +25,11 @@ public class PlanManager implements Observable, Observer {
 
 	private static final PlanManager inst = new PlanManager();
 	private final ArrayList<Observer> obs;
-	private AnalyseManager am;
-	private DockerManager dm = DockerManager.getInstance();
 	private ViableTopologies vt = ViableTopologies.getInstance();
 	private Topology newT = null;
 
 	public PlanManager() {
 		this.obs = new ArrayList<>();
-		this.am = AnalyseManager.getInstance();
 	}
 
 	public static PlanManager getInstance() {
@@ -40,7 +37,7 @@ public class PlanManager implements Observable, Observer {
 	}
 
 	public void initiate() {
-		setObservable(am);
+		setObservable(AnalyseManager.getInstance());
 
 	}
 
@@ -55,7 +52,7 @@ public class PlanManager implements Observable, Observer {
 	}
 
 	private void getRequest() {
-		AdaptationRequest ar = dm.getCurrentTopology().latestRequest();
+		AdaptationRequest ar = DockerManager.getInstance().getCurrentTopology().latestRequest();
 		vt.defineTestTopologies();
 		processRequest(ar);
 

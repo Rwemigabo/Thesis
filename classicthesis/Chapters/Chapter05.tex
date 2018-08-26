@@ -1,11 +1,89 @@
 %************************************************
-\chapter{System Testing and Evaluation}\label{ch:mathtest} % $\mathbb{ZNR}$
+\chapter{Testing}\label{ch:testing} % $\mathbb{ZNR}$
 %************************************************
 
-During the development of the system, there were a battery of tests run on each of the individual components to ensure their functionality and furthermore their interaction with each other when integrated in order to ensure that they work together. However, this chapter presents the more important tests run on the more complete versions of the system. After completing most of the implementation of the system's components, that is until the level of the Analysis of the data that is collected by the system, the more important phase of testing begun and in the following sections, I present the results of most of these tests and finally an evaluation of the results of these tests.
+During the development of the system, there were a battery of tests run on each of the individual components to ensure their functionality and furthermore their interaction with each other when integrated in order to ensure that they work together. However, this chapter presents the more important tests run on the more complete versions of the system. After implementing three of the major components of the system, that is the Sensor, Monitor and the Analysis components, the more important phase of testing begun and in the following sections, I present the results of most of these tests and finally, an evaluation of the results of the System is done in the following chapter.
+\section{Test Suite}
+\subsection{Test Applications}
+The testing of the system was done using two different applications assembled from Github. These applications include:\\\\
+\textbf{node-docker-api:}\\
+For the initial testing done on the Monitor and analysis components given that I only needed to record and analyse any statistics at the time, I used an application Developing and Testing Microservices with Docker \cite{node-docker-api} by the Github user Michael Herman. I used this application because it was quick and simple to set up by following the instructions from the author and it is a docker application implementing with the microservice architecture. The details of this testing endeavour are presented in the following sections.\\\\
+\textbf{example-voting-app:}\\
+After the initial testing of my system's Monitor and and Analysis components and confirming that they performed the basic functionality, I needed to test the more complex features of the Analysis component, which were the prediction and recommendation functionalities. To test these, I needed a simpler more basic application where I would be able to quickly write a testing script for the load simulator application I was going to use so, I decided to use \cite{example-voting-app} Example Voting App. It is a simple voting application where a user either vote cat or dog. I also decided to use this application because I was having problems with the login feature that was on the application introduced in the section above so, to save time, I changed applications and found this second micro service docker application among the other available options on Github.\\
+The services in this Application include the \textit{voting-app} service, where the users case their votes, \textit{result-app} service, which is where the user views the vote tally percentage, which is retrieved from the database, \textit{redis} service, a queue to handle the votes coming it, \textit{worker} service to process the voted and send them to the final database service \textit{db} service.
+\subsection{Load simulator}
+Locust IO\cite{locustIO}, the Load testing application introduced in \autoref{ch:implementation} was used for to load test the test applications. I wrote the test scripts for the test applications for example the short test script from the load testing done on the Example Voting App is presented in \autoref{lst:script1}. By running this script, the simulated user simply initially randomly performs a vote and then randomly changes the vote every time locust sends a request by the simulated user. \autoref{lst:script2} provides the ports where the simulated users can connect.
 
-\section{Monitor and Analysis Component Testing.}
+\begin{lstlisting}[language=Python, caption=Example Voting App testing Script, label= lst:script1]
+from locust import TaskSet, task
+import random
+class MyTasks(TaskSet):
+    # vote = null
+    # vote function
+    def vote(self, vt):
+        self.client.post("/", {'vote': vt})
 
-\section{Plan and Execution Testing.}
+    # initial random vote between cats or dogs
+    @task(2)
+    def votecat(self):
+        self.vote("a")
 
-\section{Full System Testing and Evaluation.}
+    # change vote task
+    @task(3)
+    def votedg(self):
+        self.vote("b")
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python, caption=Locust open ports Script, label= lst:script2]
+from locust import HttpLocust
+from MyTaskSet import MyTasks
+
+class MyLocust(HttpLocust):
+    task_set = MyTasks
+    min_wait = 5000
+    max_wait = 15000
+    host = 'http://localhost:5000'
+
+\end{lstlisting}
+
+\section{Sensor, Monitor and Analysis Component Testing.}
+As seen in the Component diagrams in \autoref{ch:implementation}, the These components work closely together and in order to fully test one of them, I had to have all of them working. For the testing phase of these components, I started out by testing the Sensor connection to the Docker API to see whether the statistics metrics were being accurately monitored by the sensor and to confirm, I compared them to the container statistics produced when running the command \textit{docker stats} in the terminal. After confirmation of the accuracy of the sensor statistics, I moved on to the monitoring component. Since there is a monitor instance for each of the services being monitored, I decided to plot graphs for each of the statistics for each of the metrics. Therefore creating 2 plots per container per service. \autoref{Fig:7} shows a sample of the statistics recorded from testing the Example voting application. 
+\begin{figure}[H]
+\centering
+  \subfloat[Result service container CPU stats]{%
+    \includegraphics[width=0.49\textwidth]{gfx/result_FullCPUDatapoints_0}}\hfill
+  \subfloat[Vote service container CPU stats]{%
+    \includegraphics[width=0.49\textwidth]{gfx/vote_FullCPUDatapoints_0}}\hfill   
+    \subfloat[Worker service container CPU stats]{%
+    \includegraphics[width=0.49\textwidth]{gfx/worker_FullCPUDatapoints_0}}\hfill
+  \subfloat[db service container CPU stats]{%
+    \includegraphics[width=0.49\textwidth]{gfx/postgres_FullCPUDatapoints_0}}\hfill
+    \subfloat[Redis service container CPU stats]{%
+    \includegraphics[width=0.49\textwidth]{gfx/redisalpine_FullCPUDatapoints_0}}
+    \caption{Plots of the monitored CPU statistics from the containers of the example voting application.} 
+   \label{Fig:7} 
+\end{figure}
+
+These Images show the a small sample of the testing done on the application and after the confirmation of the basic communications between the Monitor and sensor components, I then moved to the Analysis Component. From this component, my aim was to see it perform a prediction of the usage for the next time window (5 minutes) given the analysis of the already recorded data. To visualise the results of this functionality, I used the same plotting mechanism implemented for the statistics and the prediction data can be seen in \autoref{Fig:8}, where the prediction of the CPU data for the next time window is performed based on the data from the results in \autoref{Fig:7}.
+\begin{figure}[H]
+\centering
+  \subfloat[Result service container CPU prediction stats]{%
+    \includegraphics[width=0.5\textwidth]{gfx/result_PredictionforCPU_0}}\hfill
+  \subfloat[Vote service container CPU prediction stats]{%
+    \includegraphics[width=0.5\textwidth]{gfx/vote_PredictionforCPU_0}}\hfill   
+    \subfloat[Worker service container CPU prediction stats]{%
+    \includegraphics[width=0.5\textwidth]{gfx/worker_PredictionforCPU_0}}\hfill
+  \subfloat[db service container CPU prediction stats]{%
+    \includegraphics[width=0.5\textwidth]{gfx/postgres_PredictionforCPU_0}}\hfill
+    \subfloat[Redis service container CPU prediction stats]{%
+    \includegraphics[width=0.5\textwidth]{gfx/redisalpine_PredictionforCPU_0}}
+    \caption{Plots of the predicted CPU statistics from the containers of the example voting application.} 
+   \label{Fig:8} 
+\end{figure}
+
+\section{Full System Testing }
+After the confirmation of the Monitor and analysis components, the next step of testing brought us to the version of the system after the implementation of the fuzzy logic functionality in the Analysis component, which is meant to use the predicted data and decide how many containers need to be added to or removed from the service, and the Plan component, which works with that data/ recommendation from the Analysis component and proposes the topology that best suits the recommendation before notifying the execution component to change the topology.\\
+In order to confirm the above, I had to run varying loads through the application so that the system would respond accordingly. So, the Locust load simulation tool was used for this purpose and the work loads to be tested with are presented in \autoref{TABLE X} below.
+
+Tables (Different work loads and change required/ change observed)
+

@@ -14,112 +14,118 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1.3}{Document analysis.}}{2}{section.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {2}{Background and Related work}}{5}{chapter.2}
+\contentsline {chapter}{\numberline {2}{Background and Related work}}{4}{chapter.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.1}{Background }}{5}{section.2.1}
+\contentsline {section}{\numberline {2.1}{Background }}{4}{section.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.1}{ Topologies}}{5}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.1}{ Topologies}}{4}{subsection.2.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.1.1}{\textalpha -Topologies}}{5}{subsubsection.2.1.1.1}
+\contentsline {subsubsection}{\numberline {2.1.1.1}{\textalpha -Topologies}}{4}{subsubsection.2.1.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.1.1.2}{Viable Topologies}}{6}{subsubsection.2.1.1.2}
+\contentsline {subsubsection}{\numberline {2.1.1.2}{Viable Topologies}}{5}{subsubsection.2.1.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.2}{Auto-scaling (Autonomous Computing)}}{6}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.2}{Auto-scaling (Autonomous Computing)}}{5}{subsection.2.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.3}{Control Loops (MAPE-K)}}{6}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.3}{Control Loops (MAPE-K)}}{5}{subsection.2.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.4}{Microservices Architecture}}{7}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.4}{Microservices Architecture}}{6}{subsection.2.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.5}{Fuzzy logic}}{7}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.5}{Fuzzy logic}}{6}{subsection.2.1.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.2}{Related work}}{8}{section.2.2}
+\contentsline {section}{\numberline {2.2}{Related work}}{7}{section.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {3}{Specification and Design}}{11}{chapter.3}
+\contentsline {chapter}{\numberline {3}{Specification and Design}}{9}{chapter.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.1}{Requirements Specification}}{11}{section.3.1}
+\contentsline {section}{\numberline {3.1}{Requirements Specification}}{9}{section.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1.1}{{System's Functional requirements}}}{11}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.1}{{System's Functional requirements}}}{9}{subsection.3.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1.2}{Component Requirements}}{12}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.2}{Component Requirements}}{10}{subsection.3.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.1.2.1}{\textbf {Monitor Component}}}{12}{subsubsection.3.1.2.1}
+\contentsline {subsubsection}{\numberline {3.1.2.1}{\textbf {Monitor Component}}}{10}{subsubsection.3.1.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.1.2.2}{\textbf {Analysis Component}}}{12}{subsubsection.3.1.2.2}
+\contentsline {subsubsection}{\numberline {3.1.2.2}{\textbf {Analysis Component}}}{10}{subsubsection.3.1.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.1.2.3}{\textbf {Plan Component}}}{13}{subsubsection.3.1.2.3}
+\contentsline {subsubsection}{\numberline {3.1.2.3}{\textbf {Plan Component}}}{11}{subsubsection.3.1.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.1.2.4}{\textbf {Execution Component}}}{14}{subsubsection.3.1.2.4}
+\contentsline {subsubsection}{\numberline {3.1.2.4}{\textbf {Execution Component}}}{12}{subsubsection.3.1.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.1.2.5}{\textbf {Knowledge Base Component}}}{14}{subsubsection.3.1.2.5}
+\contentsline {subsubsection}{\numberline {3.1.2.5}{\textbf {Knowledge Base Component}}}{12}{subsubsection.3.1.2.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.2}{Design}}{15}{section.3.2}
+\contentsline {section}{\numberline {3.2}{Design}}{14}{section.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.1}{Use Cases}}{15}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.1}{Use Cases}}{14}{subsection.3.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.2}{Design patterns}}{20}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}{System Architecture}}{20}{section.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.3}{Complete System Architecture}}{20}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}{Activity Diagram}}{20}{subsection.3.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3.1}{Component Diagram And Patterns}}{20}{subsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.1.1}{Monitor}}{20}{subsubsection.3.3.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}{Implementation}}{21}{chapter.4}
+\contentsline {subsubsection}{\numberline {3.3.1.2}{Analyse}}{20}{subsubsection.3.3.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}{Technologies and their utilisation in the system}}{21}{section.4.1}
+\contentsline {chapter}{\numberline {4}{Implementation}}{22}{chapter.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.1}{Java}}{21}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.1}{Technologies and their utilisation in the system}}{22}{section.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.2}{Docker}}{21}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.1}{Containerisation Technology (Docker)}}{22}{subsection.4.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.2.1}{Docker API}}{21}{subsubsection.4.1.2.1}
+\contentsline {subsubsection}{\numberline {4.1.1.1}{Docker API}}{22}{subsubsection.4.1.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.2.2}{Docker Compose}}{21}{subsubsection.4.1.2.2}
+\contentsline {subsubsection}{\numberline {4.1.1.2}{Docker Compose}}{22}{subsubsection.4.1.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.3}{MySQL}}{21}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.2}{Programming Language (Java)}}{23}{subsection.4.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1.4}{Fuzzy Logic}}{21}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.3}{Database (Relational)}}{23}{subsection.4.1.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}{Application Components}}{21}{section.4.2}
+\contentsline {subsection}{\numberline {4.1.4}{Fuzzy Logic (jFuzzyLogic)}}{23}{subsection.4.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.1}{Monitor}}{21}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.1.5}{Locust IO}}{23}{subsection.4.1.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.2}{Analyse}}{21}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.2}{Application Components}}{23}{section.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.3}{Plan}}{21}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.1}{Sensor}}{24}{subsection.4.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.4}{Execute}}{21}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.2}{Monitor}}{25}{subsection.4.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.5}{Knowledge base}}{21}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.3}{Analyse}}{26}{subsection.4.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.3}{Algorithms and data structure??}}{21}{section.4.3}
+\contentsline {subsection}{\numberline {4.2.4}{Plan}}{27}{subsection.4.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}{System Testing and Evaluation}}{23}{chapter.5}
+\contentsline {subsection}{\numberline {4.2.5}{Execute}}{28}{subsection.4.2.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}{Monitor and Analysis Component Testing.}}{23}{section.5.1}
+\contentsline {chapter}{\numberline {5}{Testing}}{29}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}{Plan and Execution Testing.}}{23}{section.5.2}
+\contentsline {section}{\numberline {5.1}{Test Suite}}{29}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}{Full System Testing and Evaluation.}}{23}{section.5.3}
+\contentsline {subsection}{\numberline {5.1.1}{Test Applications}}{29}{subsection.5.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}{Conclusions}}{25}{chapter.6}
+\contentsline {subsection}{\numberline {5.1.2}{Load simulator}}{30}{subsection.5.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}{Interpretation of Results}}{25}{section.6.1}
+\contentsline {section}{\numberline {5.2}{Sensor, Monitor and Analysis Component Testing.}}{31}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}{Unresolved issues}}{25}{section.6.2}
+\contentsline {section}{\numberline {5.3}{Full System Testing }}{33}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}{Future work}}{25}{section.6.3}
+\contentsline {chapter}{\numberline {6}{Evaluation and Conclusion}}{34}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {part}{\numberline {i}{Appendix}}{27}{part.1}
+\contentsline {section}{\numberline {6.1}{Evaluation}}{34}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}{Appendix}}{29}{appendix.A}
+\contentsline {section}{\numberline {6.2}{Unresolved issues}}{34}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.1}{User Manual}}{29}{section.A.1}
+\contentsline {section}{\numberline {6.3}{Conclusion}}{34}{section.6.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.2}{Design Documents}}{29}{section.A.2}
+\contentsline {chapter}{\numberline {A}{Appendix}}{35}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.3}{Source Code}}{29}{section.A.3}
+\contentsline {chapter}{\numberline {B}{Appendix}}{36}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A.4}{Test Suite}}{29}{section.A.4}
+\contentsline {section}{\numberline {B.1}{User Manual}}{36}{section.B.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.2}{Design Documents}}{36}{section.B.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.3}{Source Code}}{36}{section.B.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.4}{Test Suite}}{36}{section.B.4}
 \defcounter {refsection}{0}\relax 
 \vspace {\beforebibskip }
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {}{Bibliography}}{30}{section*.1}
+\contentsline {chapter}{\numberline {}{Bibliography}}{37}{section*.9}

@@ -43,7 +43,6 @@ public class Analyser implements Observer, Observable {
 	// private Observable obvle = null;
 	private ArrayList<Symptom> symplogs = new ArrayList<>();//to knowledge
 	private final Cluster cluster;
-	private MonitorManager mm;
 	private long MINUTES_WINDOW = 5 * 60 * 1000;// how often to run analysis
 	// private final ArrayList<Statistic> spikestats = new ArrayList<>();
 	private int analysisCount = 0;
@@ -57,8 +56,6 @@ public class Analyser implements Observer, Observable {
 		this.obs = new ArrayList<>();
 		this.cluster = c;
 		// this.obvle = new ArrayList<>();
-
-		this.mm = MonitorManager.getInstance();
 	}
 
 	/**
@@ -71,7 +68,8 @@ public class Analyser implements Observer, Observable {
 	}
 
 	public void initiate() {
-		setObservable(mm.getMonitor(cluster));
+		
+		setObservable(MonitorManager.getInstance().getMonitor(cluster));
 	}
 
 	/**

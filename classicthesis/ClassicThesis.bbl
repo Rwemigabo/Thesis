@@ -356,6 +356,42 @@
     \field{year}{2012}
   \endentry
 
+  \entry{dockerAPI}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{\url{https://docs.docker.com/develop/sdk/}}
+    \field{note}{Accessed: 2018-08-23}
+    \field{title}{Develop with Docker Engine SDKs and API}
+  \endentry
+
+  \entry{node-docker-api}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{\url{https://github.com/mjhea0/node-docker-api}}
+    \field{note}{Accessed: 2018-08-25}
+    \field{title}{Developing and Testing Microservices with Docker}
+  \endentry
+
+  \entry{docker_compose}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{\url{https://docs.docker.com/compose/}}
+    \field{note}{Accessed: 2018-08-23}
+    \field{title}{Docker Compose}
+  \endentry
+
+  \entry{example-voting-app}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+  \field{howpublished}{\url{https://github.com/dockersamples/example-voting-app}}
+    \field{note}{Accessed: 2018-08-25}
+    \field{title}{Example Voting App}
+  \endentry
+
   \entry{fang2012rpps}{inproceedings}{}
     \name{author}{4}{}{%
       {{hash=FW}{%
@@ -676,6 +712,15 @@
     \field{year}{2010}
   \endentry
 
+  \entry{locustIO}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{howpublished}{\url{https://docs.locust.io/en/stable/index.html}}
+    \field{note}{Accessed: 2018-08-25}
+    \field{title}{Locust}
+  \endentry
+
   \entry{loff2014vadara}{inproceedings}{}
     \name{author}{2}{}{%
       {{hash=LJ}{%
@@ -714,6 +759,56 @@
   \field{howpublished}{\url{https://martinfowler.com/articles/microservices.html}}
     \field{note}{Accessed: 2018-08-04}
     \field{title}{Microservices}
+  \endentry
+
+  \entry{solaris}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+  \field{howpublished}{\url{http://www.oracle.com/technetwork/server-storage/solaris/containers-169727.html}}
+    \field{note}{Accessed: 2018-08-23}
+    \field{title}{Oracle Solaris Containers}
+  \endentry
+
+  \entry{pahl2017cloud}{article}{}
+    \name{author}{4}{}{%
+      {{hash=PC}{%
+         family={Pahl},
+         family_i={P\bibinitperiod},
+         given={Claus},
+         given_i={C\bibinitperiod},
+      }}%
+      {{hash=BA}{%
+         family={Brogi},
+         family_i={B\bibinitperiod},
+         given={Antonio},
+         given_i={A\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Soldani},
+         family_i={S\bibinitperiod},
+         given={Jacopo},
+         given_i={J\bibinitperiod},
+      }}%
+      {{hash=JP}{%
+         family={Jamshidi},
+         family_i={J\bibinitperiod},
+         given={Pooyan},
+         given_i={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE}%
+    }
+    \strng{namehash}{PC+1}
+    \strng{fullhash}{PCBASJJP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{title}{Cloud container technologies: a state-of-the-art review}
+    \field{journaltitle}{IEEE Transactions on Cloud Computing}
+    \field{year}{2017}
   \endentry
 
   \entry{qu2018auto}{article}{}
@@ -803,6 +898,15 @@
     \field{title}{Delivering cloud services with QoS requirements: an
   opportunity for ICT SMEs}
     \field{year}{2012}
+  \endentry
+
+  \entry{rkt}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{howpublished}{\url{https://coreos.com/rkt/}}
+    \field{note}{Accessed: 2018-08-23}
+    \field{title}{RKT overview page}
   \endentry
 
   \entry{yazdanov2012vertical}{inproceedings}{}

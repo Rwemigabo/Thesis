@@ -34,7 +34,6 @@ public class Monitor implements Observer, Observable {
 	private final ArrayList<Observer> obs;
 	private final List<Container> conts;
 	private Cluster service;
-	private SensorManager sm = SensorManager.getInstance();
 	// private DockerManager dm = DockerManager.getInstance();
 
 	/**
@@ -65,6 +64,7 @@ public class Monitor implements Observer, Observable {
 	 * @throws InterruptedException
 	 */
 	public void initiate() throws DockerException, InterruptedException {
+		SensorManager sm = SensorManager.getInstance();
 		for (Container container : conts) {
 			StatisticsLog sl = new StatisticsLog(container.id());
 			stats.add(sl);

@@ -95,7 +95,7 @@ Some of the requirements presented in \cite{gomez2014cloud} provided a template 
     \item [FR511] The Knowledge Base Component should contain a record of the other user preferences like the time windows for the analysis e.t.c.
     \item [FR512] The Knowledge Base Component should contain a record of the history of the performance of the various topologies that have been run before.
 \end{itemize}
-
+\newpage
 \section{Design} % \ensuremath{\NoCaseChange{\mathbb{ZNR}}}
 In this Section, I presents 2 use cases, which are cases under which the system is expected to behave differently. In the first case, the system records normal workloads under which the managed application should not have any problems dealing with and therefore, there is no need for a change. In the second use case, the system predicts stress on some of the services of the managed application or under use of the resources and therefore requires an appropriate change to be made in order for the application to utilise it's available resources optimally.
 \subsection{Use Cases}
@@ -153,17 +153,29 @@ In this Section, I presents 2 use cases, which are cases under which the system 
 	\item The loop restarts}
 	\addscenario{Extensions (Reactive):}{\item [3a] The Monitor functionality reports high metrics and shortens the time window to the analysis.
 	\item [6a] Analysis is performed on the shorter more urgent time window.
-	\item [7a] A prediction is made and the use prediction is outside the SLO.
+	\item [7a] A prediction is made and the prediction is outside the SLO.
 	\item [10a] Plan is notified with an urgency/ priority recommendation.
-	\item [11a] No check is performed.}
+	\item [11a] No time check is performed.}
 	\addscenario{Extensions (Oscillation Mitigation):}{ \item [11a] Not enough time passed triggers wait action (Depending on how close to breaking point system is predicted to be).}
  \end{usecase}
  
-\subsection{Design patterns}
+\newpage
+\section{System Architecture}
+\subsection{Activity Diagram}
+In the diagram below, the activities required to perform the functionalities in the particular component instances are presented. The monitor and analysis components have multiple instances and are managed by the monitor manager or the Analyser manager and therefore these managers ensure the aggregation of data for the entire application topology being managed. The details of the manager and individual components shall be discussed in the following chapter. At the start of the system, each of these components are created by their managers and their activities after that are as follows.
+\subsubsection{Monitor}
+ A monitor component is created for each container in the particular service being monitored. This component starts off by creating sensors for each of the metrics it is meant to monitor for that container and then the monitoring task begins. Every 2 seconds, the Sensors send their registered metric to the monitor component and these are metrics are collected to form a statistic. A sensor can also report a metric which is outside the SLOs and this will cause the component to create a new more urgent statistic. After the statistic is created it is stored to the Knowledge base and the Analyser is notified.
+\subsubsection{Analyse}
+An analyser is also created for each of the containers of a service therefore, the analysers and monitor components have a one to one relationship. When an analyser is created, it waits for it's first notification from the sensor it has a relation with and when it receives it, the analyser takes note of the time in the first statistic the sensor saved. After this point, the time window is checked every time a notification is received and when enough time has passed, the components retrieves the statistics for that window, sets the last timestamp as the latest time and analyses the data. On the other hand, an analysis is also performed on double time windows to get a more clear analysis with more data. After the analysis is done, the manager aggregates the data and notifies the plan if necessary of a necessary change.
+\begin{figure} 
+   \centering 
+   \begin{turn}{90}
+   \includegraphics[scale=0.50]{gfx/Activity_Diagram1.png}
+   \end{turn}
+   \caption{ Activity Diagram} 
+   \label{Fig:1} 
+\end{figure}
 
-\section{Complete System Architecture}
-\subsection{Component Diagram And Patterns}
-- Logical view of system
 
 %*****************************************
 %*****************************************

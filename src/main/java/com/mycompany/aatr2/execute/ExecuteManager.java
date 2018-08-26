@@ -13,6 +13,7 @@ import com.mycompany.aatr2.DockerManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
 import com.mycompany.aatr2.Topology;
+import com.mycompany.aatr2.plan.PlanManager;
 
 /**
  *Manages the various execute processes
@@ -21,7 +22,6 @@ import com.mycompany.aatr2.Topology;
 public class ExecuteManager implements Observer{
 
 	private static final ExecuteManager inst = new ExecuteManager();
-	private DockerManager dm = DockerManager.getInstance();
 	
 	public ExecuteManager() {
 		
@@ -29,6 +29,11 @@ public class ExecuteManager implements Observer{
 	
 	public static ExecuteManager getInstance() {
 		return inst;
+	}
+	
+	public void initiate() {
+		setObservable(PlanManager.getInstance());
+
 	}
 
 	public void newExecutionManager() {
@@ -38,18 +43,16 @@ public class ExecuteManager implements Observer{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		try {
 			executePlan();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 
 	private void executePlan() throws InterruptedException {
-
+		DockerManager dm = DockerManager.getInstance();
 		Topology ntop = dm.getPendingExecution();
 		String fname = ntop.getFilename();
 		Runtime rt = Runtime.getRuntime();
@@ -70,7 +73,6 @@ public class ExecuteManager implements Observer{
 
 	@Override
 	public void setObservable(Observable ob) {
-		// TODO Auto-generated method stub
 		ob.addObserver(this);
 	}
     
