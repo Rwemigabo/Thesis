@@ -6,8 +6,13 @@
 package com.mycompany.aatr2.analyse;
 
 import java.util.ArrayList;
+//import java.util.concurrent.TimeUnit;
+//import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.mycompany.aatr2.Cluster;
+import com.mycompany.aatr2.DockerManager;
 import com.mycompany.aatr2.Observable;
 import com.mycompany.aatr2.Observer;
 
@@ -22,11 +27,13 @@ public class AnalyseManager implements Observable, Observer {
 	private static final AnalyseManager inst = new AnalyseManager();
 	private final ArrayList<Observer> obs;
 	private final ArrayList<SystemState> systState;// to knowledge
-	private final ArrayList<AdaptationRequest> adaptationReq;// to knowledge
+	private final static Logger LOGGER = Logger.getLogger(AnalyseManager.class.getName());
+	private long lastNotification = 0;
+	private final long wait = 5 * 60 * 1000;
+	private ArrayList<String> notificationCount = new ArrayList<>();
 
 	private AnalyseManager() {
 		this.obs = new ArrayList<>();
-		this.adaptationReq = new ArrayList<>();
 		this.systState = new ArrayList<SystemState>();
 	}
 
@@ -58,6 +65,7 @@ public class AnalyseManager implements Observable, Observer {
 
 	@Override
 	public void notifyObservers() {
+
 		obs.forEach((Observer ob) -> {
 			ob.update();
 		});
@@ -69,13 +77,27 @@ public class AnalyseManager implements Observable, Observer {
 																		// Tools | Templates.
 	}
 
+	public void notified(String name) {
+		if (!this.notificationCount.contains(name)) {
+			this.notificationCount.add(name);
+		}
+
+	}
+	
+	public boolean alreadyNotified(String name) {
+		if (!this.notificationCount.contains(name)) {
+			return false;
+		}return true;
+	}
+
 	public ArrayList<SystemState> getArs() {
 		return systState;
 	}
 
 	@Override
-	public synchronized void update() {
+	public void update() {
 		newSystemState();
+		
 	}
 
 	@Override
@@ -93,31 +115,110 @@ public class AnalyseManager implements Observable, Observer {
 	 * Creates a new system state stores it in the list
 	 */
 	public void newSystemState() {
-		SystemState state = new SystemState();
-		for (Analyser ana : analysers) {
-			Cluster s = ana.getCluster();
-			state.addSymptom(s, ana.getLatest());
+		System.out.println("Number of Notifications = " + notificationCount.size());
+		if (this.notificationCount.size() == DockerManager.getInstance().getAppServices().size()) {
+			SystemState state = new SystemState();
+			LOGGER.log(Level.INFO, "Enough Notifications, Creating new System state");
+			for (Analyser ana : analysers) {
+				Cluster s = ana.getCluster();
+				if (ana.getLatest() != null) {
+					state.addSymptom(s, ana.getLatest());
+				} else {
+					ana.getLatest();
+				}
+			}
+			this.notificationCount.clear();
+			systState.add(state);
+			checkState(state);
+		} else {
+			System.out.println("Not enough notifications");
 		}
-		systState.add(state);
-		checkState(state);
 	}
+
+	public boolean statistics() {
+		ArrayList<Symptom> symps = new ArrayList<>();
+		for (Analyser ana : analysers) {
+			if (ana.getLatest() != null) {
+				symps.add(ana.getLatest());
+			}
+		}
+		if (symps.size() == analysers.size()) {
+			return true;
+		}
+		return false;
+	}
+
+	// private Symptom collectStat(Analyser a){
+	// Symptom stat = null;
+	// if(a.getLatest() != null) {
+	// stat = a.getLatest();
+	// }else {
+	// try {
+	//
+	// System.out.println("Sleep 2 X " + x);
+	// x++;
+	// TimeUnit.SECONDS.sleep(2);
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// collectStat(a);
+	// }
+	// this.x = 0;
+	// return stat;
+	// }
 
 	/*
 	 * Checks the new state to make sure that it is within parameters and if not
 	 * creates an adaptation request if get state returns true
 	 */
 	public void checkState(SystemState state) {
+		System.out.println("Checking state");
 		if (state.getState()) {
 			AdaptationRequest ar = new AdaptationRequest();
 			for (Analyser ana : analysers) {
 				Cluster s = ana.getCluster();
-				int conts = (int) (s.getContainers().size() + state.getAdapt().get(s).getCondition());
-				ar.addItem(ana.getAnId(), conts);
+				int prevcont = s.getContainers().size();
+				int cond = (int) state.getSymptom(s).getCondition();
+				if (cond < 0) {
+					int cond1 = Math.abs(cond);
+					int conts = prevcont - cond1;
+					if (conts <= 0) {
+						conts = 1;
+						System.out.println("Containers recommended for " + s.getServName() + " = " + conts
+								+ " Current container count = " + s.getContainers().size() + "minus"
+								+ state.getSymptom(s).getCondition());
+						ar.addItem(s.getServName(), conts);
+					} else {
+						System.out.println("Containers recommended for " + s.getServName() + " = " + conts
+								+ " Current container count = " + s.getContainers().size() + "minus"
+								+ state.getSymptom(s).getCondition());
+						ar.addItem(s.getServName(), conts);
+					}
+				} else {
+					double conts = prevcont + cond;
+					System.out.println("Containers recommended for " + s.getServName() + " = " + conts
+							+ " Current container count = " + s.getContainers().size() + "minus"
+							+ state.getSymptom(s).getCondition());
+					ar.addItem(s.getServName(), conts);
+				}
+
 			}
-			this.adaptationReq.add(ar);
-			notifyObservers();
+			DockerManager.getInstance().getCurrentTopology().addRequest(ar);
+			if (this.lastNotification == 0) {
+				LOGGER.log(Level.INFO,
+						"||||||||||||||||||||||||||||||||Notifying Planner|||||||||||||||||||||||||||||");
+				this.lastNotification = ar.getTime();
+				notifyObservers();
+			} else if (System.currentTimeMillis() - this.lastNotification > this.wait) {
+				LOGGER.log(Level.INFO,
+						"||||||||||||||||||||||||||||||||Notifying Planner|||||||||||||||||||||||||||||");
+				this.lastNotification = ar.getTime();
+				notifyObservers();
+			}
+
 		} else {
-			System.out.println("System state stable (" + state.getState() + ")");
+			System.out.println("Adaptation required (" + state.getState() + ")");
 		}
 	}
 

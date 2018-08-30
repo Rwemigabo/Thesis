@@ -127,7 +127,7 @@ public class Cluster {
 				new FileOutputStream(s.getstatLogFile()))) {
 
 			oos.writeObject(s);
-			System.out.println("Done");
+			//System.out.println("Done");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

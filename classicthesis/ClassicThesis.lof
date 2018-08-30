@@ -38,29 +38,31 @@
 \defcounter {refsection}{0}\relax 
 \ttl@tocsep 
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Plots of the monitored CPU statistics from the containers of the example voting application.\relax }}{31}{figure.caption.7}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Architecture of the test application\relax }}{30}{figure.caption.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Result service container CPU stats}}}{31}{subfigure.1.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Plots of the monitored CPU statistics from the containers of the example voting application.\relax }}{32}{figure.caption.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Vote service container CPU stats}}}{31}{subfigure.1.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Result service container CPU stats}}}{32}{subfigure.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Worker service container CPU stats}}}{31}{subfigure.1.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Vote service container CPU stats}}}{32}{subfigure.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {db service container CPU stats}}}{31}{subfigure.1.4}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Worker service container CPU stats}}}{32}{subfigure.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {Redis service container CPU stats}}}{31}{subfigure.1.5}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {db service container CPU stats}}}{32}{subfigure.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Plots of the predicted CPU statistics from the containers of the example voting application.\relax }}{32}{figure.caption.8}
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {Redis service container CPU stats}}}{32}{subfigure.2.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Result service container CPU prediction stats}}}{32}{subfigure.2.1}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Plots of the predicted CPU statistics from the containers of the example voting application.\relax }}{33}{figure.caption.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Vote service container CPU prediction stats}}}{32}{subfigure.2.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Result service container CPU prediction stats}}}{33}{subfigure.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Worker service container CPU prediction stats}}}{32}{subfigure.2.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Vote service container CPU prediction stats}}}{33}{subfigure.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {db service container CPU prediction stats}}}{32}{subfigure.2.4}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Worker service container CPU prediction stats}}}{33}{subfigure.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {Redis service container CPU prediction stats}}}{32}{subfigure.2.5}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {db service container CPU prediction stats}}}{33}{subfigure.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {Redis service container CPU prediction stats}}}{33}{subfigure.3.5}
 \defcounter {refsection}{0}\relax 
 \ttl@tocsep 
 \defcounter {refsection}{0}\relax 

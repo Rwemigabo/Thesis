@@ -6,7 +6,9 @@
 package com.mycompany.aatr2;
 
 import com.mycompany.aatr2.analyse.AnalyseManager;
+import com.mycompany.aatr2.execute.ExecuteManager;
 import com.mycompany.aatr2.monitor.MonitorManager;
+import com.mycompany.aatr2.plan.PlanManager;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -38,10 +40,12 @@ public class DockerManager {
 	private final ArrayList<Cluster> appServices;
 	private List<Container> containers;
 	private final ArrayList<String> monitored;
-	private List<Topology> topologies = new ArrayList<>();
+	private List<Topology> topologies = new ArrayList<>();//list of topologies that have been run.
 	private Topology currentTopology;
 	private HashMap<Timestamp, Topology> executions;
 	private Timestamp lastExecTime;
+	private final static Logger LOGGER = Logger.getLogger(DockerManager.class.getName());
+	
 
 	private static DockerManager instance;
 
@@ -51,6 +55,7 @@ public class DockerManager {
 		this.monitored = new ArrayList<>();
 		this.appServices = new ArrayList<>();
 		this.executions = new HashMap<>();
+		//LOGGER.setLevel(Level.INFO);
 	}
 
 	public static DockerManager getInstance() {
@@ -95,15 +100,18 @@ public class DockerManager {
 	private void newMapeLoop() throws DockerException, InterruptedException {
 		MonitorManager mm = MonitorManager.getInstance();
 		AnalyseManager am = AnalyseManager.getInstance();
-		// PlanManager pm = PlanManager.getInstance();
-		// ExecuteManager em = ExecuteManager.getInstance();
+		PlanManager pm = PlanManager.getInstance();
+		ExecuteManager em = ExecuteManager.getInstance();
+		pm.initiate();
+		em.initiate();
 		defineServices();
 		newTopology();
-		System.out.println("Service count: " + appServices.size());
+		LOGGER.log(Level.INFO, "Service count: " + appServices.size());
 		for (Cluster serv : appServices) {
 			mm.newMonitor(serv);
 			am.newAnalyser(serv);
 		}
+		
 	}
 
 	/**
@@ -133,7 +141,6 @@ public class DockerManager {
 				System.out.println("\n Service exists, adding container: " + cont.id());
 				s = getCluster(cont.image());
 				s.addContainer(cont);
-
 			}
 		}
 	}
@@ -252,7 +259,8 @@ public class DockerManager {
 					return true;
 				}
 			}
-		} return false;
+		}
+		return false;
 	}
 
 	/*
@@ -266,7 +274,7 @@ public class DockerManager {
 		} else {
 			System.out.println("Topology already exists");
 		}
-		this.setCurrentTopology(newtop);
+		this.currentTopology = newtop;
 	}
 
 	public HashMap<Timestamp, Topology> getExecutions() {
@@ -278,15 +286,19 @@ public class DockerManager {
 		for (Map.Entry<Timestamp, Topology> entry : executions.entrySet()) {
 			if (entry.getKey().after(lastExecTime)) {
 				top = entry.getValue();
-				break;
 			}
+			break;
+
 		}
 		return top;
+
 	}
 
 	public Timestamp getLastExecTime() {
 		return lastExecTime;
 	}
+	
+	
 
 	public void setLastExecTime(Timestamp lastExecTime) {
 		this.lastExecTime = lastExecTime;

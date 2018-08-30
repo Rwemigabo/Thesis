@@ -98,7 +98,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.1}{Test Suite}}{29}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1.1}{Test Applications}}{29}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.1}{Test Application}}{29}{subsection.5.1.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {5.1.2}{Load simulator}}{30}{subsection.5.1.2}
 \defcounter {refsection}{0}\relax 
@@ -106,26 +106,26 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.3}{Full System Testing }}{33}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}{Evaluation and Conclusion}}{34}{chapter.6}
+\contentsline {chapter}{\numberline {6}{Evaluation and Conclusion}}{36}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}{Evaluation}}{34}{section.6.1}
+\contentsline {section}{\numberline {6.1}{Evaluation}}{36}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}{Unresolved issues}}{34}{section.6.2}
+\contentsline {section}{\numberline {6.2}{Unresolved issues}}{37}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}{Conclusion}}{34}{section.6.3}
+\contentsline {section}{\numberline {6.3}{Conclusion}}{37}{section.6.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}{Appendix}}{35}{appendix.A}
+\contentsline {chapter}{\numberline {A}{Appendix}}{38}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}{Appendix}}{36}{appendix.B}
+\contentsline {chapter}{\numberline {B}{Appendix}}{39}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B.1}{User Manual}}{36}{section.B.1}
+\contentsline {section}{\numberline {B.1}{User Manual}}{39}{section.B.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B.2}{Design Documents}}{36}{section.B.2}
+\contentsline {section}{\numberline {B.2}{Design Documents}}{39}{section.B.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B.3}{Source Code}}{36}{section.B.3}
+\contentsline {section}{\numberline {B.3}{Source Code}}{39}{section.B.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B.4}{Test Suite}}{36}{section.B.4}
+\contentsline {section}{\numberline {B.4}{Test Suite}}{39}{section.B.4}
 \defcounter {refsection}{0}\relax 
 \vspace {\beforebibskip }
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {}{Bibliography}}{37}{section*.9}
+\contentsline {chapter}{\numberline {}{Bibliography}}{40}{section*.19}

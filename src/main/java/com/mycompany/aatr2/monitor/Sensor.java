@@ -39,7 +39,7 @@ public class Sensor extends Thread implements Observable {
 	private double cpuPerc;
 	private double free;
 	private final DockerManager dm = DockerManager.getInstance();
-	private final String contNm;
+	//private final String contNm;
 	private long preCpu = 0;
 	private long preSystem = 0;
 
@@ -61,7 +61,7 @@ public class Sensor extends Thread implements Observable {
 		this.name = context;
 		this.contID = cid;
 		this.property = new ContextElement(max, min, context);
-		this.contNm = dm.getContainer(cid).image();
+		//this.contNm = dm.getContainer(cid).image();
 		try {
 			this.preCpu = dm.getContainerStats(this.contID).precpuStats().cpuUsage().totalUsage();
 			this.preSystem = dm.getContainerStats(this.contID).precpuStats().systemCpuUsage();
@@ -119,7 +119,7 @@ public class Sensor extends Thread implements Observable {
 	 */
 	public void run() {
 		if (this.name.equals("CPU")) {
-			System.out.print("\n Monitoring CPU of conitainer " + contNm);
+			//System.out.print("\n Monitoring CPU of conitainer " + contNm);
 			Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -133,7 +133,7 @@ public class Sensor extends Thread implements Observable {
 				}
 			}, 1, 1 * 2000);
 		} else if (this.name.equals("Memory")) {
-			System.out.print("\n Monitoring Memory of conitainer " + contNm);
+			//System.out.print("\n Monitoring Memory of conitainer " + contNm);
 			Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
 

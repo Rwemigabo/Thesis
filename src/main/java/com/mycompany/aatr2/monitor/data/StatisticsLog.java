@@ -72,7 +72,7 @@ public class StatisticsLog implements Serializable{
 	}
 
 	public Statistic getLatest() {
-		System.out.println("\n Queue size : " + queue.size() + " for " + container);
+//		System.out.println("\n Queue size : " + queue.size() + " for " + container);
 		Statistic s = null;
 		if (this.queue.size() > 0) {
 			s = this.queue.get(0);

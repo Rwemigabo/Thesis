@@ -14,12 +14,13 @@ package com.mycompany.aatr2.analyse;
 public class Symptom {
     private final String name;
     private final String event;
-    private final double condition;
+    private final double condition;//number of containers
 
     public Symptom(String name, String event, double condition) {
         this.name = name;
         this.event = event;
         this.condition = condition;
+        System.out.println("New Symptom for "+ this.name + " = " + condition);
     }
 
     

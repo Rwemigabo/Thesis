@@ -13,20 +13,19 @@ import com.mycompany.aatr2.DockerManager;
  */
 public class SystemState {
 	
-	private HashMap<Cluster, Symptom> adapt;
-	private DockerManager dm = DockerManager.getInstance();
+	private HashMap<Cluster, Symptom> current_reqs;
 	private boolean state = false;
 	
 	public SystemState() {
-		this.adapt = new HashMap<Cluster, Symptom>();
+		this.current_reqs = new HashMap<Cluster, Symptom>();
 		initiate();
 		
 	}
 
 	private void initiate() {
-		for(Cluster c : dm.getAppServices()) {
-			if(!adapt.containsKey(c)) {
-				adapt.put(c, null);
+		for(Cluster c : DockerManager.getInstance().getAppServices()) {
+			if(!current_reqs.containsKey(c)) {
+				current_reqs.put(c, null);
 			}
 		}
 		
@@ -34,16 +33,20 @@ public class SystemState {
 	/*
 	 * Map of cluster  to symptom
 	 */
-	public HashMap<Cluster, Symptom> getAdapt() {
-		return adapt;
+	public HashMap<Cluster, Symptom> getcurrent_reqs() {
+		return current_reqs;
 	}
 
-	public void setAdapt(HashMap<Cluster, Symptom> adapt) {
-		this.adapt = adapt;
+	public void setcurrent_reqs(HashMap<Cluster, Symptom> current_reqs) {
+		this.current_reqs = current_reqs;
+	}
+	
+	public Symptom getSymptom(Cluster c) {
+		return this.current_reqs.get(c);
 	}
 	
 	public void addSymptom(Cluster c, Symptom e) {
-		adapt.put(c, e);
+		current_reqs.put(c, e);
 	}
 	
 	/*
@@ -53,13 +56,13 @@ public class SystemState {
 	 */
 	public void setState() {
 		int count = 0;
-		for(Symptom value : adapt.values()) {
-			if(value.getCondition() >= 1 || value.getCondition() <= 1) {
+		for(Symptom symp : current_reqs.values()) {
+			if(symp.getCondition() >= 1 || symp.getCondition() <= -1) {
 				count++;
 			}
 		}
 		
-		if(count > adapt.size()/2) {
+		if(count > current_reqs.size()/4) {
 			this.state = true;
 		}
 	}

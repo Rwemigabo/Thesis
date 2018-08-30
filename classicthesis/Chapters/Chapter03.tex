@@ -10,7 +10,7 @@ Some of the requirements presented in \cite{gomez2014cloud} provided a template 
 \begin{itemize}
     \item [FR1] The System should be able to connect to or interact with a containerisation engine.
     \item [FR2] The System should have access to the containerisation engine's API.
-    \item [FR3] The System should order the services of the application being manage into a list.
+    \item [FR3] The System should sort the services of the application being manage into a list.
     \item [FR4] The System should have access to the alternative viable topologies.
     \item [FR5] The System should be able to Monitor data from the managed Application.
      \item [FR6] The System should be able to Analyse the data from the managed Application
@@ -43,9 +43,9 @@ Some of the requirements presented in \cite{gomez2014cloud} provided a template 
     \item [FR24] The Analysis Component should perform a set of analysis tactics on the statistics gathered from the knowledge base.
     \item [FR25] The Analysis Component should provide a visual representation of the analysed data.
     \item [FR26] The Analysis Component should perform a prediction of data points for the next time window.
-    \item [FR27] The Analysis Component should make an estimation of the resources that need to be added, removed or kept as is.
+    \item [FR27] The Analysis Component should make an estimation of the resources that need to be added, removed or kept as is for each of the services.
     \item [FR28] The Analysis Component should make an aggregation of the results from the various analysers.
-    \item [FR29] The Analysis Component should create a topology suggestion using this estimation based on the topology running and the aggregated results.
+    \item [FR29] The Analysis Component should create a topology suggestion using the estimated resources based on the topology running and the aggregated results.
     \item [FR210] The Analysis Component should notify the plan component of the new topology suggestion.
     \item [FR211] The Analysis Component should save the results from the analysis to the knowledge base.
     \item [FR212] The Analysis Component should save the topology suggestion to the knowledge base.
@@ -54,26 +54,26 @@ Some of the requirements presented in \cite{gomez2014cloud} provided a template 
 \subsubsection{\textbf{Plan Component}}
 \begin{itemize}
     \item [FR31] The Plan Component should be able to receive notifications from the Analysis Component.
-    \item [FR32] The Plan Component should have access to the list of alternative viable application topologies in the Knowledge base.
-    \item [FR33] The Plan Component should have access to the suggested topology from the Analysis Component in the Knowledge base.
+    \item [FR32] The Plan Component should have access to the list of alternative viable application topologies.
+    \item [FR33] The Plan Component should have access to the recommendation(Adaptation request) from the Analysis Component.
     \item [FR34] The Plan Component should ensure enough time (set by user) has passed since last topology (re-)distribution.
-    \item [FR35] The Plan Component should retrieve the latest suggested topology baby the Analysis component.
-    \item [FR36] The Plan Component should make a comparison between the suggested topology from the Analysis Component to the alternative viable application topologies in the Knowledge base.
+    \item [FR35] The Plan Component should retrieve the latest suggested topology by the Analysis component.
+    \item [FR36] The Plan Component should make a comparison between the suggested topology from the Analysis Component to the alternative viable application topologies.
     \item [FR37] The Plan Component should retrieve the alternative viable topology closest in similarity to the suggested topology.
-    \item [FR37] The Plan Component should have record of the currently running or deployed topology.
-    \item [FR38] The Plan Component should notify the Execution component if a change is required.
-    \item [FR39] The Plan Component should store the new topology for the (re-)distribution in the Knowledge Base
+    \item [FR38] The Plan Component should have access to a record of the currently running or deployed topology.
+    \item [FR39] The Plan Component should notify the Execution component when a change is confirmed.
+    \item [FR310] The Plan Component should store the new topology for the (re-)distribution to the Knowledge Base
 \end{itemize}
 
 \subsubsection{\textbf{Execution Component}}
 \begin{itemize}
     \item [FR41] The Execution component should be able to receive notifications from the Plan component.
     \item [FR42] The Execution component should create an Effector, whose job it is to perform the execution actions.
-    \item [FR43] The Execution component should have access to the alternative topologies available in the Knowledge base.
+    \item [FR43] The Execution component should have access to the alternative topologies available.
     \item [FR44] The Execution component should have access to the containerisation API.
     \item [FR45] The Execution component should be able to run the commands necessary to make the topology change requested by the plan component.
     \item [FR46] The Execution component should confirm when the change has been made successfully
-    \item [FR47]The Execution component should record the time of the latest change of topology.
+    \item [FR47] The Execution component should record or save the time of the latest change of topology.
     \item [FR48] The Execution component should record the time it took to make the change and update it in the knowledge base
     \item [FR49] The Execution component should be able to reset the MAPE-K loop to start working on the newly redistributed topology.
     \item [FR410] The Execution component should update the currently running topology.

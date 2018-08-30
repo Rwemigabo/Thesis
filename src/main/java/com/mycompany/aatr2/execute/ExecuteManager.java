@@ -24,7 +24,6 @@ public class ExecuteManager implements Observer{
 	private static final ExecuteManager inst = new ExecuteManager();
 	
 	public ExecuteManager() {
-		
 	}
 	
 	public static ExecuteManager getInstance() {
@@ -32,14 +31,11 @@ public class ExecuteManager implements Observer{
 	}
 	
 	public void initiate() {
+		System.out.println("Initiating Execute manager");
 		setObservable(PlanManager.getInstance());
 
 	}
 
-	public void newExecutionManager() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void update() {
@@ -52,14 +48,14 @@ public class ExecuteManager implements Observer{
 	}
 
 	private void executePlan() throws InterruptedException {
-		DockerManager dm = DockerManager.getInstance();
-		Topology ntop = dm.getPendingExecution();
+		PlanManager pm = PlanManager.getInstance();
+		Topology ntop = pm.getNewT();
 		String fname = ntop.getFilename();
 		Runtime rt = Runtime.getRuntime();
 		try {
 			Process pr = rt.exec(fname + "up -d");
 			pr.waitFor();
-			dm.setLastExecTime(new Timestamp(System.currentTimeMillis()));
+			DockerManager.getInstance().setLastExecTime(new Timestamp(System.currentTimeMillis()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,5 +71,6 @@ public class ExecuteManager implements Observer{
 	public void setObservable(Observable ob) {
 		ob.addObserver(this);
 	}
+	
     
 }

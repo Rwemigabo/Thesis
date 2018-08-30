@@ -7,6 +7,8 @@ package com.mycompany.aatr2.plan;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.mycompany.aatr2.DockerManager;
 import com.mycompany.aatr2.Observable;
@@ -27,6 +29,8 @@ public class PlanManager implements Observable, Observer {
 	private final ArrayList<Observer> obs;
 	private ViableTopologies vt = ViableTopologies.getInstance();
 	private Topology newT = null;
+	private long setTime = 2 * 60 * 1000;
+	private final static Logger LOGGER = Logger.getLogger(PlanManager.class.getName());
 
 	public PlanManager() {
 		this.obs = new ArrayList<>();
@@ -37,6 +41,7 @@ public class PlanManager implements Observable, Observer {
 	}
 
 	public void initiate() {
+		System.out.println("Initiating plan manager");
 		setObservable(AnalyseManager.getInstance());
 
 	}
@@ -48,12 +53,15 @@ public class PlanManager implements Observable, Observer {
 
 	@Override
 	public void update() {
+		System.out.println("||||||||||||||||||||||||||||Notification received from Analysis|||||||||||||||||||||||||||||||");
 		getRequest();
 	}
 
 	private void getRequest() {
+		System.out.println("Getting latest request");
 		AdaptationRequest ar = DockerManager.getInstance().getCurrentTopology().latestRequest();
-		vt.defineTestTopologies();
+		vt.defineTopologies2();
+		//vt.defineTestTopologies();
 		processRequest(ar);
 
 	}
@@ -66,6 +74,8 @@ public class PlanManager implements Observable, Observer {
 	 * 
 	 */
 	public void processRequest(AdaptationRequest ar) {
+		
+		System.out.println("||||||||||||||||||||||||||||PROCESSING ADAPTATION REQUEST|||||||||||||||||||||||||||||||");
 		Topology r_top = ar.recommended(); // new recommended topology
 		Topology selected = null; // topology selected to replace currently running topology.
 		double s_diff = 0;
@@ -101,8 +111,19 @@ public class PlanManager implements Observable, Observer {
 
 		}
 		//dm.prepareForExecution(selected);
+		LOGGER.log(Level.INFO, "..................................Topology Selected " + selected.getID());
 		setNewT(selected);
-		//notifyObservers();
+		
+//		if(DockerManager.getInstance().getLastExecTime()!= null) {
+//			long timepassed = System.currentTimeMillis() - DockerManager.getInstance().getLastExecTime().getTime();
+//			if(timepassed >= this.setTime) {
+//				notifyObservers();
+//			}
+//			
+//		}else {
+//			notifyObservers();
+//		}
+		
 	}
 	
 	/*
@@ -112,9 +133,9 @@ public class PlanManager implements Observable, Observer {
 	 */
 	public boolean moreSimilar(double cs, double s) {
 		double myNumber = 0;
-		double distance = Math.abs(cs - myNumber);
-		double cdistance = Math.abs(s - myNumber);
-		if (cdistance > distance) {
+		double champ = Math.abs(cs - myNumber);
+		double contender = Math.abs(s - myNumber);
+		if (champ > contender) {
 			return true;
 		}else { return false;}
 	
@@ -164,8 +185,16 @@ public class PlanManager implements Observable, Observer {
 
 	public void setNewT(Topology newT) {
 		this.newT = newT;
+		System.out.println("Topology to be deployed is "+ newT.getFilename());
 	}
 	
-	
+	/**
+	 * 
+	 * @return wait time set before the next topology change can be done
+	 */
+	public long getSetTime() {
+		return this.setTime;
+		
+	}
 
 }

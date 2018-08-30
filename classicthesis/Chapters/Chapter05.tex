@@ -4,13 +4,17 @@
 
 During the development of the system, there were a battery of tests run on each of the individual components to ensure their functionality and furthermore their interaction with each other when integrated in order to ensure that they work together. However, this chapter presents the more important tests run on the more complete versions of the system. After implementing three of the major components of the system, that is the Sensor, Monitor and the Analysis components, the more important phase of testing begun and in the following sections, I present the results of most of these tests and finally, an evaluation of the results of the System is done in the following chapter.
 \section{Test Suite}
-\subsection{Test Applications}
+\subsection{Test Application}
 The testing of the system was done using two different applications assembled from Github. These applications include:\\\\
-\textbf{node-docker-api:}\\
-For the initial testing done on the Monitor and analysis components given that I only needed to record and analyse any statistics at the time, I used an application Developing and Testing Microservices with Docker \cite{node-docker-api} by the Github user Michael Herman. I used this application because it was quick and simple to set up by following the instructions from the author and it is a docker application implementing with the microservice architecture. The details of this testing endeavour are presented in the following sections.\\\\
 \textbf{example-voting-app:}\\
 After the initial testing of my system's Monitor and and Analysis components and confirming that they performed the basic functionality, I needed to test the more complex features of the Analysis component, which were the prediction and recommendation functionalities. To test these, I needed a simpler more basic application where I would be able to quickly write a testing script for the load simulator application I was going to use so, I decided to use \cite{example-voting-app} Example Voting App. It is a simple voting application where a user either vote cat or dog. I also decided to use this application because I was having problems with the login feature that was on the application introduced in the section above so, to save time, I changed applications and found this second micro service docker application among the other available options on Github.\\
 The services in this Application include the \textit{voting-app} service, where the users case their votes, \textit{result-app} service, which is where the user views the vote tally percentage, which is retrieved from the database, \textit{redis} service, a queue to handle the votes coming it, \textit{worker} service to process the voted and send them to the final database service \textit{db} service.
+\begin{figure} [H]
+   \centering 
+   \includegraphics[scale=0.40]{gfx/voteApp.png}
+   \caption{ Architecture of the test application} 
+   \label{Fig:3} 
+\end{figure}
 \subsection{Load simulator}
 Locust IO\cite{locustIO}, the Load testing application introduced in \autoref{ch:implementation} was used for to load test the test applications. I wrote the test scripts for the test applications for example the short test script from the load testing done on the Example Voting App is presented in \autoref{lst:script1}. By running this script, the simulated user simply initially randomly performs a vote and then randomly changes the vote every time locust sends a request by the simulated user. \autoref{lst:script2} provides the ports where the simulated users can connect.
 
@@ -83,7 +87,73 @@ These Images show the a small sample of the testing done on the application and 
 
 \section{Full System Testing }
 After the confirmation of the Monitor and analysis components, the next step of testing brought us to the version of the system after the implementation of the fuzzy logic functionality in the Analysis component, which is meant to use the predicted data and decide how many containers need to be added to or removed from the service, and the Plan component, which works with that data/ recommendation from the Analysis component and proposes the topology that best suits the recommendation before notifying the execution component to change the topology.\\
-In order to confirm the above, I had to run varying loads through the application so that the system would respond accordingly. So, the Locust load simulation tool was used for this purpose and the work loads to be tested with are presented in \autoref{TABLE X} below.
+In order to confirm the above, I had to run varying loads through the application so that the system would respond accordingly. So, the Locust load simulation tool was used for this purpose and the work loads to be tested with are presented in \autoref{systest} below. \autoref{tops} shows the simulated topology structures of the test application Example Voting app introduced in the Test suite section these topologies were used for the purpose of providing the planning component a simplified example of different topology structures that it can switch between. The column show the number of topologies in each of the services for the given topology.
 
-Tables (Different work loads and change required/ change observed)
+\begin{table}[H]
+%\resizebox{\textwidth}{!}{%
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+ Vote & Result & db & redis & worker  \\ \hline
+1 & 1 & 1 & 1 & 1  \\ \hline
+2 & 1 & 1 & 1 & 1  \\ \hline
+3 & 2 & 1 & 1 & 1 \\ \hline
+4 & 3 & 2 & 1 & 1  \\ \hline
+5 & 4 & 3 & 2 & 1  \\ \hline
+6 & 5 & 4 & 3 & 2  \\ \hline
+\end{tabular}%
+%}
+\caption{Topology options for the testing of the application}
+\label{tops}
+\end{table}
+
+For the first test case, I ran different fixed numbers of users but this didn't cause a reaction from my system as seen in \autoref{systest}. So, I decided to use a different strategy of testing the application, which is presented in \autoref{systest2}   
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+ Test & Number of users & Requests (s) & average response time & Result & Topology selected \\ \hline
+1 & 30 & 2.9 & 11(ms) & No Adaptation  & N/A \\ \hline
+2 & 5 & 0.4 & 12 (ms) & No Adaptation & N/A \\ \hline
+3 & 120 & 12 & 12 (ms) & No Adaptation& N/A \\ \hline
+4 & 300 & 30 & 14 (ms) & No Adaptation & N/A\\ \hline
+4 & 500 & 51 & 15(ms) & No Adaptation & N/A \\ \hline
+\end{tabular}%
+}
+\caption{Test case 1 run on the application.}
+\label{systest}
+\end{table}
+
+For this test case, I put a final user count of 10000 users  and made the locust load tester hatch the users at a different rate every time the analysis was run (every after a time window). The results of this testing are as seen below.
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+  Number of users  & Requests(s) & average response time(ms) & Result & Topology selected \\ \hline
+ 290 & 30 & 17 & No Adaptation & N/A \\ \hline
+540 & 55 & 15  & No Adaptation & N/A \\ \hline
+ 830 & 84 & 19  & No Adaptation & N/A \\ \hline
+1135 & 115.5 & 37 & No Adaptation & N/A\\ \hline
+1433 & 130 & 175 & No Adaptation & N/A \\ \hline
+ 2056 & 200 & 2370 & No Adaptation& N/A\\ \hline
+\end{tabular}%
+}
+\caption{Test case 2 run on the application.}
+\label{systest2}
+\end{table}
+
+As seen from the above tests in \autoref{systest2}, There was still no reaction from the automation system's Planner and analysis so, I made some changes to the program performed the final testing phase, which is presented in \autoref{systest3}. The following tests proved that the components were communicating successfully and the call for adaptation was possible and happening. So, the next step from here was to move the system to an application which I picked to perform the optimisation on as a case study, which is introduced in the next section.
+\begin{table}[H]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+ Number of users& Requests(s) & response time (ms) & Result & Topology selected \\ \hline
+ 300 &  &  & Adaptation  & 2 \\ \hline
+400 &  &  & No Adaptation  & N/A \\ \hline
+1150 &  &  & No Adaptation & N/A \\ \hline
+\end{tabular}%
+}
+\caption{Test case 3 run on the application.}
+\label{systest3}
+\end{table}
 

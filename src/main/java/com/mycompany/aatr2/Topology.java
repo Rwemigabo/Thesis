@@ -17,6 +17,7 @@ public class Topology {
 		this.services = servs;
 		this.service_conts = new HashMap<>();
 		this.setService_conts();
+		System.out.println("Topology " + id + " created");
 	}
 
 	/*
@@ -26,6 +27,7 @@ public class Topology {
 	public Topology() {
 		this.id = new RandomString(8).nextString();
 		this.service_conts = new HashMap<>();
+		System.out.println("Topology " + id + " created");
 	}
 	
 	/*
@@ -36,9 +38,16 @@ public class Topology {
 		this.id = new RandomString(8).nextString();
 		this.service_conts = new HashMap<>();
 		this.filename = filename;
+		System.out.println("Topology " + id + " created");
 	}
 	
 	public String getFilename() {
+		if(filename != null) {
+			return filename;
+		}else { 
+			System.out.println("Topology had no filename");
+			this.setFilename("Filename");
+		}
 		return filename;
 	}
 

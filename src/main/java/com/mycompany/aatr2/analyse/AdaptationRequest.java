@@ -8,7 +8,7 @@ import com.mycompany.aatr2.Topology;
  * Created when the analysis of the application confirm that the system is out of scope of it's parameters.
  */
 public class AdaptationRequest {
-	private HashMap<String, Double> adapt; // Analyser ID and number of suggested containers required.
+	private HashMap<String, Double> adapt; // container image name and number of suggested containers required.
 	private long time;
 
 	// private Topology newTop;

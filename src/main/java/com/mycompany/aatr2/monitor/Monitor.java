@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 /**
  * Capture and record new statistics to the database every set number of minutes
@@ -35,6 +37,7 @@ public class Monitor implements Observer, Observable {
 	private final List<Container> conts;
 	private Cluster service;
 	// private DockerManager dm = DockerManager.getInstance();
+//	private final static Logger LOGGER = Logger.getLogger(Monitor.class.getName());
 
 	/**
 	 *
@@ -71,7 +74,7 @@ public class Monitor implements Observer, Observable {
 			this.sens.add(sm.newSensor("CPU", 0.00, 75.00, container.id()));
 			this.sens.add(sm.newSensor("Memory", 0.00, 75.00, container.id()));
 			if (container.state().equals("running")) { // && container.state().equals("running")
-				System.out.print("\n Accessing sensors to initiate metric watch");
+				//System.out.print("\n Accessing sensors to initiate metric watch");
 				startMonitoring(container.id());
 			} else {
 				System.out.print("\n Sorry container state: " + container.state());
@@ -135,7 +138,7 @@ public class Monitor implements Observer, Observable {
 
 		sens.forEach((Sensor sen) -> {
 			if (sen.getContID().equals(id)) {
-				System.out.print("\n Initiating Sensor for " + sen.sensorContext() + " " + sen.getContID());
+				//System.out.print("\n Initiating Sensor for " + sen.sensorContext() + " " + sen.getContID());
 				setObservable(sen);
 				sen.start();
 			} else {
@@ -189,10 +192,11 @@ public class Monitor implements Observer, Observable {
 
 			// create new stat and add it to the container's log
 			this.service.addStat(cont.id(), metric2, metric1);
-			System.out.println(
-					"\n New Stat log from " + this.service.getServName() + " Memory " + metric2 + " CPU " + metric1);
+//			LOGGER.log(Level.INFO,
+//					"\n New Stat log from " + this.service.getServName() + " Memory " + metric2 + " CPU " + metric1);
 		}
 		if (notify) {
+			// windowcheck();
 			notifyObservers();
 		}
 	}
@@ -242,6 +246,5 @@ public class Monitor implements Observer, Observable {
 		return null;
 
 	}
-	
 
 }
