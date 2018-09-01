@@ -62,7 +62,7 @@ public class SystemState {
 			}
 		}
 		
-		if(count > current_reqs.size()/4) {
+		if(count > Math.round(0.25 * current_reqs.values().size())) {
 			this.state = true;
 		}
 	}

@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+//import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,12 +41,11 @@ public class DockerManager {
 	private final ArrayList<Cluster> appServices;
 	private List<Container> containers;
 	private final ArrayList<String> monitored;
-	private List<Topology> topologies = new ArrayList<>();//list of topologies that have been run.
+	private List<Topology> topologies = new ArrayList<>();// list of topologies that have been run.
 	private Topology currentTopology;
 	private HashMap<Timestamp, Topology> executions;
 	private Timestamp lastExecTime;
 	private final static Logger LOGGER = Logger.getLogger(DockerManager.class.getName());
-	
 
 	private static DockerManager instance;
 
@@ -55,7 +55,7 @@ public class DockerManager {
 		this.monitored = new ArrayList<>();
 		this.appServices = new ArrayList<>();
 		this.executions = new HashMap<>();
-		//LOGGER.setLevel(Level.INFO);
+		// LOGGER.setLevel(Level.INFO);
 	}
 
 	public static DockerManager getInstance() {
@@ -111,7 +111,7 @@ public class DockerManager {
 			mm.newMonitor(serv);
 			am.newAnalyser(serv);
 		}
-		
+
 	}
 
 	/**
@@ -187,6 +187,7 @@ public class DockerManager {
 	 * @return
 	 */
 	public Cluster newService(String img) {
+
 		Cluster serv = new Cluster(img);
 		List<String> temp = new ArrayList<String>();
 		appServices.forEach((service) -> {
@@ -206,6 +207,38 @@ public class DockerManager {
 
 		return null;
 	}
+
+//	private int randomNumber(int x, int y) {
+//		Random r = new Random();
+//		int Low = x;
+//		int High = y;
+//		int Result = r.nextInt(High - Low) + Low;
+//		return Result;
+//	}
+
+	
+//	/**
+//	 * Ranks the services according to their total valuability in the application.
+//	 * 
+//	 * @param img
+//	 * @return
+//	 */
+//	private Cluster newCluster(String img) {
+//		int rank = randomNumber(1, images.size());
+//		List<Integer> ranks = new ArrayList<>();
+//		if (this.appServices.size() > 0) {
+//			for (Cluster serv : this.appServices) {
+//				ranks.add(serv.getRank());
+//			}
+//			while(ranks.contains(rank)) {
+//				rank = randomNumber(1, images.size());
+//			}
+//		}
+//		
+//		return c;
+//	}
+
+	
 
 	// public Topology createTopology() {
 	// //if topology doesn't exist then create and store it's id in the list of
@@ -297,8 +330,6 @@ public class DockerManager {
 	public Timestamp getLastExecTime() {
 		return lastExecTime;
 	}
-	
-	
 
 	public void setLastExecTime(Timestamp lastExecTime) {
 		this.lastExecTime = lastExecTime;

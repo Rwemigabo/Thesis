@@ -12,6 +12,7 @@ import com.mycompany.aatr2.monitor.data.StatisticsLog;
 import com.spotify.docker.client.messages.Container;
 import java.util.ArrayList;
 import java.util.List;
+//import java.util.Random;
 
 /**
  * Creates a cluster object with the containers that make up the functionality
@@ -24,11 +25,21 @@ public class Cluster {
 	private String servName;
 	private ArrayList<StatisticsLog> logs = new ArrayList<>();
 	private SLO slo = new SLO();
-
+	//private int rank;
+	
 	public Cluster(String name) {
 		this.servName = name;
 		this.containers = new ArrayList<>();
+
 	}
+
+//	public int getRank() {
+//		return rank;
+//	}
+//
+//	public void setRank(int rank) {
+//		this.rank = rank;
+//	}
 
 	public List<Container> getContainers() {
 		return this.containers;

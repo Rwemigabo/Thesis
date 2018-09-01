@@ -34,9 +34,9 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import net.sourceforge.jFuzzyLogic.FIS;
 
 /**
- * Analyze class performs an analysis on the data received from the monitor an
+ * Analyze class performs an analysis on the data received from the monitor. An
  * analyzer is created for each of the services in order to perform an analysis
- * on the data recorded on that service
+ * on the data recorded on that service from each of its containers
  * 
  * @author eric
  */
@@ -47,7 +47,7 @@ public class Analyser implements Observer, Observable {
 	// private Observable obvle = null;
 	private ArrayList<Symptom> symplogs = new ArrayList<>();// to knowledge
 	private final Cluster cluster;
-	private long MINUTES_WINDOW = 1 * 30 * 1000;// how often to run analysis
+	private long MINUTES_WINDOW = 2 * 60 * 1000;// how often to run analysis
 	// private final ArrayList<Statistic> spikestats = new ArrayList<>();
 	private int analysisCount = 0;
 	private final static Logger LOGGER = Logger.getLogger(Analyser.class.getName());
@@ -461,7 +461,7 @@ public class Analyser implements Observer, Observable {
 					// Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
 
 					long m_window = System.currentTimeMillis() - log.getminCheckpoint();
-					long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
+//					long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
 
 					if (m_window >= MINUTES_WINDOW) {// if X mins have passed run short term analysis
 						System.out.println("Checking window1");
@@ -471,15 +471,16 @@ public class Analyser implements Observer, Observable {
 						//Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(), this);
 						//analyse.start();
 						log.setminCheckpoint(latest.getTime());
-					} else if (h_window >= MINUTES_WINDOW * 2) {// if 2X mins have passed run long term analysis
-						System.out.println("Checking window2");
-						// runWindowAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest,
-						// hrcheckpt));
-						 runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
-						//Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(), this);
-						//analyse.start();
-						log.setHrCheckpoint(latest.getTime());
-					} else {
+					} else //if (h_window >= MINUTES_WINDOW * 2) {// if 2X mins have passed run long term analysis
+//						System.out.println("Checking window2");
+//						// runWindowAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest,
+//						// hrcheckpt));
+//						 //runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
+//						//Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(), this);
+//						//analyse.start();
+//						log.setHrCheckpoint(latest.getTime());
+//					} else 
+						{
 
 						// TBD check critical values (Reactive analysis)
 						// check SLOs are followed using symptom repository method checkSLO()

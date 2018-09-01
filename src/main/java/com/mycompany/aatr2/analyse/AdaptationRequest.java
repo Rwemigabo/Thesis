@@ -1,6 +1,8 @@
 package com.mycompany.aatr2.analyse;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Random;
 
 import com.mycompany.aatr2.Topology;
 
@@ -28,6 +30,14 @@ public class AdaptationRequest {
 	public void addItem(String id, double conts) {
 		this.adapt.put(id, conts);
 	}
+	
+	int randomNumber(int x, int y) {
+		Random r = new Random();
+		int Low = x;
+		int High = y;
+		int Result = r.nextInt(High-Low) + Low;
+		return Result;
+	}
 
 	/**
 	 * creates a new topology from the analysis performed
@@ -37,6 +47,16 @@ public class AdaptationRequest {
 		Topology n_top = new Topology();
 		n_top.setService_conts(adapt);
 		return n_top;
+	}
+	
+//	public String toString() {
+//		return "Time of request = " + this.time + listServices();
+//	}
+
+	public void listServices() {
+		for(Entry<String, Double> entry : adapt.entrySet()) {
+			System.out.println("Service: " + entry.getKey() + "Contaier count = " + entry.getValue() + "\n");
+		}
 	}
 
 }

@@ -11,13 +11,17 @@ public class Topology {
 	private String id;
 	private HashMap<String, Double> service_conts;
 	private String filename;
+	private int vms;
+	private double price;// Price of the topology
+	private ArrayList<VirtualMachine> VMS = new ArrayList<>();
 
 	public Topology(ArrayList<Cluster> servs) {
 		this.id = new RandomString(8).nextString();
 		this.services = servs;
 		this.service_conts = new HashMap<>();
 		this.setService_conts();
-		System.out.println("Topology " + id + " created");
+		
+		
 	}
 
 	/*
@@ -27,9 +31,9 @@ public class Topology {
 	public Topology() {
 		this.id = new RandomString(8).nextString();
 		this.service_conts = new HashMap<>();
-		System.out.println("Topology " + id + " created");
+		System.out.println("Topology " + filename + " created");
 	}
-	
+
 	/*
 	 * To define viable topologies by the user.
 	 * 
@@ -40,11 +44,62 @@ public class Topology {
 		this.filename = filename;
 		System.out.println("Topology " + id + " created");
 	}
-	
+
+	public int getVms() {
+		return vms;
+	}
+
+	public void setVms(int vms) {
+		this.vms = vms;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	void addVM(VirtualMachine vm) {
+		this.VMS.add(vm);
+		updatePrice();
+		System.out.println("VMs added to" + this.toString());
+	}
+
+	// update the price of the topology (Per hour)
+	void updatePrice() {
+		double totalprice = 0;
+		for (VirtualMachine vm : VMS) {
+			totalprice = totalprice + vm.getPrice();
+		}
+		this.price = totalprice;
+	}
+
+	public ArrayList<AdaptationRequest> getAdapts() {
+		return adapts;
+	}
+
+	public void setAdapts(ArrayList<AdaptationRequest> adapts) {
+		this.adapts = adapts;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public ArrayList<VirtualMachine> getVMS() {
+		return VMS;
+	}
+
+	public void setVMS(ArrayList<VirtualMachine> vMS) {
+		VMS = vMS;
+	}
+
 	public String getFilename() {
-		if(filename != null) {
+		if (filename != null) {
 			return filename;
-		}else { 
+		} else {
 			System.out.println("Topology had no filename");
 			this.setFilename("Filename");
 		}
@@ -59,6 +114,9 @@ public class Topology {
 		return service_conts;
 	}
 
+	// public void setPrice(double price) {
+	// this.price = price;
+	// }
 	/*
 	 * sets the mapping of the services to number of containers using the list of
 	 * services available.
@@ -72,7 +130,7 @@ public class Topology {
 			}
 		}
 	}
-	
+
 	public void setService_conts(HashMap<String, Double> service) {
 		this.service_conts = service;
 	}
@@ -143,6 +201,18 @@ public class Topology {
 		return true;
 
 	}
+
+	/**
+	 * total price of using the topology per month
+	 * 
+	 * @return the price
+	 */
+	public double getPrice() {
+		return this.price;
+	}
 	
-	
+	public String toString() {
+		return "Topology " + this.filename + " | Virtual machines = " + this.VMS.size() + " | Price ="  + this.price;
+	}
+
 }
