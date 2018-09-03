@@ -79,6 +79,10 @@ public class PlanManager implements Observable, Observer {
 
 		System.out.println("||||||||||||||||||||||||||||PROCESSING ADAPTATION REQUEST|||||||||||||||||||||||||||||||");
 		Topology r_top = ar.recommended(); // new recommended topology
+		for (Entry<String, Double> c : r_top.getService_conts().entrySet()) {
+			System.out.println("!!!!!!!!!!!!RECOMMENDED TOPOLOGY!!!!!!!!!!!!!!!!!!!! \n" + "Service: " + c.getKey()
+					+ " Containers: " + c.getValue() + "\n");
+		}
 		Topology selected = null; // topology selected to replace currently running topology.
 		HashMap<Topology, Integer> map = new HashMap<>();// list of the bets topologies based on them having +1/-1
 															// similarity to recommended
@@ -87,19 +91,23 @@ public class PlanManager implements Observable, Observer {
 			int points = 0;
 			double difference = 0;// value differentiating the topology from the recommended one
 			if (top.getService_conts() != null) {
-				for (Map.Entry<String, Double> rt_entry : r_top.getService_conts().entrySet()) {// iterates over the
+				 for (Map.Entry<String, Double> t_entry : top.getService_conts().entrySet()){// iterates over the
 																								// entry sets of the
 																								// recommended topology
-					for (Map.Entry<String, Double> t_entry : top.getService_conts().entrySet()) {// iterates over the
+					 for (Map.Entry<String, Double> rt_entry : r_top.getService_conts().entrySet()) {// iterates over the
 																									// entry sets of the
 																									// viable topology
-						if (rt_entry.getKey().equals(t_entry.getKey())) {// if the same service name, find difference
-																			// between the # of containers
+						if (rt_entry.getKey().contains(t_entry.getKey())) {// if the same service name, find difference
+								System.out.println(rt_entry.getKey()+" | CONTAINS | "+ t_entry.getKey());											// between the # of containers
 							double cont_diff = t_entry.getValue() - rt_entry.getValue();
 							if (cont_diff == 0 || cont_diff == 1) {// || cont_diff == -1) {
 								points++;
 							} else if (cont_diff == -1) {
 								points--;
+							} else if (cont_diff > 1) {
+
+							} else if (cont_diff < -1) {
+
 							}
 							difference = difference + cont_diff;
 							break;
@@ -125,6 +133,10 @@ public class PlanManager implements Observable, Observer {
 		for (Entry<Topology, Integer> entry : map.entrySet()) {
 			System.out.println(
 					entry.getKey().getFilename() + " | " + entry.getValue() + " | " + entry.getKey().getPrice());
+			for (Entry<String, Double> c : entry.getKey().getService_conts().entrySet()) {
+				System.out.println("Service: " + c.getKey() + " Containers: " + c.getValue() + "\n");
+			}
+
 		}
 
 		selected = costAnalysis(map);
@@ -170,7 +182,6 @@ public class PlanManager implements Observable, Observer {
 		}
 		return top;
 	}
-
 
 	/*
 	 * returns true if the new topology is more similar to the suggested one

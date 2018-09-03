@@ -83,11 +83,12 @@ public class AnalyseManager implements Observable, Observer {
 		}
 
 	}
-	
+
 	public boolean alreadyNotified(String name) {
 		if (!this.notificationCount.contains(name)) {
 			return false;
-		}return true;
+		}
+		return true;
 	}
 
 	public ArrayList<SystemState> getArs() {
@@ -97,7 +98,7 @@ public class AnalyseManager implements Observable, Observer {
 	@Override
 	public void update() {
 		newSystemState();
-		
+
 	}
 
 	@Override
@@ -120,12 +121,17 @@ public class AnalyseManager implements Observable, Observer {
 			SystemState state = new SystemState();
 			LOGGER.log(Level.INFO, "Enough Notifications, Creating new System state");
 			for (Analyser ana : analysers) {
-				Cluster s = ana.getCluster();
-				if (ana.getLatest() != null) {
-					state.addSymptom(s, ana.getLatest());
+				if (state.getcurrent_reqs().keySet().contains(ana.getCluster())) {
+					System.out.println("State already has a result from this");
 				} else {
-					ana.getLatest();
+					Cluster s = ana.getCluster();
+					if (ana.getLatest() != null) {
+						state.addSymptom(s, ana.getLatest());
+					} else {
+						ana.getLatest();
+					}
 				}
+
 			}
 			this.notificationCount.clear();
 			systState.add(state);
@@ -185,15 +191,18 @@ public class AnalyseManager implements Observable, Observer {
 					int conts = prevcont - cond1;
 					if (conts <= 0) {
 						conts = 1;
-						//System.out.println("Containers recommended for " + s.getServName() + " = " + conts);
+						// System.out.println("Containers recommended for " + s.getServName() + " = " +
+						// conts);
 						ar.addItem(s.getServName(), conts);
 					} else {
-						//System.out.println("Containers recommended for " + s.getServName() + " = " + conts);
+						// System.out.println("Containers recommended for " + s.getServName() + " = " +
+						// conts);
 						ar.addItem(s.getServName(), conts);
 					}
 				} else {
 					int conts = prevcont + cond;
-					//System.out.println("Containers recommended for " + s.getServName() + " = " + conts);
+					// System.out.println("Containers recommended for " + s.getServName() + " = " +
+					// conts);
 					ar.addItem(s.getServName(), conts);
 				}
 

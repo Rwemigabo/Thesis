@@ -2,6 +2,7 @@ package com.mycompany.aatr2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.mycompany.aatr2.analyse.AdaptationRequest;
 
@@ -31,7 +32,7 @@ public class Topology {
 	public Topology() {
 		this.id = new RandomString(8).nextString();
 		this.service_conts = new HashMap<>();
-		System.out.println("Topology " + filename + " created");
+		System.out.println("Topology " + id + " created");
 	}
 
 	/*
@@ -42,7 +43,14 @@ public class Topology {
 		this.id = new RandomString(8).nextString();
 		this.service_conts = new HashMap<>();
 		this.filename = filename;
-		System.out.println("Topology " + id + " created");
+		System.out.println("Topology " + filename + " created");
+	}
+	
+	void initialize() {
+		for(Cluster c : DockerManager.getInstance().getAppServices()) {
+			new Cluster(c.getServName());
+		}
+		
 	}
 
 	public int getVms() {
@@ -60,7 +68,7 @@ public class Topology {
 	void addVM(VirtualMachine vm) {
 		this.VMS.add(vm);
 		updatePrice();
-		System.out.println("VMs added to" + this.toString());
+		System.out.println("VMs added to" + this.filename);
 	}
 
 	// update the price of the topology (Per hour)
@@ -212,7 +220,20 @@ public class Topology {
 	}
 	
 	public String toString() {
-		return "Topology " + this.filename + " | Virtual machines = " + this.VMS.size() + " | Price ="  + this.price;
+		if(services != null && services.size() > 0) {
+			for(Cluster serv : services) {
+				System.out.println("\n" +"Service: " +serv.getServName() + " | Containers = "+serv.getContainers().size());
+			}
+		}else {
+			for (Entry<String, Double> entry: service_conts.entrySet()) {
+				System.out.println("\n" +"Service: " +entry.getKey() + " | Containers = "+entry.getValue());
+			}
+			
+		}
+		
+		System.out.println("");
+		
+		return "Topology " + this.filename + " | Virtual machines = " + this.VMS.size() + " | Price($) ="  + this.price;
 	}
 
 }

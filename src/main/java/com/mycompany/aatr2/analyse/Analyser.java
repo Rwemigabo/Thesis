@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
-//import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import net.sourceforge.jFuzzyLogic.FIS;
 
@@ -51,9 +50,10 @@ public class Analyser implements Observer, Observable {
 	// private final ArrayList<Statistic> spikestats = new ArrayList<>();
 	private int analysisCount = 0;
 	private final static Logger LOGGER = Logger.getLogger(Analyser.class.getName());
+	private List<Integer> results = new ArrayList<>();
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-	 private TreeMap<Long, Double> full_pred_data = new TreeMap<>();// to
+	private TreeMap<Long, Double> full_pred_data = new TreeMap<>();// to
 	// knowledge
 	// private final DynamicLineAndTimeSeriesChart dynamic_pred_chart = new
 	// DynamicLineAndTimeSeriesChart("");
@@ -67,7 +67,7 @@ public class Analyser implements Observer, Observable {
 	}
 
 	/**
-	 * testing purposes.
+	 * testing purposes only.
 	 */
 	public Analyser() {
 		this.anId = new RandomString(8).nextString();
@@ -78,6 +78,13 @@ public class Analyser implements Observer, Observable {
 	public void initiate() {
 
 		setObservable(MonitorManager.getInstance().getMonitor(cluster));
+	}
+
+	public void resultAccum() {
+		if (cluster.getLogs().size() == results.size()) {
+			this.createSymptom(calculateAverage(results));
+		}
+
 	}
 
 	/**
@@ -141,11 +148,18 @@ public class Analyser implements Observer, Observable {
 		fis.setVariable("CPU_load_delta", cpupred);
 		fis.evaluate();
 		double result = fis.getVariable("replicas").getValue();
-		//System.out.println("Number of replicas required = " + result);
+		// System.out.println("Number of replicas required = " + result);
 
-		createSymptom(Math.round(result));
-		LOGGER.log(Level.INFO, "Average = " + Math.round(result));
+		int res = makeSymptom(result);
+		results.add(res);
+		resultAccum();
 
+	}
+
+	int makeSymptom(double res) {
+		int currConts = this.cluster.getContainers().size();
+		int newSymp = (int) (Math.round(res) - currConts);
+		return newSymp;
 	}
 
 	public void addSymptom(Symptom s) {
@@ -170,45 +184,44 @@ public class Analyser implements Observer, Observable {
 	// double cont_count
 	// }
 
-	public double calculateAverage(List<Double> results) {
-		double sum = 0;
+	public int calculateAverage(List<Integer> results) {
+		int sum = 0;
 		if (!results.isEmpty()) {
-			for (double mark : results) {
+			for (int mark : results) {
 				sum += mark;
 			}
-			return sum / results.size();
+			return Math.round(sum / results.size());
 		}
 		return sum;
 	}
 
-	 private void plotData(TreeMap<Long, Double> map, String title) {
-	 Plot p = new Plot(this.cluster.getServName(), title,
-	 Integer.toString(analysisCount));
-	 long[] cx = new long[map.size()];
-	 double[] cy = new double[map.size()];
-	
-	 int countCPU = 0;
-	 if (countCPU < map.size()) {
-	 for (Map.Entry<Long, Double> entry : map.entrySet()) {
-	 cx[countCPU] = entry.getKey();
-	 cy[countCPU] = entry.getValue();
-	 countCPU++;
-	 }
-	 if (countCPU > 0) {
-	 p.plot(cx, cy);
-	 } else {
-	 System.out.println("Nothing in the list");
-	 }
-	
-	 // cpudataPlot.pack();
-	 // cpudataPlot.setVisible(true);
-	
-	 }
-	
-	 // System.out.println(title+": Timestamps " + Arrays.toString(cx));
-	 // System.out.println(title+" values: " + Arrays.toString(cy));
-	
-	 }
+	private void plotData(TreeMap<Long, Double> map, String title) {
+		Plot p = new Plot(this.cluster.getServName(), title, Integer.toString(analysisCount));
+		long[] cx = new long[map.size()];
+		double[] cy = new double[map.size()];
+
+		int countCPU = 0;
+		if (countCPU < map.size()) {
+			for (Map.Entry<Long, Double> entry : map.entrySet()) {
+				cx[countCPU] = entry.getKey();
+				cy[countCPU] = entry.getValue();
+				countCPU++;
+			}
+			if (countCPU > 0) {
+				p.plot(cx, cy);
+			} else {
+				System.out.println("Nothing in the list");
+			}
+
+			// cpudataPlot.pack();
+			// cpudataPlot.setVisible(true);
+
+		}
+
+		// System.out.println(title+": Timestamps " + Arrays.toString(cx));
+		// System.out.println(title+" values: " + Arrays.toString(cy));
+
+	}
 
 	/**
 	 * Analyzes data in the given hashmap by calculating the gradients at each point
@@ -444,7 +457,7 @@ public class Analyser implements Observer, Observable {
 	 */
 	public void windowCheck() {
 		cluster.getLogs().forEach((log) -> {
-			cluster.writeToFile(log);
+			// cluster.writeToFile(log);
 			if (log != null) {
 
 				// System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n
@@ -454,33 +467,35 @@ public class Analyser implements Observer, Observable {
 					log.setminCheckpoint(System.currentTimeMillis());
 					log.setHrCheckpoint(System.currentTimeMillis());
 				} else {
-					// System.out.println("latest log" + log.getLatest().getTimestamp());
 					Timestamp latest = log.getLatest().getTimestamp();
 					// Timestamp mincheckpt = new Timestamp(log.getminCheckpoint());
 					// System.out.println("Minutes Timestamp" + mincheckpt);
 					// Timestamp hrcheckpt = new Timestamp(log.getHrCheckpoint());
 
 					long m_window = System.currentTimeMillis() - log.getminCheckpoint();
-//					long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
+					// long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
 
 					if (m_window >= MINUTES_WINDOW) {// if X mins have passed run short term analysis
 						System.out.println("Checking window1");
 						// runWindowAnalysis(log.getCPUStats(latest, mincheckpt),
 						// log.getMemStats(latest, mincheckpt));
-						 runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
-						//Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(), this);
-						//analyse.start();
+						runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
+						// Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(), this);
+						// analyse.start();
 						log.setminCheckpoint(latest.getTime());
-					} else //if (h_window >= MINUTES_WINDOW * 2) {// if 2X mins have passed run long term analysis
-//						System.out.println("Checking window2");
-//						// runWindowAnalysis(log.getCPUStats(latest, hrcheckpt), log.getMemStats(latest,
-//						// hrcheckpt));
-//						 //runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
-//						//Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(), this);
-//						//analyse.start();
-//						log.setHrCheckpoint(latest.getTime());
-//					} else 
-						{
+					} else // if (h_window >= MINUTES_WINDOW * 2) {// if 2X mins have passed run long term
+							// analysis
+					// System.out.println("Checking window2");
+					// // runWindowAnalysis(log.getCPUStats(latest, hrcheckpt),
+					// log.getMemStats(latest,
+					// // hrcheckpt));
+					// //runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
+					// //Analysis analyse = new Analysis(log.getCPUStats(), log.getMemStats(),
+					// this);
+					// //analyse.start();
+					// log.setHrCheckpoint(latest.getTime());
+					// } else
+					{
 
 						// TBD check critical values (Reactive analysis)
 						// check SLOs are followed using symptom repository method checkSLO()
@@ -501,7 +516,7 @@ public class Analyser implements Observer, Observable {
 			}
 		});
 	}
-	
+
 	/**
 	 * Using the result from the diagnosis, a symptom is created and logged in the
 	 * symptoms log list and if the result is more or less than 0.5 then the
@@ -518,34 +533,32 @@ public class Analyser implements Observer, Observable {
 			addSymptom(nSymp);
 			LOGGER.log(Level.INFO, "1 Notifying Analysis Manager!!!!!!!!!!!!!!!!!!!!!");
 			notification();
-			//AnalyseManager.getInstance().notified(this.cluster.getServName());
-			
+			// AnalyseManager.getInstance().notified(this.cluster.getServName());
+
 		} else if (result <= 0 && result > -1) {
-			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);		
+			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
 			addSymptom(nSymp);
 			LOGGER.log(Level.INFO, "2 Notifying Analysis Manager!!!!!!!!!!!!!!!!!!!!!");
 			notification();
-			
-			
 
 		} else if (result >= 1) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Add", result);
 			addSymptom(nSymp);
 			LOGGER.log(Level.INFO, "3 Notifying Analysis Manager!!!!!!!!!!!!!!!!!!!!!");
 			notification();
-			//AnalyseManager.getInstance().notified(this.cluster.getServName());
+			// AnalyseManager.getInstance().notified(this.cluster.getServName());
 
 		} else if (result <= -1) {
 			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
 
-			//ana.setLatest(nSymp);
+			// ana.setLatest(nSymp);
 
 			addSymptom(nSymp);
 			LOGGER.log(Level.INFO, "4 Notifying Analysis Manager!!!!!!!!!!!!!!!!!!!!!");
 			notification();
-			//AnalyseManager.getInstance().notified(this.cluster.getServName());
-			
-		} 
+			// AnalyseManager.getInstance().notified(this.cluster.getServName());
+
+		}
 	}
 
 	/**
@@ -554,58 +567,57 @@ public class Analyser implements Observer, Observable {
 	 * @param cpuStats
 	 * @param memStats
 	 */
-	 private void runFullDataAnalysis(HashMap<Timestamp, Double> cpuStats,HashMap<Timestamp, Double> memStats) {
-	 TreeMap<Timestamp, Double> c_map = new TreeMap<>(cpuStats);// order by thetimestamp
-	 TreeMap<Timestamp, Double> m_map = new TreeMap<>(memStats);// order by thetimestamp
-	 Plot cpudataPlot = new Plot(this.cluster.getServName(), "Full CPU Datapoints",
-	 Integer.toString(analysisCount));
-	 Plot memdataPlot = new Plot(this.cluster.getServName(), "Full Memory Datapoints",
-	 Integer.toString(analysisCount));
-	 long[] cx = new long[c_map.size()];
-	 double[] cy = new double[c_map.size()];
-	 long[] mx = new long[m_map.size()];
-	 double[] my = new double[m_map.size()];
-	 int countCPU = 0;
-	 int countMEM = 0;
-	 if (countCPU < c_map.size()) {
-	 for (Map.Entry<Timestamp, Double> entry : c_map.entrySet()) {
-	 cx[countCPU] = entry.getKey().getTime();
-	 cy[countCPU] = entry.getValue();
-	 countCPU++;
-	 }
-	 cpudataPlot.plot(cx, cy);
-	 }
-	
-	 if (countMEM < m_map.size()) {
-	 for (Map.Entry<Timestamp, Double> entry : m_map.entrySet()) {
-	 mx[countMEM] = entry.getKey().getTime();
-	 my[countMEM] = entry.getValue();
-	 countMEM++;
-	 }
-	 memdataPlot.plot(mx, my);
-	 }
-	
-	 // System.out.println("Full CPU timestamps: " + Arrays.toString(cx));
-	 // System.out.println("Full CPU values: " + Arrays.toString(cy));
-	 // System.out.println("Full Memory values: " + Arrays.toString(my));
-	 // System.out.println("Full Memory timestamps: " + Arrays.toString(mx));
-	
-	 // double[] min_mem_gradients = runMinuteMemoryAnalysis(mx, my, "Full Memory
-	 // Gradient");
-	 // double[] min_cpu_gradients = runMinuteCPUAnalysis(cx, cy, "Full CPU
-	 // Gradient");
-	
-	 double CPU_prediction = makePrediction(c_map, "CPU");
-	 double Mem_prediction = makePrediction(m_map, "Memory");
-	
-	 diagnose(CPU_prediction, Mem_prediction);
-	
-//	 System.out.println("Cpu prediction: " + CPU_prediction + " for " +
-//	 this.cluster.getServName());
-//	 System.out.println("Memory prediction: " + Mem_prediction + " for " +
-//	 this.cluster.getServName());
-	
-	 }
+	private void runFullDataAnalysis(HashMap<Timestamp, Double> cpuStats, HashMap<Timestamp, Double> memStats) {
+		TreeMap<Timestamp, Double> c_map = new TreeMap<>(cpuStats);// order by thetimestamp
+		TreeMap<Timestamp, Double> m_map = new TreeMap<>(memStats);// order by thetimestamp
+		Plot cpudataPlot = new Plot(this.cluster.getServName(), "Full CPU Datapoints", Integer.toString(analysisCount));
+		Plot memdataPlot = new Plot(this.cluster.getServName(), "Full Memory Datapoints",
+				Integer.toString(analysisCount));
+		long[] cx = new long[c_map.size()];
+		double[] cy = new double[c_map.size()];
+		long[] mx = new long[m_map.size()];
+		double[] my = new double[m_map.size()];
+		int countCPU = 0;
+		int countMEM = 0;
+		if (countCPU < c_map.size()) {
+			for (Map.Entry<Timestamp, Double> entry : c_map.entrySet()) {
+				cx[countCPU] = entry.getKey().getTime();
+				cy[countCPU] = entry.getValue();
+				countCPU++;
+			}
+			cpudataPlot.plot(cx, cy);
+		}
+
+		if (countMEM < m_map.size()) {
+			for (Map.Entry<Timestamp, Double> entry : m_map.entrySet()) {
+				mx[countMEM] = entry.getKey().getTime();
+				my[countMEM] = entry.getValue();
+				countMEM++;
+			}
+			memdataPlot.plot(mx, my);
+		}
+
+		// System.out.println("Full CPU timestamps: " + Arrays.toString(cx));
+		// System.out.println("Full CPU values: " + Arrays.toString(cy));
+		// System.out.println("Full Memory values: " + Arrays.toString(my));
+		// System.out.println("Full Memory timestamps: " + Arrays.toString(mx));
+
+		// double[] min_mem_gradients = runMinuteMemoryAnalysis(mx, my, "Full Memory
+		// Gradient");
+		// double[] min_cpu_gradients = runMinuteCPUAnalysis(cx, cy, "Full CPU
+		// Gradient");
+
+		double CPU_prediction = makePrediction(c_map, "CPU");
+		double Mem_prediction = makePrediction(m_map, "Memory");
+
+		diagnose(CPU_prediction, Mem_prediction);
+
+		// System.out.println("Cpu prediction: " + CPU_prediction + " for " +
+		// this.cluster.getServName());
+		// System.out.println("Memory prediction: " + Mem_prediction + " for " +
+		// this.cluster.getServName());
+
+	}
 
 	public ArrayList<Symptom> getSymplogs() {
 		return symplogs;
@@ -620,7 +632,8 @@ public class Analyser implements Observer, Observable {
 	 * @return latest system state
 	 */
 	public Symptom getLatest() {
-		System.out.println("Number of Symptom logs = " + this.symplogs.size() + this.cluster.getServName());
+		// System.out.println("Number of Symptom logs = " + this.symplogs.size() +
+		// this.cluster.getServName());
 		return this.symplogs.get(symplogs.size() - 1);
 	}
 
@@ -772,69 +785,67 @@ public class Analyser implements Observer, Observable {
 	// // });
 	// }
 
-	 /**
-	 * Performs a prediction for the next time Window, plots the predictions for
-	 the
+	/**
+	 * Performs a prediction for the next time Window, plots the predictions for the
 	 * next window and plots the predictions for all the full data including
 	 * previous predictions.
 	 *
 	 * @param treemap
-	 * of data to perform prediction on
+	 *            of data to perform prediction on
 	 * @return
 	 */
-	 private double makePrediction(TreeMap<Timestamp, Double> trendList, String
-	 metric_nm) {
-	 if (trendList.size() == 0) {
-	 System.out.println("Nothing in list for prediction to be made");
-	 return 0;
-	 }
-	 SimpleRegression regression = new SimpleRegression();
-	 double prediction = 0;
-	 List<Double> y_predicts = new ArrayList<>();
-	 TreeMap<Long, Double> plot_data = new TreeMap<>();
-	 for (Map.Entry<Timestamp, Double> entry : trendList.entrySet()) {
-	 regression.addData(entry.getKey().getTime(), entry.getValue());
-	 }
-	
-	 long frame = 10 * 1000;// 10 second frames
-	 long lastvalue = trendList.lastEntry().getKey().getTime() + MINUTES_WINDOW;
-	 // last timestamp in the prediction
-	 // values
-	 for (long afterlast = trendList.lastEntry().getKey().getTime()
-	 + 100; afterlast <= lastvalue; afterlast += frame) {
-	 double metric = regression.predict(afterlast);
-	 y_predicts.add(metric);
-	 plot_data.put(afterlast, metric);
-	 full_pred_data.put(afterlast, metric);
-	
-	 }
-	
-	 prediction = Collections.max(y_predicts);
-//	  //LOGGER.log(Level.INFO, "Max prediction for next time window = "+
-//	 prediction+
-//	  " for " +metric_nm);
-	 if (plot_data.isEmpty()) {
-	 System.out.println("Prediction plot data is empty");
-	 } else {
-	 plotData(plot_data, "Window Prediction for " + metric_nm);
-	 //plotData(full_pred_data, "Full Prediction Data for " + metric_nm);
-	 }
-	
-	 return prediction;
-	 }
+	private double makePrediction(TreeMap<Timestamp, Double> trendList, String metric_nm) {
+		if (trendList.size() == 0) {
+			System.out.println("Nothing in list for prediction to be made");
+			return 0;
+		}
+		SimpleRegression regression = new SimpleRegression();
+		double prediction = 0;
+		List<Double> y_predicts = new ArrayList<>();
+		TreeMap<Long, Double> plot_data = new TreeMap<>();
+		for (Map.Entry<Timestamp, Double> entry : trendList.entrySet()) {
+			regression.addData(entry.getKey().getTime(), entry.getValue());
+		}
+
+		long frame = 10 * 1000;// 10 second frames
+		long lastvalue = trendList.lastEntry().getKey().getTime() + MINUTES_WINDOW;
+		// last timestamp in the prediction
+		// values
+		for (long afterlast = trendList.lastEntry().getKey().getTime()
+				+ 100; afterlast <= lastvalue; afterlast += frame) {
+			double metric = regression.predict(afterlast);
+			y_predicts.add(metric);
+			plot_data.put(afterlast, metric);
+			full_pred_data.put(afterlast, metric);
+
+		}
+
+		prediction = Collections.max(y_predicts);
+		// //LOGGER.log(Level.INFO, "Max prediction for next time window = "+
+		// prediction+
+		// " for " +metric_nm);
+		if (plot_data.isEmpty()) {
+			System.out.println("Prediction plot data is empty");
+		} else {
+			plotData(plot_data, "Window Prediction for " + metric_nm);
+			// plotData(full_pred_data, "Full Prediction Data for " + metric_nm);
+		}
+
+		return prediction;
+	}
 
 	public long getMinuteWindow() {
 		return this.MINUTES_WINDOW;
 	}
 
 	public void notification() {
-		
+
 		boolean didI = AnalyseManager.getInstance().alreadyNotified(cluster.getServName());
 		System.out.println("checking if i notified.........................." + didI);
-		if(!didI) {
+		if (!didI) {
 			AnalyseManager.getInstance().notified(this.cluster.getServName());
 			notifyObservers();
-			
+
 		}
 	}
 }

@@ -55,7 +55,7 @@ public class AdaptationRequest {
 
 	public void listServices() {
 		for(Entry<String, Double> entry : adapt.entrySet()) {
-			System.out.println("Service: " + entry.getKey() + "Contaier count = " + entry.getValue() + "\n");
+			System.out.println("Service: " + entry.getKey() + " | Contaier count = " + entry.getValue() + "\n");
 		}
 	}
 

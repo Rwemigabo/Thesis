@@ -25,11 +25,11 @@ FUZZIFY MEM_load_delta
 END_FUZZIFY
 
 DEFUZZIFY replicas
-	TERM doubleup := (0,0) (1,1) (2,0) ;
-	TERM singleup := (0,0) (0.5, 1) (1,0);
-    TERM none := (0,0) ;
-    TERM singledown := (-1,0) (-0.5, 1) (0,0);
-    TERM doubledown := (-2,0) (-1, 1) (0,0);
+    
+    TERM lowscale := ( 0,1)  (2,0);
+    TERM mediumscale := (1.5, 0)  (2.5,1)  (3.5,1)  (4.5,0);
+    TERM highscale := (3,0) (3,1) (5, 1);
+    
     METHOD: COG;
     DEFAULT := 0;  // Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
@@ -40,12 +40,15 @@ AND: MIN;	// Use 'min' for 'and'
 AND:MIN;	// Use 'min' activation method
 ACCU:MAX;	// Use 'max' accumulation method
 
-RULE 0: IF CPU_load_delta IS low THEN replicas IS singledown;
-RULE 1: IF MEM_load_delta IS medium THEN replicas IS none;
-RULE 2: IF CPU_load_delta IS high THEN replicas IS doubleup;
-RULE 3: IF MEM_load_delta IS high THEN replicas IS singleup;
-RULE 4: IF  MEM_load_delta IS low THEN replicas IS singledown;
-RULE 5: IF CPU_load_delta IS medium THEN replicas IS doubleup;
+RULE 0: IF CPU_load_delta IS low AND MEM_load_delta IS low THEN replicas IS lowscale;
+RULE 1: IF MEM_load_delta IS medium AND CPU_load_delta IS medium THEN replicas IS mediumscale;
+RULE 2: IF CPU_load_delta IS high AND MEM_load_delta IS high THEN replicas IS highscale;
+RULE 3: IF CPU_load_delta IS low AND MEM_load_delta IS high THEN replicas IS mediumscale;
+RULE 4: IF CPU_load_delta IS high AND MEM_load_delta IS low THEN replicas IS mediumscale;
+RULE 5: IF CPU_load_delta IS medium AND MEM_load_delta IS low THEN replicas IS lowscale;
+RULE 6: IF CPU_load_delta IS low AND MEM_load_delta IS medium THEN replicas IS lowscale;
+RULE 7: IF CPU_load_delta IS high AND MEM_load_delta IS medium THEN replicas IS highscale;
+RULE 8: IF CPU_load_delta IS medium AND MEM_load_delta IS high THEN replicas IS highscale;
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK

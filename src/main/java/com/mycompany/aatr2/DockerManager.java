@@ -125,10 +125,12 @@ public class DockerManager {
 		for (Container cont : containers) {
 			ArrayList<String> temp = new ArrayList<String>();
 			appServices.forEach((service) -> {
-				temp.add(service.getServName());// add already existing service names to the temp list.
+				if(!cont.image().contains("visualizer")) {
+					temp.add(service.getServName());// add already existing service names to the temp list.
+				}
 			});
 			// if service doesn't exist then create it and add it to the list of services.
-			if (!temp.contains(cont.image())) {
+			if (!cont.image().contains("visualizer") && !temp.contains(cont.image())) {
 				// System.out.println("\n Creating new service for " + cont.image());
 				s = newService(cont.image());
 				s.addContainer(cont);
@@ -140,7 +142,10 @@ public class DockerManager {
 			} else {
 				System.out.println("\n Service exists, adding container: " + cont.id());
 				s = getCluster(cont.image());
-				s.addContainer(cont);
+				if(!cont.image().contains("visualizer")) {
+					s.addContainer(cont);
+				}
+				
 			}
 		}
 	}

@@ -25,21 +25,21 @@ public class Cluster {
 	private String servName;
 	private ArrayList<StatisticsLog> logs = new ArrayList<>();
 	private SLO slo = new SLO();
-	//private int rank;
-	
+	private int containerCount;
+
 	public Cluster(String name) {
 		this.servName = name;
 		this.containers = new ArrayList<>();
-
+		this.containerCount = containers.size();
 	}
 
-//	public int getRank() {
-//		return rank;
-//	}
-//
-//	public void setRank(int rank) {
-//		this.rank = rank;
-//	}
+	// public int getRank() {
+	// return rank;
+	// }
+	//
+	// public void setRank(int rank) {
+	// this.rank = rank;
+	// }
 
 	public List<Container> getContainers() {
 		return this.containers;
@@ -52,9 +52,18 @@ public class Cluster {
 	public void addContainer(Container container) {
 		if (!this.containers.contains(container)) {
 			this.containers.add(container);
+			this.containerCount = this.containers.size();
 		} else {
 			System.out.println("container already exists");
 		}
+	}
+
+	public int getContainerCount() {
+		return containerCount;
+	}
+
+	public void setContainerCount(int containerCount) {
+		this.containerCount = containerCount;
 	}
 
 	public void addStat(String cid, double mem, double cpu) {
@@ -134,11 +143,10 @@ public class Cluster {
 	}
 
 	public void writeToFile(StatisticsLog s) {
-		try (ObjectOutputStream oos = new ObjectOutputStream(
-				new FileOutputStream(s.getstatLogFile()))) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(s.getstatLogFile()))) {
 
 			oos.writeObject(s);
-			//System.out.println("Done");
+			// System.out.println("Done");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
