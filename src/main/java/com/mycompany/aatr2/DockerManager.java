@@ -140,7 +140,7 @@ public class DockerManager {
 				this.monitored.add(s.getServName());
 
 			} else {
-				System.out.println("\n Service exists, adding container: " + cont.id());
+				System.out.println("\n Service exists, adding container: " + cont.image());
 				s = getCluster(cont.image());
 				if(!cont.image().contains("visualizer")) {
 					s.addContainer(cont);

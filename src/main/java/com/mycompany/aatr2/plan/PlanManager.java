@@ -62,9 +62,9 @@ public class PlanManager implements Observable, Observer {
 
 	private void getRequest() {
 		AdaptationRequest ar = DockerManager.getInstance().getCurrentTopology().latestRequest();
-		ar.listServices();
-		// vt.defineDynamicTopologies2();
-		vt.defineTestTopologies();
+		// ar.listServices();
+		 vt.defineDynamicTopologies2();
+		//vt.defineTestTopologies();
 		processRequest(ar);
 
 	}
@@ -77,47 +77,62 @@ public class PlanManager implements Observable, Observer {
 	 */
 	public void processRequest(AdaptationRequest ar) {
 
-		System.out.println("||||||||||||||||||||||||||||PROCESSING ADAPTATION REQUEST|||||||||||||||||||||||||||||||");
+		System.out
+				.println("\n ||||||||||||||||||||||||||||PROCESSING ADAPTATION REQUEST|||||||||||||||||||||||||||||||");
 		Topology r_top = ar.recommended(); // new recommended topology
+		System.out.println("\n !!!!!!!!!!!!RECOMMENDED TOPOLOGY!!!!!!!!!!!!!!!!!!!!");
 		for (Entry<String, Double> c : r_top.getService_conts().entrySet()) {
-			System.out.println("!!!!!!!!!!!!RECOMMENDED TOPOLOGY!!!!!!!!!!!!!!!!!!!! \n" + "Service: " + c.getKey()
-					+ " Containers: " + c.getValue() + "\n");
+
+			System.out.println("Service: " + c.getKey() + " Containers: " + c.getValue());
 		}
 		Topology selected = null; // topology selected to replace currently running topology.
-		HashMap<Topology, Integer> map = new HashMap<>();// list of the bets topologies based on them having +1/-1
-															// similarity to recommended
+		HashMap<Topology, Integer> map = new HashMap<>();// list of the best topologies
 		// double s_diff = 0;
 		for (Topology top : vt.getTops()) {
 			int points = 0;
-			double difference = 0;// value differentiating the topology from the recommended one
+			boolean badOption = false;
+
 			if (top.getService_conts() != null) {
-				 for (Map.Entry<String, Double> t_entry : top.getService_conts().entrySet()){// iterates over the
-																								// entry sets of the
-																								// recommended topology
-					 for (Map.Entry<String, Double> rt_entry : r_top.getService_conts().entrySet()) {// iterates over the
-																									// entry sets of the
-																									// viable topology
-						if (rt_entry.getKey().contains(t_entry.getKey())) {// if the same service name, find difference
-								System.out.println(rt_entry.getKey()+" | CONTAINS | "+ t_entry.getKey());											// between the # of containers
-							double cont_diff = t_entry.getValue() - rt_entry.getValue();
-							if (cont_diff == 0 || cont_diff == 1) {// || cont_diff == -1) {
-								points++;
-							} else if (cont_diff == -1) {
-								points--;
-							} else if (cont_diff > 1) {
+				for (Map.Entry<String, Double> rt_entry : r_top.getService_conts().entrySet()) {// iterates over the
+					// entry sets of the
+					if (!badOption) {
+						for (Map.Entry<String, Double> vt_entry : top.getService_conts().entrySet()) {// iterates over
+																										// the
+							// entry sets of the
+							// viable topology
+							if (rt_entry.getKey().contains(vt_entry.getKey())) {
+								double cont_diff = vt_entry.getValue() - rt_entry.getValue();
+								//System.out.println(vt_entry.getValue() +" - "+ rt_entry.getValue()+ " = "+  cont_diff);
+								if (cont_diff >= 1) {
+									if (cont_diff == 0) {// || cont_diff == -1) {
+										points = points + 3;
+									} else if (cont_diff == 1) {
+										points = points + 2;
+									} else if (cont_diff > 1) {
+										points++;
+									}
+									// difference = difference + cont_diff;
+									break;
+								} else {
+									badOption = true;
+									break;
+								}
 
-							} else if (cont_diff < -1) {
-
-							}
-							difference = difference + cont_diff;
-							break;
+							}else {}//System.out.println(rt_entry.getKey()+" | DOESN'T CONTAIN | "+ vt_entry.getKey());}
 						}
+					} else {
+						break;
 					}
+
 				}
+				if (!badOption) {
+					map.put(top, points);
+				}else {System.out.println(top.getFilename() +" Is a bad option");}
 			} else {
 				System.out.println("Mapping of cluster and number of containers not found.");
 			}
-			map.put(top, points);
+			
+
 			// if(vt.getTops().indexOf(top) == 0) {
 			// selected = top;
 			// s_diff = difference;
@@ -236,7 +251,6 @@ public class PlanManager implements Observable, Observer {
 
 	@Override
 	public void notifyObservers(double metric) {
-		// TODO Auto-generated method stub
 
 	}
 

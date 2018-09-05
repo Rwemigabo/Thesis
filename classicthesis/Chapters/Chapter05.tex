@@ -41,12 +41,22 @@ class MyTasks(TaskSet):
 \begin{lstlisting}[language=Python, caption=Locust open ports Script, label= lst:script2]
 from locust import HttpLocust
 from MyTaskSet import MyTasks
+# from MyTaskSet import MyServicesTasks
+
 
 class MyLocust(HttpLocust):
     task_set = MyTasks
-    min_wait = 5000
-    max_wait = 15000
+    min_wait = 10
+    max_wait = 100
     host = 'http://localhost:5000'
+
+
+# class MyServicesLocust(HttpLocust):
+#     task_set = MyServicesTasks
+#     min_wait = 10
+#     max_wait = 100
+#     host = 'http://localhost:5001'
+
 
 \end{lstlisting}
 
@@ -87,73 +97,82 @@ These Images show the a small sample of the testing done on the application and 
 
 \section{Full System Testing }
 After the confirmation of the Monitor and analysis components, the next step of testing brought us to the version of the system after the implementation of the fuzzy logic functionality in the Analysis component, which is meant to use the predicted data and decide how many containers need to be added to or removed from the service, and the Plan component, which works with that data/ recommendation from the Analysis component and proposes the topology that best suits the recommendation before notifying the execution component to change the topology.\\
-In order to confirm the above, I had to run varying loads through the application so that the system would respond accordingly. So, the Locust load simulation tool was used for this purpose and the work loads to be tested with are presented in \autoref{systest} below. \autoref{tops} shows the simulated topology structures of the test application Example Voting app introduced in the Test suite section these topologies were used for the purpose of providing the planning component a simplified example of different topology structures that it can switch between. The column show the number of topologies in each of the services for the given topology.
+In order to confirm the above, I had to run varying loads through the application so that the system would respond accordingly. So, the Locust load simulation tool was used for this purpose and the work loads to be tested with are presented in \autoref{systest} below. \autoref{tops} shows the simulated topology structures of the test application Example Voting app introduced in the Test suite section .The table shows the services in the top row and every other row shows the number of containers for that service in that topology. These topologies were used for the purpose of providing the planning component a simplified example of different topology structures that it can switch between. The last 2 columns are based on pricing of Amazon's General purpose dedicated host virtual machines \cite{amazonprices}. These are represented in the table as small, medium and large representing the m4 = 2.42 USD per hour, m5 = 5.069 USD per hour and m5d = 5.966 USD per hour options respectively per hour from Amazon EC2 services.
 
 \begin{table}[H]
-%\resizebox{\textwidth}{!}{%
+\resizebox{\textwidth}{!}{%
 \centering
-\begin{tabular}{|l|l|l|l|l|l|}
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
 \hline
- Vote & Result & db & redis & worker  \\ \hline
-1 & 1 & 1 & 1 & 1  \\ \hline
-3 & 2 & 1 &2 & 1  \\ \hline
-4 & 2 & 1 & 2 & 3 \\ \hline
-4 & 2 & 1 & 2 & 3  \\ \hline
-5 & 5 & 3 & 2 & 1  \\ \hline
-6 & 5 & 4 & 3 & 2  \\ \hline
+Topology & Worker & Vote & db & Redis & result & Virtual Machines & total Price (USD) \\ \hline
+T1 & 1 & 1 & 1 & 1 & 1 & 1 Small & 2.42 \\ \hline
+T2 & 2 & 1 & 1 & 1 & 1 & 2 Small & 4.84 \\ \hline
+T3 & 3 & 2 & 1 &1 & 1 & 1 Medium  & 5.069 \\ \hline
+T4 & 4 & 3 & 2 & 1 &1 & 1 Medium & 5.069\\ \hline
+T5 & 4 & 4 & 3 & 2 & 1 & 2 Medium & 10.138\\ \hline
+T6 & 4 & 4 & 4 & 3 & 2 & 2 Medium &10.138\\ \hline
+T7 & 4 & 4 & 4 & 4 & 3 & 1 Large &5.966\\ \hline
+T8 & 4 & 4 & 4 & 4 & 4 & 2 Large &11.932\\ \hline
 \end{tabular}%
-%}
+}
 \caption{Topology options for the testing of the application}
 \label{tops}
 \end{table}
 
-For the first test case, I ran different fixed numbers of users but this didn't cause a reaction from my system as seen in \autoref{systest}. So, I decided to use a different strategy of testing the application, which is presented in \autoref{systest2}   
+\subsection{Test Case 1(Upscale request)}
+For the first test case, I ran the system to test for its ability to request for a topology with an increased number resources (containers) available to the application for the next time window as seen in \autoref{systest}. The starting Topology for this test case was Topology 1 (T1) as seen in \autoref{tops}above. The results of this testing are as seen below.
 \begin{table}[H]
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
- Test & Number of users & Requests (s) & average response time & Result & Topology selected \\ \hline
-1 & 30 & 2.9 & 11(ms) & No Adaptation  & N/A \\ \hline
-2 & 5 & 0.4 & 12 (ms) & No Adaptation & N/A \\ \hline
-3 & 120 & 12 & 12 (ms) & No Adaptation& N/A \\ \hline
-4 & 300 & 30 & 14 (ms) & No Adaptation & N/A\\ \hline
-4 & 500 & 51 & 15(ms) & No Adaptation & N/A \\ \hline
+ Test &Users | Requests (/s) & average response time & Result & Topology \\ \hline
+1& 3 | 45 & 14(ms) & No Adaptation  & T1 \\ \hline
+2 & 8 | 102 & 23(ms) &  Adaptation & T3\\ \hline
+3 & 15 | 122 &  53(ms) & Adaptation& T4 \\ \hline
+4 & 30 | 160 &  141(ms) & Adaptation & T4 \\ \hline
 \end{tabular}%
 }
 \caption{Test case 1 run on the application.}
 \label{systest}
 \end{table}
 
-For this test case, I put a final user count of 10000 users  and made the locust load tester hatch the users at a different rate every time the analysis was run (every after a time window). The results of this testing are as seen below.
+In the tests where a change in the topology was requested (scale up) for example Test 4, the recommendation of the new topology structure was triggered by one of the services (Vote) requiring a lot more computing power and therefore the system suggesting more containers for the component. An example of the structure of the recommended topology can be seen in \autoref{RecTopconsoleoutput} for tests 3 and 2.
+\begin{figure} [H]
+   \centering 
+   \subfloat[Test 2]{%
+   	\includegraphics[width=0.60\textwidth]{gfx/RecTopology2}}\hfill
+   \subfloat[Test 3]{%
+   	\includegraphics[width=0.60\textwidth]{gfx/RecTopology}}
+   \caption{ Recommended Topology output} 
+   \label{RecTopconsoleoutput} 
+\end{figure}
+
+
+\subsection{Test Case 2(Different topology testing)}
+This test was done to confirm both the system's functionality after a new Topology has been deployed and the up and down scaling requests of the system when given different loads. The tests run in this test case start with Topology 3 (T3) after the load (number of users) that caused the adaptation switch.
 \begin{table}[H]
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
-  Number of users  & Requests(s) & average response time(ms) & Result & Topology selected \\ \hline
- 290 & 30 & 17 & No Adaptation & N/A \\ \hline
-540 & 55 & 15  & No Adaptation & N/A \\ \hline
- 830 & 84 & 19  & No Adaptation & N/A \\ \hline
-1135 & 115.5 & 37 & No Adaptation & N/A\\ \hline
-1433 & 130 & 175 & No Adaptation & N/A \\ \hline
- 2056 & 200 & 2370 & No Adaptation& N/A\\ \hline
+ Test & Users | Requests(/s) & average response time & Result & Topology \\ \hline
+1& 15 | 50 & 130(ms) & Adaptation  & T2 \\ \hline
+2 & 80 | 130 &383 (ms) & Adaptation & T4 \\ \hline
+3 & 200 | 190 &  572(ms) & Adaptation& T4 \\ \hline
 \end{tabular}%
 }
 \caption{Test case 2 run on the application.}
-\label{systest2}
+\label{systest1}
 \end{table}
 
-As seen from the above tests in \autoref{systest2}, There was still no reaction from the automation system's Planner and analysis so, I made some changes to the program performed the final testing phase, which is presented in \autoref{systest3}. The following tests proved that the components were communicating successfully and the call for adaptation was possible and happening. So, the next step from here was to move the system to an application which I picked to perform the optimisation on as a case study, which is introduced in the next section.
-\begin{table}[H]
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|}
-\hline
- Number of users& Requests(s) & response time (ms) & Result & Topology selected \\ \hline
- 300 &  &  & Adaptation  & 2 \\ \hline
-400 &  &  & No Adaptation  & N/A \\ \hline
-1150 &  &  & No Adaptation & N/A \\ \hline
-\end{tabular}%
-}
-\caption{Test case 3 run on the application.}
-\label{systest3}
-\end{table}
+The selections of the next topology to run from the above tests for the next time window are selected based on the recommended topology by the system as seen in \autoref{RecTopconsoleoutput2} below. 
+
+\begin{figure} [H]
+   \centering 
+   \subfloat[Test 1]{%
+   	\includegraphics[scale=0.30]{gfx/T3output}}\hfill
+    \subfloat[Test 3]{%
+   	\includegraphics[scale=0.30]{gfx/test3}}
+   \caption{ Recommended Topology output} 
+   \label{RecTopconsoleoutput2} 
+\end{figure}
 

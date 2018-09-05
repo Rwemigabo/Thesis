@@ -42,22 +42,15 @@ import net.sourceforge.jFuzzyLogic.FIS;
 public class Analyser implements Observer, Observable {
 	private final String anId;
 	private final ArrayList<Observer> obs;
-
-	// private Observable obvle = null;
 	private ArrayList<Symptom> symplogs = new ArrayList<>();// to knowledge
 	private final Cluster cluster;
-	private long MINUTES_WINDOW = 2 * 60 * 1000;// how often to run analysis
-	// private final ArrayList<Statistic> spikestats = new ArrayList<>();
+	private long MINUTES_WINDOW = 2 * 60 * 1000;// how often to run analysis;
 	private int analysisCount = 0;
 	private final static Logger LOGGER = Logger.getLogger(Analyser.class.getName());
 	private List<Integer> results = new ArrayList<>();
 
 	StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-	private TreeMap<Long, Double> full_pred_data = new TreeMap<>();// to
-	// knowledge
-	// private final DynamicLineAndTimeSeriesChart dynamic_pred_chart = new
-	// DynamicLineAndTimeSeriesChart("");
-	// private Symptom latest;
+	private TreeMap<Long, Double> full_pred_data = new TreeMap<>();
 
 	public Analyser(Cluster c) {
 		this.anId = new RandomString(8).nextString();
@@ -81,8 +74,9 @@ public class Analyser implements Observer, Observable {
 	}
 
 	public void resultAccum() {
-		if (cluster.getLogs().size() == results.size()) {
+		if (cluster.getContainers().size() == results.size()) {
 			this.createSymptom(calculateAverage(results));
+			results.clear();
 		}
 
 	}
@@ -135,6 +129,7 @@ public class Analyser implements Observer, Observable {
 	 * @param avrmem
 	 */
 	public void diagnose(double cpupred, double mempred) {
+		System.out.println("Starting Diagnosis");
 		String fileName = "/Users/eric/Desktop/Msc_Computer_Science/Year2/Sem2/thesis/AATR2/src/main/java/com/mycompany/aatr2/analyse/SystAnalysis.fcl";
 		FIS fis = FIS.load(fileName, true);
 		if (fis == null) {
@@ -148,9 +143,10 @@ public class Analyser implements Observer, Observable {
 		fis.setVariable("CPU_load_delta", cpupred);
 		fis.evaluate();
 		double result = fis.getVariable("replicas").getValue();
-		// System.out.println("Number of replicas required = " + result);
+		System.out.println("Number of replicas required = " + result);
 
 		int res = makeSymptom(result);
+
 		results.add(res);
 		resultAccum();
 
@@ -191,6 +187,17 @@ public class Analyser implements Observer, Observable {
 				sum += mark;
 			}
 			return Math.round(sum / results.size());
+		}
+		return sum;
+	}
+	
+	double average(List<Double> results) {
+		double sum = 0;
+		if (!results.isEmpty()) {
+			for (double mark : results) {
+				sum += mark;
+			}
+			return sum / results.size();
 		}
 		return sum;
 	}
@@ -476,7 +483,7 @@ public class Analyser implements Observer, Observable {
 					// long h_window = System.currentTimeMillis() - log.getHrCheckpoint();
 
 					if (m_window >= MINUTES_WINDOW) {// if X mins have passed run short term analysis
-						System.out.println("Checking window1");
+						System.out.println("\n Analyzing window1");
 						// runWindowAnalysis(log.getCPUStats(latest, mincheckpt),
 						// log.getMemStats(latest, mincheckpt));
 						runFullDataAnalysis(log.getCPUStats(), log.getMemStats());
@@ -504,10 +511,6 @@ public class Analyser implements Observer, Observable {
 
 					}
 					log.removeProcessed();
-					// }
-					// } else {
-					// System.out.println("\n No new values ");
-					// }
 
 				}
 
@@ -558,6 +561,14 @@ public class Analyser implements Observer, Observable {
 			notification();
 			// AnalyseManager.getInstance().notified(this.cluster.getServName());
 
+		} else {
+			Symptom nSymp = new Symptom(cluster.getServName(), "Remove", result);
+
+			// ana.setLatest(nSymp);
+
+			addSymptom(nSymp);
+			LOGGER.log(Level.INFO, "5 Notifying Analysis Manager!!!!!!!!!!!!!!!!!!!!!");
+			notification();
 		}
 	}
 
@@ -568,6 +579,7 @@ public class Analyser implements Observer, Observable {
 	 * @param memStats
 	 */
 	private void runFullDataAnalysis(HashMap<Timestamp, Double> cpuStats, HashMap<Timestamp, Double> memStats) {
+		// System.out.println("Analyzing full Data");
 		TreeMap<Timestamp, Double> c_map = new TreeMap<>(cpuStats);// order by thetimestamp
 		TreeMap<Timestamp, Double> m_map = new TreeMap<>(memStats);// order by thetimestamp
 		Plot cpudataPlot = new Plot(this.cluster.getServName(), "Full CPU Datapoints", Integer.toString(analysisCount));
@@ -597,25 +609,10 @@ public class Analyser implements Observer, Observable {
 			memdataPlot.plot(mx, my);
 		}
 
-		// System.out.println("Full CPU timestamps: " + Arrays.toString(cx));
-		// System.out.println("Full CPU values: " + Arrays.toString(cy));
-		// System.out.println("Full Memory values: " + Arrays.toString(my));
-		// System.out.println("Full Memory timestamps: " + Arrays.toString(mx));
-
-		// double[] min_mem_gradients = runMinuteMemoryAnalysis(mx, my, "Full Memory
-		// Gradient");
-		// double[] min_cpu_gradients = runMinuteCPUAnalysis(cx, cy, "Full CPU
-		// Gradient");
-
 		double CPU_prediction = makePrediction(c_map, "CPU");
 		double Mem_prediction = makePrediction(m_map, "Memory");
 
 		diagnose(CPU_prediction, Mem_prediction);
-
-		// System.out.println("Cpu prediction: " + CPU_prediction + " for " +
-		// this.cluster.getServName());
-		// System.out.println("Memory prediction: " + Mem_prediction + " for " +
-		// this.cluster.getServName());
 
 	}
 
@@ -764,27 +761,6 @@ public class Analyser implements Observer, Observable {
 		}
 	}
 
-	// /**
-	// * call either short term or long term analysis based on the time passed
-	// between
-	// * the last analysis/ checkpoint and this current statistic's time stamp.
-	// *
-	// */
-	// public void filewindowCheck(StatisticsLog sl) {
-	//
-	// if (sl != null) {
-	//
-	// System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n
-	// Number of stats :"
-	// + sl.getMonitorstats().size() + " for container " + sl.container());
-	// runFullDataAnalysis(sl.getCPUStats(), sl.getMemStats());
-	//
-	// } else {
-	// System.out.println("\n No logs found ");
-	// }
-	// // });
-	// }
-
 	/**
 	 * Performs a prediction for the next time Window, plots the predictions for the
 	 * next window and plots the predictions for all the full data including
@@ -795,6 +771,7 @@ public class Analyser implements Observer, Observable {
 	 * @return
 	 */
 	private double makePrediction(TreeMap<Timestamp, Double> trendList, String metric_nm) {
+		System.out.println("Predicting " + metric_nm);
 		if (trendList.size() == 0) {
 			System.out.println("Nothing in list for prediction to be made");
 			return 0;
@@ -821,6 +798,8 @@ public class Analyser implements Observer, Observable {
 		}
 
 		prediction = Collections.max(y_predicts);
+		double aprediction = average(y_predicts);
+		System.out.println("Prediction complete for " + metric_nm + " = " + prediction + " | Average Prediction = " + aprediction);
 		// //LOGGER.log(Level.INFO, "Max prediction for next time window = "+
 		// prediction+
 		// " for " +metric_nm);
@@ -831,7 +810,7 @@ public class Analyser implements Observer, Observable {
 			// plotData(full_pred_data, "Full Prediction Data for " + metric_nm);
 		}
 
-		return prediction;
+		return aprediction;
 	}
 
 	public long getMinuteWindow() {

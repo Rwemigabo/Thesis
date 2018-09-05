@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.24)  29 AUG 2018 18:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.2.24)  5 SEP 2018 09:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1895,7 +1895,7 @@ File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 )
 Package scrhack Info: hyperref hack deactivated because of
 (scrhack)             detection of KOMA-Script class, that doesn't
-(scrhack)             need that hack, on input line 192.
+(scrhack)             need that hack, on input line 193.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2016/05/05 v6.83n Hypertext links for LaTeX
@@ -2032,7 +2032,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks38
 \@floatcapt=\box54
 )
-Package scrhack Info: loading float hack on input line 195.
+Package scrhack Info: loading float hack on input line 196.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/float.hak
 File: float.hak 2016/05/10 v3.20 KOMA-Script package (hacking package float)
@@ -2040,15 +2040,15 @@ Package scrhack Info: redefining \newfloat on input line 161.
 Package scrhack Info: redefining \listof on input line 161.
 Package scrhack Info: undefining \float@addtolists on input line 161.
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 217.
-Package hyperref Info: Option `linktocpage' set `true' on input line 217.
-Package hyperref Info: Option `breaklinks' set `true' on input line 217.
-Package hyperref Info: Option `pageanchor' set `true' on input line 217.
-Package hyperref Info: Option `plainpages' set `false' on input line 217.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 217.
+Package hyperref Info: Option `colorlinks' set `true' on input line 218.
+Package hyperref Info: Option `linktocpage' set `true' on input line 218.
+Package hyperref Info: Option `breaklinks' set `true' on input line 218.
+Package hyperref Info: Option `pageanchor' set `true' on input line 218.
+Package hyperref Info: Option `plainpages' set `false' on input line 218.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 218.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 217.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 217.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 218.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 218.
 
 (./classicthesis.sty
 Package: classicthesis 2017/10/13 v4.4 Typographic style for a classic-looking 
@@ -2237,13 +2237,7 @@ Package tocloft Info: The document has chapter divisions on input line 44.
 Using KOMA-command "deffootnote" for footnote setup
 (/usr/local/texlive/2016/texmf-dist/tex/latex/koma-script/scrtime.sty
 Package: scrtime 2016/05/10 v3.20 KOMA-Script package (time of LaTeX run)
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/ms/prelim2e.sty
-Package: prelim2e 2009/05/29 v1.3 prelim2e Package (MS)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/ms/everyshi.sty
-Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
-))))
+)))
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
@@ -2278,8 +2272,9 @@ File: german.lbx 2016/05/14 v3.4 biblatex localization (PK/JW/AB)
 
 LaTeX Warning: Label `Fig:3' multiply defined.
 
-) (./Chapters/Chapter06.aux) (./Chapters/Chapter0A.aux)
-(./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Declaration.aux))
+) (./Chapters/Chapter06.aux) (./Chapters/Chapter07.aux)
+(./Chapters/Chapter0A.aux) (./FrontBackmatter/Bibliography.aux)
+(./FrontBackmatter/Declaration.aux))
 \openout1 = `ClassicThesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
@@ -2403,27 +2398,17 @@ Package microtype Info: No adjustment of character kerning.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
-ABD: EveryShipout initializing macros
 \openout2 = `FrontBackmatter/Titlepage.aux'.
 
- (./FrontBackmatter/Titlepage.tex
-<gfx/rug_logo.png, id=229, 331.9602pt x 50.1072pt>
+
+(./FrontBackmatter/Titlepage.tex
+<gfx/rug_logo.png, id=245, 331.9602pt x 50.1072pt>
 File: gfx/rug_logo.png Graphic file (type png)
  <use gfx/rug_logo.png>
 Package pdftex.def Info: gfx/rug_logo.png used on input line 22.
 (pdftex.def)             Requested size: 426.79134pt x 64.4252pt.
-LaTeX Font Info:    Try loading font information for T1+fvm on input line 36.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/bera/t1fvm.fd
-File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
-)
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 7.65005pt on input line 36.
-Package microtype Info: Loading generic settings for font family
-(microtype)             `fvm' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- [1
+[1
 
 
 
@@ -2432,14 +2417,14 @@ Package microtype Info: Loading generic settings for font family
 ug_logo.png>])
 \openout2 = `FrontBackmatter/Titleback.aux'.
 
-
-(./FrontBackmatter/Titleback.tex) [2
+ (./FrontBackmatter/Titleback.tex) [2
 
 
 ]
 \openout2 = `FrontBackmatter/Abstract.aux'.
 
- (./FrontBackmatter/Abstract.tex)
+
+(./FrontBackmatter/Abstract.tex)
 LaTeX Font Info:    Try loading font information for OT1+pplx on input line 79.
 
 
@@ -2541,6 +2526,12 @@ Overfull \hbox (14.34518pt too wide) in paragraph at lines 55--55
  \T1/pplj/m/n/10.95 con-tain-ers of the ex-am-ple vot-ing ap-pli-ca-tion. []  
  []
 
+
+Overfull \hbox (2.14107pt too wide) in paragraph at lines 85--85
+ [][] []\T1/pplj/m/n/10.95 The topol-ogy se-lected by a com-bi-na-tion of point
+s 
+ []
+
 )
 \tf@lof=\write7
 \openout7 = `ClassicThesis.lof'.
@@ -2552,7 +2543,7 @@ Overfull \hbox (14.34518pt too wide) in paragraph at lines 55--55
 Package tocbasic Info: character protrusion at lot deactivated on input line 43
 .
  (./ClassicThesis.lot
-Overfull \hbox (10.42508pt too wide) in paragraph at lines 43--43
+Overfull \hbox (10.42508pt too wide) in paragraph at lines 41--41
  [][] []\T1/pplj/m/n/10.95 System Func-tional Re-quire-ments eval-u-a-tion []  
 
  []
@@ -2699,7 +2690,7 @@ Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 160.
 See the caption package documentation for explanation.
 
-[19] <gfx/Activity_Diagram1.png, id=544, 1219.06604pt x 600.5693pt>
+[19] <gfx/Activity_Diagram1.png, id=581, 1219.06604pt x 600.5693pt>
 File: gfx/Activity_Diagram1.png Graphic file (type png)
 
 <use gfx/Activity_Diagram1.png>
@@ -2715,7 +2706,7 @@ Chapter 4.
 
 
 
-] [23] <gfx/Sensor_CD.png, id=585, 892.33376pt x 632.3625pt>
+] [23] <gfx/Sensor_CD.png, id=622, 892.33376pt x 632.3625pt>
 File: gfx/Sensor_CD.png Graphic file (type png)
 
 <use gfx/Sensor_CD.png>
@@ -2726,7 +2717,7 @@ Overfull \hbox (20.92719pt too wide) in paragraph at lines 26--27
  [][] 
  []
 
-<gfx/Monitor_CD.png, id=586, 1051.93pt x 880.28876pt>
+<gfx/Monitor_CD.png, id=623, 1051.93pt x 880.28876pt>
 File: gfx/Monitor_CD.png Graphic file (type png)
  <use gfx/Monitor_CD.png>
 Package pdftex.def Info: gfx/Monitor_CD.png used on input line 34.
@@ -2737,7 +2728,7 @@ Overfull \hbox (84.76454pt too wide) in paragraph at lines 34--35
  []
 
 [24 <./gfx/Sensor_CD.png (PNG copy)>]
-<gfx/Analyse_CD.png, id=591, 1057.9525pt x 1035.87pt>
+<gfx/Analyse_CD.png, id=628, 1057.9525pt x 1035.87pt>
 File: gfx/Analyse_CD.png Graphic file (type png)
  <use gfx/Analyse_CD.png>
 Package pdftex.def Info: gfx/Analyse_CD.png used on input line 42.
@@ -2748,14 +2739,14 @@ Overfull \hbox (87.17351pt too wide) in paragraph at lines 42--43
  []
 
 [25 <./gfx/Monitor_CD.png (PNG copy)>]
-<gfx/Plan_CD.png, id=596, 839.135pt x 728.7225pt>
+<gfx/Plan_CD.png, id=633, 839.135pt x 728.7225pt>
 File: gfx/Plan_CD.png Graphic file (type png)
  <use gfx/Plan_CD.png>
 Package pdftex.def Info: gfx/Plan_CD.png used on input line 50.
 (pdftex.def)             Requested size: 335.64804pt x 291.48383pt.
 
 [26 <./gfx/Analyse_CD.png (PNG copy)>]
-<gfx/Execute_CD.png, id=601, 627.34375pt x 510.90875pt>
+<gfx/Execute_CD.png, id=638, 627.34375pt x 510.90875pt>
 File: gfx/Execute_CD.png Graphic file (type png)
 
 <use gfx/Execute_CD.png>
@@ -2766,7 +2757,7 @@ Package pdftex.def Info: gfx/Execute_CD.png used on input line 58.
 
  (./Chapters/Chapter05.tex
 Chapter 5.
-<gfx/voteApp.png, id=611, 761.84625pt x 626.34pt>
+<gfx/voteApp.png, id=648, 761.84625pt x 626.34pt>
 File: gfx/voteApp.png Graphic file (type png)
  <use gfx/voteApp.png>
 Package pdftex.def Info: gfx/voteApp.png used on input line 14.
@@ -2785,84 +2776,84 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--17
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 [30 <./gfx/voteApp.png>]
-<gfx/result_FullCPUDatapoints_0.jpeg, id=646, 562.1pt x 371.3875pt>
+<gfx/result_FullCPUDatapoints_0.jpeg, id=683, 562.1pt x 371.3875pt>
 File: gfx/result_FullCPUDatapoints_0.jpeg Graphic file (type jpg)
 
 <use gfx/result_FullCPUDatapoints_0.jpeg>
 Package pdftex.def Info: gfx/result_FullCPUDatapoints_0.jpeg used on input line
- 58.
+ 68.
 (pdftex.def)             Requested size: 164.64185pt x 108.78198pt.
 
-<gfx/vote_FullCPUDatapoints_0.jpeg, id=647, 562.1pt x 371.3875pt>
+<gfx/vote_FullCPUDatapoints_0.jpeg, id=684, 562.1pt x 371.3875pt>
 File: gfx/vote_FullCPUDatapoints_0.jpeg Graphic file (type jpg)
 
 <use gfx/vote_FullCPUDatapoints_0.jpeg>
-Package pdftex.def Info: gfx/vote_FullCPUDatapoints_0.jpeg used on input line 6
+Package pdftex.def Info: gfx/vote_FullCPUDatapoints_0.jpeg used on input line 7
 0.
 (pdftex.def)             Requested size: 164.64185pt x 108.78198pt.
 
-<gfx/worker_FullCPUDatapoints_0.jpeg, id=648, 562.1pt x 371.3875pt>
+<gfx/worker_FullCPUDatapoints_0.jpeg, id=685, 562.1pt x 371.3875pt>
 File: gfx/worker_FullCPUDatapoints_0.jpeg Graphic file (type jpg)
 
 <use gfx/worker_FullCPUDatapoints_0.jpeg>
 Package pdftex.def Info: gfx/worker_FullCPUDatapoints_0.jpeg used on input line
- 62.
+ 72.
 (pdftex.def)             Requested size: 164.64185pt x 108.78198pt.
 
-<gfx/postgres_FullCPUDatapoints_0.jpeg, id=649, 562.1pt x 371.3875pt>
+<gfx/postgres_FullCPUDatapoints_0.jpeg, id=686, 562.1pt x 371.3875pt>
 File: gfx/postgres_FullCPUDatapoints_0.jpeg Graphic file (type jpg)
 
 <use gfx/postgres_FullCPUDatapoints_0.jpeg>
 Package pdftex.def Info: gfx/postgres_FullCPUDatapoints_0.jpeg used on input li
-ne 64.
+ne 74.
 (pdftex.def)             Requested size: 164.64185pt x 108.78198pt.
 
-<gfx/redisalpine_FullCPUDatapoints_0.jpeg, id=650, 562.1pt x 371.3875pt>
+<gfx/redisalpine_FullCPUDatapoints_0.jpeg, id=687, 562.1pt x 371.3875pt>
 File: gfx/redisalpine_FullCPUDatapoints_0.jpeg Graphic file (type jpg)
 
 <use gfx/redisalpine_FullCPUDatapoints_0.jpeg>
 Package pdftex.def Info: gfx/redisalpine_FullCPUDatapoints_0.jpeg used on input
- line 66.
+ line 76.
 (pdftex.def)             Requested size: 164.64185pt x 108.78198pt.
  [31]
-<gfx/result_PredictionforCPU_0.jpeg, id=665, 562.1pt x 371.3875pt>
+<gfx/result_PredictionforCPU_0.jpeg, id=712, 562.1pt x 371.3875pt>
 File: gfx/result_PredictionforCPU_0.jpeg Graphic file (type jpg)
 
 <use gfx/result_PredictionforCPU_0.jpeg>
 Package pdftex.def Info: gfx/result_PredictionforCPU_0.jpeg used on input line 
-75.
+85.
 (pdftex.def)             Requested size: 168.0pt x 110.99774pt.
 
-<gfx/vote_PredictionforCPU_0.jpeg, id=666, 562.1pt x 371.3875pt>
+<gfx/vote_PredictionforCPU_0.jpeg, id=713, 562.1pt x 371.3875pt>
 File: gfx/vote_PredictionforCPU_0.jpeg Graphic file (type jpg)
 
 <use gfx/vote_PredictionforCPU_0.jpeg>
-Package pdftex.def Info: gfx/vote_PredictionforCPU_0.jpeg used on input line 77
+Package pdftex.def Info: gfx/vote_PredictionforCPU_0.jpeg used on input line 87
 .
 (pdftex.def)             Requested size: 168.0pt x 110.99774pt.
 
-<gfx/worker_PredictionforCPU_0.jpeg, id=667, 562.1pt x 371.3875pt>
+<gfx/worker_PredictionforCPU_0.jpeg, id=714, 562.1pt x 371.3875pt>
 File: gfx/worker_PredictionforCPU_0.jpeg Graphic file (type jpg)
 
 <use gfx/worker_PredictionforCPU_0.jpeg>
 Package pdftex.def Info: gfx/worker_PredictionforCPU_0.jpeg used on input line 
-79.
+89.
 (pdftex.def)             Requested size: 168.0pt x 110.99774pt.
 
-<gfx/postgres_PredictionforCPU_0.jpeg, id=668, 562.1pt x 371.3875pt>
+<gfx/postgres_PredictionforCPU_0.jpeg, id=715, 562.1pt x 371.3875pt>
 File: gfx/postgres_PredictionforCPU_0.jpeg Graphic file (type jpg)
 
 <use gfx/postgres_PredictionforCPU_0.jpeg>
 Package pdftex.def Info: gfx/postgres_PredictionforCPU_0.jpeg used on input lin
-e 81.
+e 91.
 (pdftex.def)             Requested size: 168.0pt x 110.99774pt.
 
-<gfx/redisalpine_PredictionforCPU_0.jpeg, id=669, 562.1pt x 371.3875pt>
+<gfx/redisalpine_PredictionforCPU_0.jpeg, id=716, 562.1pt x 371.3875pt>
 File: gfx/redisalpine_PredictionforCPU_0.jpeg Graphic file (type jpg)
 
 <use gfx/redisalpine_PredictionforCPU_0.jpeg>
 Package pdftex.def Info: gfx/redisalpine_PredictionforCPU_0.jpeg used on input 
-line 83.
+line 93.
 (pdftex.def)             Requested size: 168.0pt x 110.99774pt.
  [32 <./gfx/result_FullCPUDatapoints_0.jpeg> <./gfx/vote_FullCPUDatapoints_0.jp
 eg> <./gfx/worker_FullCPUDatapoints_0.jpeg> <./gfx/postgres_FullCPUDatapoints_0
@@ -2871,21 +2862,47 @@ onforCPU_0.jpeg> <./gfx/vote_PredictionforCPU_0.jpeg> <./gfx/worker_Predictionf
 orCPU_0.jpeg> <./gfx/postgres_PredictionforCPU_0.jpeg> <./gfx/redisalpine_Predi
 ctionforCPU_0.jpeg>]
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 95.
+(Font)              scaled to size 11.40997pt on input line 117.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 95.
+(Font)              scaled to size 8.33606pt on input line 117.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 95.
+(Font)              scaled to size 11.40997pt on input line 117.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 95.
- [34])
-[35]
+(Font)              scaled to size 8.33606pt on input line 117.
+
+<gfx/RecTopology2.png, id=741, 316.18124pt x 92.345pt>
+File: gfx/RecTopology2.png Graphic file (type png)
+
+<use gfx/RecTopology2.png>
+Package pdftex.def Info: gfx/RecTopology2.png used on input line 143.
+(pdftex.def)             Requested size: 201.60205pt x 58.88217pt.
+
+<gfx/RecTopology.png, id=742, 338.26375pt x 92.345pt>
+File: gfx/RecTopology.png Graphic file (type png)
+
+<use gfx/RecTopology.png>
+Package pdftex.def Info: gfx/RecTopology.png used on input line 145.
+(pdftex.def)             Requested size: 201.60205pt x 55.03824pt.
+ [34]
+<gfx/T3output.png, id=750, 968.61874pt x 93.34875pt>
+File: gfx/T3output.png Graphic file (type png)
+ <use gfx/T3output.png>
+Package pdftex.def Info: gfx/T3output.png used on input line 172.
+(pdftex.def)             Requested size: 290.58786pt x 28.00484pt.
+
+<gfx/test3.png, id=751, 966.61125pt x 96.36pt>
+File: gfx/test3.png Graphic file (type png)
+ <use gfx/test3.png>
+Package pdftex.def Info: gfx/test3.png used on input line 174.
+(pdftex.def)             Requested size: 289.98561pt x 28.9082pt.
+) [35 <./gfx/RecTopology2.png> <./gfx/RecTopology.png> <./gfx/T3output.png> <./
+gfx/test3.png>]
 \openout2 = `Chapters/Chapter06.aux'.
 
  (./Chapters/Chapter06.tex
 Chapter 6.
 
-Overfull \hbox (4.23784pt too wide) in paragraph at lines 5--18
+Overfull \hbox (4.23784pt too wide) in paragraph at lines 6--19
 \T1/pplj/m/n/10.95 sys-tem us-ing the ta-bles be-low con-tain-ing the re-quire-
 ment and whether
  []
@@ -2895,9 +2912,72 @@ ment and whether
 
 
 
-]) [37]
+] (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+[37] <gfx/socksTopologyRecomm.png, id=798, 431.6125pt x 212.795pt>
+File: gfx/socksTopologyRecomm.png Graphic file (type png)
+
+<use gfx/socksTopologyRecomm.png>
+Package pdftex.def Info: gfx/socksTopologyRecomm.png used on input line 155.
+(pdftex.def)             Requested size: 215.80571pt x 106.39723pt.
+ [38]
+<gfx/bestOptions.png, id=838, 766.865pt x 801.99625pt>
+File: gfx/bestOptions.png Graphic file (type png)
+
+<use gfx/bestOptions.png>
+Package pdftex.def Info: gfx/bestOptions.png used on input line 164.
+(pdftex.def)             Requested size: 230.06128pt x 240.60072pt.
+ <gfx/selected.png, id=840, 497.86pt x 455.7025pt>
+File: gfx/selected.png Graphic file (type png)
+
+<use gfx/selected.png>
+Package pdftex.def Info: gfx/selected.png used on input line 173.
+(pdftex.def)             Requested size: 199.14047pt x 182.27776pt.
+ [39 <./gfx/socksTopologyRecomm.png> <./gfx/bestOptions.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
+
+ []
+
+<gfx/test3badoptions.png, id=851, 433.62pt x 127.47626pt>
+File: gfx/test3badoptions.png Graphic file (type png)
+
+<use gfx/test3badoptions.png>
+Package pdftex.def Info: gfx/test3badoptions.png used on input line 184.
+(pdftex.def)             Requested size: 173.44492pt x 50.9896pt.
+
+<gfx/locustss.png, id=852, 1191.45125pt x 798.985pt>
+File: gfx/locustss.png Graphic file (type png)
+ <use gfx/locustss.png>
+Package pdftex.def Info: gfx/locustss.png used on input line 191.
+(pdftex.def)             Requested size: 297.86208pt x 199.74576pt.
+
+[40 <./gfx/selected.png> <./gfx/test3badoptions.png>]
+<gfx/locustchart.png, id=859, 1184.425pt x 732.7375pt>
+File: gfx/locustchart.png Graphic file (type png)
+
+<use gfx/locustchart.png>
+Package pdftex.def Info: gfx/locustchart.png used on input line 198.
+(pdftex.def)             Requested size: 296.10553pt x 183.18393pt.
+) [41 <./gfx/locustss.png> <./gfx/locustchart.png>]
+\openout2 = `Chapters/Chapter07.aux'.
+
+
+(./Chapters/Chapter07.tex
+Chapter 7.
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+) [42
+
+
+
+
+]
 Appendix A.
-[38
+[43
 
 
 
@@ -2906,7 +2986,7 @@ Appendix A.
 
  (./Chapters/Chapter0A.tex
 Appendix B.
-) [39
+) [44
 
 
 
@@ -2914,8 +2994,17 @@ Appendix B.
 \openout2 = `FrontBackmatter/Bibliography.aux'.
 
  (./FrontBackmatter/Bibliography.tex
+LaTeX Font Info:    Try loading font information for T1+fvm on input line 15.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/bera/t1fvm.fd
+File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
+)
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
 (Font)              scaled to size 9.30756pt on input line 15.
+Package microtype Info: Loading generic settings for font family
+(microtype)             `fvm' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 
 Overfull \hbox (14.08844pt too wide) in paragraph at lines 15--15
 \T1/pplj/m/it/10.95 2013 IEEE 5th In-ter-na-tional Con-fer-ence on\T1/pplj/m/n/
@@ -2946,13 +3035,7 @@ Overfull \hbox (3.54631pt too wide) in paragraph at lines 15--15
   Elas-
  []
 
-
-Overfull \hbox (1.53444pt too wide) in paragraph at lines 15--15
-[]\T1/pplj/m/it/10.95 Developing and Test-ing Mi-croser-vices with Docker\T1/pp
-lj/m/n/10.95 . [][]$\T1/fvm/m/n/10.95 https : / / github .
- []
-
-[40
+[45
 
 
 
@@ -2981,7 +3064,7 @@ Overfull \hbox (0.8581pt too wide) in paragraph at lines 15--15
 /fvm/m/n/10.95 http : / / www . oracle . com / technetwork /
  []
 
-[41]
+[46]
 Overfull \hbox (3.75203pt too wide) in paragraph at lines 15--15
 []\T1/pplj/m/n/10.95 Claus Pahl, An-to-nio Brogi, Ja-copo Sol-dani, and Pooyan 
 Jamshidi.
@@ -3005,25 +3088,25 @@ Overfull \hbox (8.88503pt too wide) in paragraph at lines 15--15
 -els\T1/pplj/m/n/10.95 . Springer.
  []
 
-) [42]
+) [47]
 \openout2 = `FrontBackmatter/Declaration.aux'.
 
- (./FrontBackmatter/Declaration.tex) [43
+ (./FrontBackmatter/Declaration.tex) [48
 
 
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 131.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 131.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 132.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 132.
  (./ClassicThesis.aux
 (./FrontBackmatter/Titlepage.aux) (./FrontBackmatter/Titleback.aux)
 (./FrontBackmatter/Abstract.aux) (./FrontBackmatter/Contents.aux)
 (./Chapters/Chapter01.aux) (./Chapters/Chapter02.aux) (./Chapters/Chapter03.aux
 ) (./Chapters/Chapter04.aux) (./Chapters/Chapter05.aux)
-(./Chapters/Chapter06.aux) (./Chapters/Chapter0A.aux)
-(./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Declaration.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 131.
+(./Chapters/Chapter06.aux) (./Chapters/Chapter07.aux) (./Chapters/Chapter0A.aux
+) (./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Declaration.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 132.
 
 
  *File List*
@@ -3186,8 +3269,6 @@ styles)
 titlesec.sty    2016/03/21 v2.10.2 Sectioning titles
  tocloft.sty    2013/05/02 v2.3f parameterised ToC, etc., typesetting
  scrtime.sty    2016/05/10 v3.20 KOMA-Script package (time of LaTeX run)
-prelim2e.sty    2009/05/29 v1.3 prelim2e Package (MS)
-everyshi.sty    2001/05/15 v3.00 EveryShipout Package (MS)
  english.lbx    2016/05/14 v3.4 biblatex localization (PK/JW/AB)
 american.lbx    2016/05/14 v3.4 biblatex localization (PK/JW/AB)
   german.lbx    2016/05/14 v3.4 biblatex localization (PK/JW/AB)
@@ -3208,7 +3289,6 @@ epstopdf-sys.cfg    2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
   mt-ppl.cfg    2005/11/16 v1.6 microtype config. file: Palatino (RS)
 FrontBackmatter/Titlepage.tex
 gfx/rug_logo.png
-   t1fvm.fd    2004/09/07 scalable font definitions for T1/fvm.
 FrontBackmatter/Titleback.tex
 FrontBackmatter/Abstract.tex
  ot1pplx.fd    2004/09/06 font definitions for OT1/pplx.
@@ -3245,15 +3325,28 @@ gfx/vote_PredictionforCPU_0.jpeg
 gfx/worker_PredictionforCPU_0.jpeg
 gfx/postgres_PredictionforCPU_0.jpeg
 gfx/redisalpine_PredictionforCPU_0.jpeg
+gfx/RecTopology2.png
+gfx/RecTopology.png
+gfx/T3output.png
+gfx/test3.png
 Chapters/Chapter06.tex
+lstlang1.sty    2015/06/04 1.6 listings language file
+gfx/socksTopologyRecomm.png
+gfx/bestOptions.png
+gfx/selected.png
+gfx/test3badoptions.png
+gfx/locustss.png
+gfx/locustchart.png
+Chapters/Chapter07.tex
 Chapters/Chapter0A.tex
 FrontBackmatter/Bibliography.tex
+   t1fvm.fd    2004/09/07 scalable font definitions for T1/fvm.
 FrontBackmatter/Declaration.tex
  ***********
 
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 131.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 132.
 Package rerunfilecheck Info: File `ClassicThesis.out' has not changed.
-(rerunfilecheck)             Checksum: DAC9AB741698344CDBC86260D9C2A334;3762.
+(rerunfilecheck)             Checksum: 180A3A6710158A98B360642C72432AD0;4095.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -3265,13 +3358,13 @@ Package logreq Info: Writing requests to 'ClassicThesis.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33858 strings out of 493014
- 612727 string characters out of 6133351
- 1083015 words of memory out of 5000000
- 36505 multiletter control sequences out of 15000+600000
- 73951 words of font info for 107 fonts, out of 8000000 for 9000
+ 34107 strings out of 493014
+ 616423 string characters out of 6133351
+ 1122521 words of memory out of 5000000
+ 36659 multiletter control sequences out of 15000+600000
+ 73331 words of font info for 105 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
- 76i,23n,105p,10515b,2791s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 76i,23n,105p,10515b,3546s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/euler/eurb10.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/fpl/fplbj8a.pfb></usr/local/texlive
@@ -3283,10 +3376,10 @@ e1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/
 palatino/uplbi8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palati
 no/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr
 i8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on ClassicThesis.pdf (51 pages, 1615081 bytes).
+Output written on ClassicThesis.pdf (56 pages, 2226699 bytes).
 PDF statistics:
- 851 PDF objects out of 1000 (max. 8388607)
- 759 compressed objects within 8 object streams
- 241 named destinations out of 1000 (max. 500000)
- 15899 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 1024 PDF objects out of 1200 (max. 8388607)
+ 905 compressed objects within 10 object streams
+ 325 named destinations out of 1000 (max. 500000)
+ 15469 words of extra memory for PDF output out of 17280 (max. 10000000)
 

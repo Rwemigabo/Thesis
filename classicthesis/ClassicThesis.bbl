@@ -65,6 +65,15 @@
     \field{year}{2013}
   \endentry
 
+  \entry{amazonprices}{misc}{}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+  \field{howpublished}{\url{https://aws.amazon.com/ec2/dedicated-hosts/pricing/}}
+    \field{note}{Accessed: 2018-08-26}
+    \field{title}{Amazon EC2 Dedicated Hosts Pricing}
+  \endentry
+
   \entry{andrikopoulos2017engineering}{inproceedings}{}
     \name{author}{1}{}{%
       {{hash=AV}{%
@@ -363,15 +372,6 @@
     \field{howpublished}{\url{https://docs.docker.com/develop/sdk/}}
     \field{note}{Accessed: 2018-08-23}
     \field{title}{Develop with Docker Engine SDKs and API}
-  \endentry
-
-  \entry{node-docker-api}{misc}{}
-    \field{labeltitlesource}{title}
-    \field{sortinit}{D}
-    \field{sortinithash}{D}
-    \field{howpublished}{\url{https://github.com/mjhea0/node-docker-api}}
-    \field{note}{Accessed: 2018-08-25}
-    \field{title}{Developing and Testing Microservices with Docker}
   \endentry
 
   \entry{docker_compose}{misc}{}

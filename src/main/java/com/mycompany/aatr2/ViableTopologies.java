@@ -47,56 +47,71 @@ public class ViableTopologies {
 		Topology vtop4 = new Topology("top3");
 		Topology vtop5 = new Topology("top4");
 		Topology vtop6 = new Topology("top5");
+		Topology vtop7 = new Topology("top6");
+		Topology vtop8 = new Topology("top7");
 
-		String serv1 = "postgres:9.4";// 5
-		String serv2 = "result";// 2
-		String serv3 = "vote";// 1
-		String serv4 = "worker";// 3
-		String serv5 = "redis:alpine";// 4
+		String serv1 = "worker";// 5
+		String serv2 = "vote";// 2
+		String serv3 = "postgres:9.4";// 1
+		String serv4 = "redis:alpine";// 3
+		String serv5 = "result";// 4
 
-		vtop2.addService(serv1, 1);
-		vtop2.addService(serv2, 2);
-		vtop2.addService(serv3, 2);
-		vtop2.addService(serv4, 2);
+		vtop2.addService(serv1, 2);
+		vtop2.addService(serv2, 1);
+		vtop2.addService(serv3, 1);
+		vtop2.addService(serv4, 1);
 		vtop2.addService(serv5, 1);
-		MediumVM Mvm = new MediumVM();
-		vtop2.addVM(Mvm);
+		vtop2.addVM(new SmallVM());
+		vtop2.addVM(new SmallVM());
 
-		vtop3.addService(serv1, 1);
+		vtop3.addService(serv1, 3);
 		vtop3.addService(serv2, 2);
-		vtop3.addService(serv3, 3);
+		vtop3.addService(serv3, 1);
 		vtop3.addService(serv4, 1);
-		vtop3.addService(serv5, 2);
-		SmallVM svm2 = new SmallVM();
-		SmallVM svm3 = new SmallVM();
-		vtop3.addVM(svm2);
-		vtop3.addVM(svm3);
+		vtop3.addService(serv5, 1);
+		vtop3.addVM(new MediumVM());
 
-		vtop4.addService(serv1, 1);
+		vtop4.addService(serv1, 4);
 		vtop4.addService(serv2, 3);
-		vtop4.addService(serv3, 4);
-		vtop4.addService(serv4, 2);
-		vtop4.addService(serv5, 2);
+		vtop4.addService(serv3, 2);
+		vtop4.addService(serv4, 1);
+		vtop4.addService(serv5, 1);
 		MediumVM Mvm1 = new MediumVM();
-		MediumVM Mvm2 = new MediumVM();
 		vtop4.addVM(Mvm1);
-		vtop4.addVM(Mvm2);
 
-		vtop5.addService(serv1, 1);
-		vtop5.addService(serv2, 3);
-		vtop5.addService(serv3, 4);
+		vtop5.addService(serv1, 4);
+		vtop5.addService(serv2, 4);
+		vtop5.addService(serv3, 3);
 		vtop5.addService(serv4, 2);
-		vtop5.addService(serv5, 2);
-		LargeVM lvm = new LargeVM();
-		vtop5.addVM(lvm);
+		vtop5.addService(serv5, 1);
+		vtop5.addVM(new MediumVM());
+		vtop5.addVM(new MediumVM());
 
-		vtop6.addService(serv1, 1);
-		vtop6.addService(serv2, 5);
-		vtop6.addService(serv3, 5);
-		vtop6.addService(serv4, 4);
-		vtop6.addService(serv5, 3);
-		LargeVM lvm1 = new LargeVM();
-		vtop6.addVM(lvm1);
+		vtop6.addService(serv1, 4);
+		vtop6.addService(serv2, 4);
+		vtop6.addService(serv3, 4);
+		vtop6.addService(serv4, 3);
+		vtop6.addService(serv5, 2);
+		MediumVM mvma = new MediumVM();
+		MediumVM mvmb = new MediumVM();
+		vtop6.addVM(mvma);
+		vtop6.addVM(mvmb);
+
+		vtop7.addService(serv1, 4);
+		vtop7.addService(serv2, 4);
+		vtop7.addService(serv3, 4);
+		vtop7.addService(serv4, 4);
+		vtop7.addService(serv5, 3);
+		vtop7.addVM(new LargeVM());
+
+		vtop8.addService(serv1, 4);
+		vtop8.addService(serv2, 4);
+		vtop8.addService(serv3, 4);
+		vtop8.addService(serv4, 4);
+		vtop8.addService(serv5, 4);
+
+		vtop8.addVM(new LargeVM());
+		vtop8.addVM(new LargeVM());
 
 		// vtop1.addService(serv1, 1);
 		// vtop1.addService(serv2, 1);
@@ -112,10 +127,13 @@ public class ViableTopologies {
 		addTopology(vtop4);
 		addTopology(vtop5);
 		addTopology(vtop6);
+		addTopology(vtop7);
+		addTopology(vtop8);
 
 	}
 
 	public void defineDynamicTopologies2() {
+
 		ArrayList<String> myservs = createServices();
 		Topology t1 = DockerManager.getInstance().getCurrentTopology();
 		t1.setFilename("Current Topology");
@@ -125,17 +143,60 @@ public class ViableTopologies {
 			t1.setFilename("Current Topology");
 		}
 		addTopology(t1);
-		for (String str : myservs) {
-			Topology t = new Topology("top" + myservs.indexOf(str));
-			int randomnum = randomNumber(1, 3);
-			if (randomnum == 1) {
-				t.addVM(makeVM());
+		Topology vtop2 = new Topology("top1");
+		Topology vtop3 = new Topology("top2");
+		Topology vtop4 = new Topology("top3");
+		Topology vtop5 = new Topology("top4");
+		Topology vtop6 = new Topology("top5");
+		Topology vtop7 = new Topology("top6");
+		
+
+		addVMs(vtop2);
+		addVMs(vtop3);
+		addVMs(vtop4);
+		addVMs(vtop5);
+		addVMs(vtop6);
+		addVMs(vtop7);
+		addServices(myservs, vtop2);
+		addServices(myservs, vtop3);
+		addServices(myservs, vtop4);
+		addServices(myservs, vtop5);
+		addServices(myservs, vtop6);
+		addServices(myservs, vtop7);
+		addTopology(vtop2);
+		addTopology(vtop3);
+		addTopology(vtop4);
+		addTopology(vtop5);
+		addTopology(vtop6);
+		addTopology(vtop7);
+
+	}
+
+	void addVMs(Topology t) {
+		int randomnum = randomNumber(1, 3);
+		if (randomnum == 1) {
+			t.addVM(makeVM());
+		} else if (randomnum == 2) {
+			t.addVM(makeVM());
+			t.addVM(makeVM());
+		} else {
+			t.addVM(makeVM());
+			t.addVM(makeVM());
+			t.addVM(makeVM());
+		}
+	}
+
+	void addServices(ArrayList<String> s, Topology t) {
+		int toprand = randomNumber(1, 3);
+		for (String str : s) {
+			if (toprand == 1) {
+				t.addService(str, randomNumber(1, 3));
+			} else if (toprand == 2) {
+				t.addService(str, randomNumber(2, 4));
 			} else {
-				t.addVM(makeVM());
-				t.addVM(makeVM());
+				t.addService(str, randomNumber(3, 5));
 			}
-			t.addService(str, randomNumber(1, 6));
-			addTopology(t);
+
 		}
 	}
 
@@ -170,7 +231,7 @@ public class ViableTopologies {
 		}
 
 		System.out.println(
-				"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Numbber of services = " + services.size());
+				"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Number of services = " + services.size());
 		return services;
 	}
 
