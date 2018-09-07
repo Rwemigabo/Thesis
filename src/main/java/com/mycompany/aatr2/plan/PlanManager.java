@@ -63,8 +63,8 @@ public class PlanManager implements Observable, Observer {
 	private void getRequest() {
 		AdaptationRequest ar = DockerManager.getInstance().getCurrentTopology().latestRequest();
 		// ar.listServices();
-		 vt.defineDynamicTopologies2();
-		//vt.defineTestTopologies();
+		 //vt.defineDynamicTopologies2();
+		vt.defineTestTopologies();
 		processRequest(ar);
 
 	}
@@ -103,7 +103,7 @@ public class PlanManager implements Observable, Observer {
 							if (rt_entry.getKey().contains(vt_entry.getKey())) {
 								double cont_diff = vt_entry.getValue() - rt_entry.getValue();
 								//System.out.println(vt_entry.getValue() +" - "+ rt_entry.getValue()+ " = "+  cont_diff);
-								if (cont_diff >= 1) {
+								if (cont_diff >= 0) {// 1 or 0
 									if (cont_diff == 0) {// || cont_diff == -1) {
 										points = points + 3;
 									} else if (cont_diff == 1) {
@@ -153,14 +153,17 @@ public class PlanManager implements Observable, Observer {
 			}
 
 		}
+		if (map.size() >= 1) {
+			selected = costAnalysis(map);
+			// dm.prepareForExecution(selected);
+			LOGGER.log(Level.INFO, "..................................Topology Selected " + selected.getID());
 
-		selected = costAnalysis(map);
+			setNewT(selected);
 
-		// dm.prepareForExecution(selected);
-		LOGGER.log(Level.INFO, "..................................Topology Selected " + selected.getID());
+		}else { 
+		System.out.println("None of the topology options were good enough for the load");}
 
-		setNewT(selected);
-
+		
 		// if(DockerManager.getInstance().getLastExecTime()!= null) {
 		// long timepassed = System.currentTimeMillis() -
 		// DockerManager.getInstance().getLastExecTime().getTime();
